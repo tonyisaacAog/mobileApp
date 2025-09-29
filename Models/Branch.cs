@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CompanyApi.Models
 {
@@ -18,13 +17,13 @@ namespace CompanyApi.Models
         public int InitialCreditTaxSerial { get; set; }
         [RegularExpression("^[0-9]*$", ErrorMessage = "Only numbers are allowed.")]
         public int InitialDebitTaxSerial { get; set; }
-        public bool IsActive { get; set; }
-        public int CompanyId { get; set; }
-        [ForeignKey(nameof(CompanyId))]
-        public Company? Company { get; set; }
+        public bool IsActive { get; set; } = true;
+        //public int CompanyId { get; set; }
+        //[ForeignKey(nameof(CompanyId))]
+        //public Company? Company { get; set; }
 
-        public virtual ICollection<User> Users { get; set; } = new List<User>();
-        public virtual ICollection<Document> Receipts { get; set; } = new List<Document>();
-        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+        public virtual ICollection<User> Users { get; set; } = [];
+        public virtual ICollection<Document> Receipts { get; set; } = [];
+        public virtual ICollection<Product> Products { get; set; } = [];
     }
 }

@@ -1,14 +1,19 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace CompanyApi.DTOs
 {
     // Additional DTOs for other entities
     public class BranchDto
     {
-        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
-        public string PhoneNumber { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public bool IsActive { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string Code { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
+        public string Governate { get; set; } = string.Empty;
+        public string RegionCity { get; set; } = string.Empty;
+        public string Street { get; set; } = string.Empty;
+        public string BuildingNumber { get; set; } = string.Empty;
+        public int InitialInvoiceTaxSerial { get; set; }
+        public int InitialCreditTaxSerial { get; set; }
+        public int InitialDebitTaxSerial { get; set; }
     }
 }

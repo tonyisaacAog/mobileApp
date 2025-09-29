@@ -1,6 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace CompanyApi.Models
 {
     public class Company : BaseEntity
@@ -12,7 +9,7 @@ namespace CompanyApi.Models
         public string? ERPClientID { get; set; } = string.Empty;
         public string? ERPClientSecret { get; set; } = string.Empty;
 
-        public virtual ICollection<Branch> Branches { get; set; } = new List<Branch>();
+        //public virtual ICollection<Branch> Branches { get; set; } = new List<Branch>();
         public virtual ICollection<Document> Receipts { get; set; } = new List<Document>();
     }
 }

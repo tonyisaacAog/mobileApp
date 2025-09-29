@@ -53,11 +53,11 @@ namespace CompanyApi.Data
                 .OnDelete(DeleteBehavior.Cascade);
        
             // Company-Branch relationship
-            modelBuilder.Entity<Company>()
-                .HasMany(c => c.Branches)
-                .WithOne(b => b.Company)
-                .HasForeignKey(b => b.CompanyId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<Company>()
+            //    .HasMany(c => c.Branches)
+            //    .WithOne(b => b.Company)
+            //    .HasForeignKey(b => b.CompanyId)
+            //    .OnDelete(DeleteBehavior.Cascade);
 
             // Add some indexes for better performance
             modelBuilder.Entity<User>()
@@ -78,6 +78,52 @@ namespace CompanyApi.Data
             modelBuilder.Entity<Document>()
                 .HasIndex(r => r.ReceiptNumber)
                 .IsUnique();
+
+
+
+
+            // Apply global filter for soft delete
+            foreach( var entityType in modelBuilder.Model.GetEntityTypes() )
+            {
+                if( typeof(BaseEntity).IsAssignableFrom(entityType.ClrType) )
+                {
+                    var method = typeof(ApplicationDbContext)
+                        .GetMethod(nameof(SetSoftDeleteFilter),System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
+                        ?.MakeGenericMethod(entityType.ClrType);
+
+                    method?.Invoke(null,[modelBuilder]);
+                }
+            }
+        }
+
+        public override int SaveChanges()
+        {
+            HandleSoftDelete();
+            return base.SaveChanges();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            HandleSoftDelete();
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void HandleSoftDelete()
+        {
+            foreach( var entry in ChangeTracker.Entries<BaseEntity>() )
+            {
+                if( entry.State == EntityState.Deleted )
+                {
+                    entry.State = EntityState.Modified;
+                    entry.Entity.IsDeleted = true;
+                }
+            }
+        }
+
+
+        private static void SetSoftDeleteFilter<TEntity>(ModelBuilder modelBuilder) where TEntity : BaseEntity
+        {
+            modelBuilder.Entity<TEntity>().HasQueryFilter(e => !e.IsDeleted);
         }
     }
 }

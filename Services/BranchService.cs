@@ -1,5 +1,8 @@
 ﻿using CompanyApi.DTOs;
+using CompanyApi.Models;
 using CompanyApi.Repositories;
+using CompanyApi.Repositories.Interfaces;
+using CompanyApi.Services.Interfaces;
 
 namespace CompanyApi.Services
 {
@@ -27,18 +30,14 @@ namespace CompanyApi.Services
                 RegionCity = dto.RegionCity,
                 Street = dto.Street,
                 BuildingNumber = dto.BuildingNumber,
-                InitialInvoiceTaxSerial = dto.InitialInvoiceTaxSerial,
-                InitialCreditTaxSerial = dto.InitialCreditTaxSerial,
-                InitialDebitTaxSerial = dto.InitialDebitTaxSerial
             };
-            await _unitOfWork.Branches.AddAsync(branch);
+            await _unitOfWork.Repository<Branch>().AddAsync(branch);
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<BranchDto>> GetAllBranchesAsync()
+        public async Task<Result<IEnumerable<BranchDto>>> GetAllBranchesAsync()
         {
-            var branches = await _unitOfWork.Branches.GetAllAsync();
-            return branches.Select(b => new BranchDto
+            var branches = await _unitOfWork.Repository<Branch>().GetProjectedAsync<BranchDto>(b => new BranchDto
             {
                 Name = b.Name,
                 Code = b.Code,
@@ -46,18 +45,14 @@ namespace CompanyApi.Services
                 Governate = b.Governate,
                 RegionCity = b.RegionCity,
                 Street = b.Street,
-                BuildingNumber = b.BuildingNumber,
-                InitialInvoiceTaxSerial = b.InitialInvoiceTaxSerial,
-                InitialCreditTaxSerial = b.InitialCreditTaxSerial,
-                InitialDebitTaxSerial = b.InitialDebitTaxSerial
+                BuildingNumber = b.BuildingNumber
             });
+            return Result<IEnumerable<BranchDto>>.Success(branches);
         }
 
-        public async Task<BranchDto?> GetBranchByIdAsync(int id)
+        public async Task<Result<BranchDto>?> GetBranchByIdAsync(int id)
         {
-            var branch = await _unitOfWork.Branches.GetByIdAsync(id);
-            if (branch == null) return null;
-            return new BranchDto
+            var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(obj=>obj.Id == id,branch=> new BranchDto
             {
                 Name = branch.Name,
                 Code = branch.Code,
@@ -65,16 +60,14 @@ namespace CompanyApi.Services
                 Governate = branch.Governate,
                 RegionCity = branch.RegionCity,
                 Street = branch.Street,
-                BuildingNumber = branch.BuildingNumber,
-                InitialInvoiceTaxSerial = branch.InitialInvoiceTaxSerial,
-                InitialCreditTaxSerial = branch.InitialCreditTaxSerial,
-                InitialDebitTaxSerial = branch.InitialDebitTaxSerial
-            };
+                BuildingNumber = branch.BuildingNumber
+            });
+        return branch == null ? null : Result<BranchDto>.Success(branch);
         }
 
         public async Task UpdateBranchAsync(int id, BranchDto dto)
         {
-            var branch = await _unitOfWork.Branches.GetByIdAsync(id);
+            var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(id);
             if (branch == null) throw new KeyNotFoundException("Branch not found.");
             var isUnique = await IsBranchNameUniqueAsync(dto.Name);
             if( !isUnique && branch.Name != dto.Name )
@@ -88,24 +81,21 @@ namespace CompanyApi.Services
             branch.RegionCity = dto.RegionCity;
             branch.Street = dto.Street;
             branch.BuildingNumber = dto.BuildingNumber;
-            branch.InitialInvoiceTaxSerial = dto.InitialInvoiceTaxSerial;
-            branch.InitialCreditTaxSerial = dto.InitialCreditTaxSerial;
-            branch.InitialDebitTaxSerial = dto.InitialDebitTaxSerial;
-            _unitOfWork.Branches.Update(branch);
+            _unitOfWork.Repository<Branch>().Update(branch);
             await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task DeleteBranchAsync(int id)
         {
-            var branch = await _unitOfWork.Branches.GetByIdAsync(id);
+            var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(id);
             if (branch == null) throw new KeyNotFoundException("Branch not found.");
-            _unitOfWork.Branches.Remove(branch);
+            _unitOfWork.Repository<Branch>().Remove(branch);
             await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task<bool> IsBranchNameUniqueAsync(string branchName)
         {
-            var existingBranch = await _unitOfWork.Branches
+            var existingBranch = await _unitOfWork.Repository<Branch>()
                 .FirstOrDefaultAsync(b => b.Name == branchName);
             return existingBranch == null;
         }

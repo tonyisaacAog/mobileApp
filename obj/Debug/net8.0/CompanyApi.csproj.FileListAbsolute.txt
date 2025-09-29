@@ -137,8 +137,6 @@ G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\staticwebassets.build.
 G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\staticwebassets.build.json.cache
 G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\staticwebassets.development.json
 G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\swae.build.ex.cache
-G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\CompanyApi.csproj.Up2Date
 G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\CompanyApi.dll
 G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\refint\CompanyApi.dll
@@ -292,3 +290,6 @@ D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\refint\CompanyApi.dll
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.pdb
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.genruntimeconfig.cache
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\ref\CompanyApi.dll
+G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\CompanyApi.sourcelink.json
+G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\swae.build.ex.cache
+G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

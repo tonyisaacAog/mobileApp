@@ -4,8 +4,7 @@ namespace CompanyApi.DTOs
 {
     public class DocumentDto
     {
-        public int Id { get; set; }
-        public string ReceiptNumber { get; set; } = string.Empty;
+        public string ReceiptNumber { get; set; }
         public DateTime ReceiptDate { get; set; }
         public decimal Subtotal { get; set; }
         public decimal TaxAmount { get; set; }
@@ -31,6 +30,5 @@ namespace CompanyApi.DTOs
         public string Notes { get; set; } = string.Empty;
         public int? UserId { get; set; }
         public int? BranchId { get; set; }
-        public int? CompanyId { get; set; }
     }
 }

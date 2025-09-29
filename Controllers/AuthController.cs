@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using CompanyApi.DTOs;
-using CompanyApi.Services;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 using CompanyApi.Models;
+using CompanyApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CompanyApi.Controllers
 {
@@ -64,7 +64,7 @@ namespace CompanyApi.Controllers
                 var createdUser = await _userService.CreateUserAsync(user);
                 var userDto = _mapper.Map<UserDto>(createdUser);
 
-                return CreatedAtAction(nameof(GetUser), new { id = createdUser.Id }, userDto);
+                return Ok(createdUser);
             }
             catch (ArgumentException ex)
             {
@@ -88,7 +88,7 @@ namespace CompanyApi.Controllers
                 var createdUser = await _userService.CreateUserAsync(user);
                 var userDto = _mapper.Map<UserDto>(createdUser);
 
-                return CreatedAtAction(nameof(GetUser), new { id = createdUser.Id }, userDto);
+                return Ok(userDto);
             }
             catch (ArgumentException ex)
             {
@@ -124,14 +124,12 @@ namespace CompanyApi.Controllers
 
         [HttpGet("users")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers(PaginationParameters paginationParameters)
         {
             try
             {
-                var users = await _userService.GetAllUsersAsync();
-                var userDtos = _mapper.Map<IEnumerable<UserDto>>(users);
-
-                return Ok(userDtos);
+                var users = await _userService.GetAllUsersAsync(paginationParameters);
+                return Ok(users);
             }
             catch (Exception ex)
             {
@@ -155,7 +153,7 @@ namespace CompanyApi.Controllers
                 }
 
                 // Allow users to update their own profile or admins to update any profile
-                if (id != currentUserId && !currentUser.IsAdmin)
+                if (id != currentUserId && !currentUser.Data.IsAdmin)
                 {
                     return Forbid();
                 }
@@ -189,7 +187,7 @@ namespace CompanyApi.Controllers
             {
                 var result = await _userService.DeleteUserAsync(id);
 
-                if (!result)
+                if (!result.Data)
                 {
                     return NotFound(new { message = "User not found" });
                 }
@@ -210,7 +208,7 @@ namespace CompanyApi.Controllers
             {
                 var result = await _userService.ActivateUserAsync(id);
 
-                if (!result)
+                if (!result.Data)
                 {
                     return NotFound(new { message = "User not found" });
                 }
@@ -231,7 +229,7 @@ namespace CompanyApi.Controllers
             {
                 var result = await _userService.DeactivateUserAsync(id);
 
-                if (!result)
+                if (!result.Data)
                 {
                     return NotFound(new { message = "User not found" });
                 }

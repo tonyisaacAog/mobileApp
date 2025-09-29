@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using CompanyApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyApi.Data
 {
@@ -51,7 +51,7 @@ namespace CompanyApi.Data
                 .WithMany()
                 .HasForeignKey(ri => ri.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
-       
+
             // Company-Branch relationship
             //modelBuilder.Entity<Company>()
             //    .HasMany(c => c.Branches)
@@ -83,15 +83,15 @@ namespace CompanyApi.Data
 
 
             // Apply global filter for soft delete
-            foreach( var entityType in modelBuilder.Model.GetEntityTypes() )
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                if( typeof(BaseEntity).IsAssignableFrom(entityType.ClrType) )
+                if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
                 {
                     var method = typeof(ApplicationDbContext)
-                        .GetMethod(nameof(SetSoftDeleteFilter),System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
+                        .GetMethod(nameof(SetSoftDeleteFilter), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
                         ?.MakeGenericMethod(entityType.ClrType);
 
-                    method?.Invoke(null,[modelBuilder]);
+                    method?.Invoke(null, [modelBuilder]);
                 }
             }
         }
@@ -110,9 +110,9 @@ namespace CompanyApi.Data
 
         private void HandleSoftDelete()
         {
-            foreach( var entry in ChangeTracker.Entries<BaseEntity>() )
+            foreach (var entry in ChangeTracker.Entries<BaseEntity>())
             {
-                if( entry.State == EntityState.Deleted )
+                if (entry.State == EntityState.Deleted)
                 {
                     entry.State = EntityState.Modified;
                     entry.Entity.IsDeleted = true;

@@ -2,14 +2,14 @@ namespace CompanyApi.Models
 {
     public class Company : BaseEntity
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public string? PhoneNumber { get; set; } = string.Empty;
+        public string? Email { get; set; } = string.Empty;
+        public string TaxNumber { get; set; } = string.Empty;
+        public string? Description { get; set; } = string.Empty;
         public string? TradeName { get; set; }
-        public string TaxCode { get; set; }
-        public string ActivityCode { get; set; }
-        public string? ERPClientID { get; set; } = string.Empty;
-        public string? ERPClientSecret { get; set; } = string.Empty;
-
-        //public virtual ICollection<Branch> Branches { get; set; } = new List<Branch>();
+        public bool IsActive { get; set; }
         public virtual ICollection<Document> Receipts { get; set; } = new List<Document>();
     }
 }

@@ -1,12 +1,13 @@
-using Microsoft.EntityFrameworkCore;
 using CompanyApi.Data;
+using CompanyApi.Mappings;
 using CompanyApi.Repositories;
+using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Services;
+using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using AutoMapper;
-using CompanyApi.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,10 +28,14 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Configure services
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBranchService, BranchService>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<IDeviceService, DeviceService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IUserBranchService, UserBranchService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 
 // Configure JWT authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");

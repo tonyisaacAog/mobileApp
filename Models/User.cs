@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CompanyApi.Models
 {
-    public class User:BaseEntity
+    public class User : BaseEntity
     {
         [Required]
         [StringLength(50)]

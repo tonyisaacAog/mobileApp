@@ -1,6 +1,6 @@
 using CompanyApi.Models;
 
-namespace CompanyApi.Services
+namespace CompanyApi.Services.Interfaces
 {
     public interface IAuthService
     {

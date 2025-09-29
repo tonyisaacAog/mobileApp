@@ -9,5 +9,6 @@ namespace CompanyApi.Services
         Task<IEnumerable<BranchDto>> GetAllBranchesAsync();
         Task UpdateBranchAsync(int id, BranchDto branch);
         Task DeleteBranchAsync(int id);
+        Task<bool> IsBranchNameUniqueAsync(string name);
     }
 }

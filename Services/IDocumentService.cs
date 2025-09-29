@@ -9,5 +9,6 @@ namespace CompanyApi.Services
         Task<IEnumerable<DocumentDto>> GetAllDocumentsAsync();
         Task UpdateDocumentAsync(int id, DocumentDto document);
         Task DeleteDocumentAsync(int id);
+        Task<bool> IsDocumentUniqueAsync(string receiptNumber);
     }
 }

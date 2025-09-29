@@ -175,7 +175,7 @@ namespace CompanyApi.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        private async Task<bool> IsDocumentUniqueAsync(string receiptNumber)
+        public async Task<bool> IsDocumentUniqueAsync(string receiptNumber)
         {
             var existingDocument = await _unitOfWork.Receipts.FirstOrDefaultAsync(d => d.ReceiptNumber == receiptNumber);
             return existingDocument == null;

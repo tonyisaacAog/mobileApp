@@ -14,6 +14,7 @@ namespace CompanyApi.Data
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Device> Devices { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<DocumentLines> DocumentLines { get; set; }
 
@@ -71,13 +72,11 @@ namespace CompanyApi.Data
             modelBuilder.Entity<Branch>()
                 .HasIndex(b => b.Name);
 
-            modelBuilder.Entity<Product>()
-                .HasIndex(p => p.SKU)
-                .IsUnique();
+            modelBuilder.Entity<Device>()
+                .HasIndex(d => d.Name);
 
-            modelBuilder.Entity<Document>()
-                .HasIndex(r => r.ReceiptNumber)
-                .IsUnique();
+            modelBuilder.Entity<Device>()
+                .HasIndex(d => d.Code);
 
 
 

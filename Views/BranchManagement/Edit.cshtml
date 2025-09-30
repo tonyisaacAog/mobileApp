@@ -1,0 +1,86 @@
+@model CompanyApi.DTOs.BranchDto
+
+@{
+    ViewData["Title"] = "Edit Branch";
+    Layout = "_Layout";
+}
+
+<div class="p-6">
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900 mb-2">Edit Branch</h1>
+                <p class="text-gray-600">Update branch information and location details.</p>
+            </div>
+
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="@Model.Id" />
+
+                <div class="mb-4">
+                    <label asp-for="@Model.Name" class="block text-sm font-medium text-gray-700 mb-2">Branch Name</label>
+                    <input asp-for="@Model.Name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                    <span asp-validation-for="@Model.Name" class="text-red-500 text-sm mt-1"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="@Model.Code" class="block text-sm font-medium text-gray-700 mb-2">Branch Code</label>
+                    <input asp-for="@Model.Code" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                    <span asp-validation-for="@Model.Code" class="text-red-500 text-sm mt-1"></span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label asp-for="@Model.Country" class="block text-sm font-medium text-gray-700 mb-2">Country</label>
+                        <input asp-for="@Model.Country" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                        <span asp-validation-for="@Model.Country" class="text-red-500 text-sm mt-1"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="@Model.Governate" class="block text-sm font-medium text-gray-700 mb-2">Governorate</label>
+                        <input asp-for="@Model.Governate" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                        <span asp-validation-for="@Model.Governate" class="text-red-500 text-sm mt-1"></span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="@Model.RegionCity" class="block text-sm font-medium text-gray-700 mb-2">Region/City</label>
+                    <input asp-for="@Model.RegionCity" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                    <span asp-validation-for="@Model.RegionCity" class="text-red-500 text-sm mt-1"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="@Model.Street" class="block text-sm font-medium text-gray-700 mb-2">Street</label>
+                    <input asp-for="@Model.Street" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                    <span asp-validation-for="@Model.Street" class="text-red-500 text-sm mt-1"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="@Model.BuildingNumber" class="block text-sm font-medium text-gray-700 mb-2">Building Number</label>
+                    <input asp-for="@Model.BuildingNumber" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                    <span asp-validation-for="@Model.BuildingNumber" class="text-red-500 text-sm mt-1"></span>
+                </div>
+
+                <div class="mb-4">
+                    <div class="flex items-center">
+                        <input asp-for="@Model.IsActive" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded" />
+                        <label asp-for="@Model.IsActive" class="ml-2 block text-sm text-gray-900">Active</label>
+                    </div>
+                    <span asp-validation-for="@Model.IsActive" class="text-red-500 text-sm mt-1"></span>
+                </div>
+
+                <div class="flex justify-between items-center pt-6">
+                    <a href="@Url.Action("Index", "BranchManagement")" class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to List
+                    </a>
+                    <button type="submit" class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-save mr-2"></i>Update Branch
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

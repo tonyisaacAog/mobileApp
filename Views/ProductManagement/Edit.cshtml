@@ -1,0 +1,87 @@
+@model CompanyApi.DTOs.ProductDto
+
+@{
+    ViewData["Title"] = "Edit Product";
+    Layout = "_Layout";
+}
+
+<div class="p-6">
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900 mb-2">Edit Product</h1>
+                <p class="text-gray-600">Update product information and inventory.</p>
+            </div>
+
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="@Model.Id" />
+
+                <div class="mb-4">
+                    <label asp-for="@Model.Name" class="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
+                    <input asp-for="@Model.Name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                    <span asp-validation-for="@Model.Name" class="text-red-500 text-sm mt-1"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="@Model.Description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <textarea asp-for="@Model.Description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+                    <span asp-validation-for="@Model.Description" class="text-red-500 text-sm mt-1"></span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label asp-for="@Model.Price" class="block text-sm font-medium text-gray-700 mb-2">Price</label>
+                        <input asp-for="@Model.Price" type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                        <span asp-validation-for="@Model.Price" class="text-red-500 text-sm mt-1"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="@Model.Cost" class="block text-sm font-medium text-gray-700 mb-2">Cost</label>
+                        <input asp-for="@Model.Cost" type="number" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                        <span asp-validation-for="@Model.Cost" class="text-red-500 text-sm mt-1"></span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label asp-for="@Model.SKU" class="block text-sm font-medium text-gray-700 mb-2">SKU</label>
+                        <input asp-for="@Model.SKU" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                        <span asp-validation-for="@Model.SKU" class="text-red-500 text-sm mt-1"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="@Model.Category" class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                        <input asp-for="@Model.Category" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                        <span asp-validation-for="@Model.Category" class="text-red-500 text-sm mt-1"></span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="@Model.StockQuantity" class="block text-sm font-medium text-gray-700 mb-2">Stock Quantity</label>
+                    <input asp-for="@Model.StockQuantity" type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                    <span asp-validation-for="@Model.StockQuantity" class="text-red-500 text-sm mt-1"></span>
+                </div>
+
+                <div class="mb-4">
+                    <div class="flex items-center">
+                        <input asp-for="@Model.IsActive" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded" />
+                        <label asp-for="@Model.IsActive" class="ml-2 block text-sm text-gray-900">Active</label>
+                    </div>
+                    <span asp-validation-for="@Model.IsActive" class="text-red-500 text-sm mt-1"></span>
+                </div>
+
+                <div class="flex justify-between items-center pt-6">
+                    <a href="@Url.Action("Index", "ProductManagement")" class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to List
+                    </a>
+                    <button type="submit" class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-save mr-2"></i>Update Product
+                    </button>
+                </div>
+            </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

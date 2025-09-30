@@ -292,4 +292,8 @@ D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.genruntimeconfi
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\ref\CompanyApi.dll
 G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\CompanyApi.sourcelink.json
 G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\swae.build.ex.cache
+G:\Company Projects\MobileApp\CompanyApi\bin\Debug\net8.0\CompanyApi.staticwebassets.runtime.json
+G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\CompanyApi.RazorAssemblyInfo.cache
+G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\CompanyApi.RazorAssemblyInfo.cs
+G:\Company Projects\MobileApp\CompanyApi\bin\Debug\net8.0\package.json
 G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

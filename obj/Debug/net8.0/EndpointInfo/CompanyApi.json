@@ -264,38 +264,6 @@
         "tags": [
           "Branch"
         ],
-        "parameters": [
-          {
-            "name": "PageNumber",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "PageSize",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "SortBy",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "SortDescending",
-            "in": "query",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -723,6 +691,11 @@
       "BranchDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "name": {
             "type": "string",
             "nullable": true
@@ -751,17 +724,8 @@
             "type": "string",
             "nullable": true
           },
-          "initialInvoiceTaxSerial": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "initialCreditTaxSerial": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "initialDebitTaxSerial": {
-            "type": "integer",
-            "format": "int32"
+          "isActive": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -991,6 +955,11 @@
       "ProductDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "name": {
             "type": "string",
             "nullable": true

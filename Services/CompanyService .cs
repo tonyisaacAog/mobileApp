@@ -1,8 +1,7 @@
-﻿using AutoMapper;
+using AutoMapper;
 using CompanyApi.DTOs;
 using CompanyApi.Models;
 using CompanyApi.Repositories.Interfaces;
-using CompanyApi.Repositories.Utilities;
 using CompanyApi.Services.Interfaces;
 
 namespace CompanyApi.Services
@@ -18,65 +17,96 @@ namespace CompanyApi.Services
             _mapper = mapper;
         }
 
-        public async Task CreateCompanyAsync(CompanyDto dto)
+        public async Task<Result<List<CompanyDto>>> GetAllCompaniesAsync()
         {
-            // Ensure only one company exists
-            var existingCompany = await _unitOfWork.Repository<Company>().FirstOrDefaultAsync(c => true);
-            if (existingCompany != null)
+            try
             {
-                throw new InvalidOperationException("A company already exists. You can only update it.");
+                var companies = await _unitOfWork.Repository<Company>().GetAllAsync();
+                var companyDtos = _mapper.Map<List<CompanyDto>>(companies);
+                return await Result<List<CompanyDto>>.SuccessAsync(companyDtos, "Companies retrieved successfully");
             }
-
-            var company = new Company
+            catch (Exception ex)
             {
-                Name = dto.Name,
-                Address = dto.Address,
-                PhoneNumber = dto.PhoneNumber,
-                Email = dto.Email,
-                TaxNumber = dto.TaxNumber,
-                Description = dto.Description,
-                TradeName = dto.TradeName,
-                IsActive = dto.IsActive,
-                CreatedAt = DateTime.UtcNow
-            };
-
-            await _unitOfWork.Repository<Company>().AddAsync(company);
-            await _unitOfWork.SaveChangesAsync();
+                return await Result<List<CompanyDto>>.FailureAsync($"Error retrieving companies: {ex.Message}");
+            }
         }
 
-        public async Task<Result<CompanyDto>> GetCompanyAsync()
+        public async Task<Result<CompanyDto>?> GetCompanyByIdAsync(int id)
         {
-            var selectors = MappingUtilities.CreateMapExpression<Company, CompanyDto>();
-            var company = await _unitOfWork.Repository<Company>().FirstOrDefaultAsync(c => true);
-
-            if (company == null)
+            try
             {
-                return await Result<CompanyDto>.FailureAsync("No company found.");
-            }
+                var company = await _unitOfWork.Repository<Company>().GetByIdAsync(id);
+                if (company == null)
+                    return null;
 
-            return await Result<CompanyDto>.SuccessAsync(_mapper.Map<CompanyDto>(company));
+                var companyDto = _mapper.Map<CompanyDto>(company);
+                return await Result<CompanyDto>.SuccessAsync(companyDto, "Company retrieved successfully");
+            }
+            catch (Exception ex)
+            {
+                return await Result<CompanyDto>.FailureAsync($"Error retrieving company: {ex.Message}");
+            }
         }
 
-        public async Task UpdateCompanyAsync(CompanyDto dto)
+        public async Task<Result<CompanyDto>> CreateCompanyAsync(CompanyDto dto)
         {
-            var company = await _unitOfWork.Repository<Company>().FirstOrDefaultAsync(c => true);
-
-            if (company == null)
+            try
             {
-                throw new KeyNotFoundException("No company found. Please create one first.");
+                var company = _mapper.Map<Company>(dto);
+                company.CreatedAt = DateTime.UtcNow;
+
+                await _unitOfWork.Repository<Company>().AddAsync(company);
+                await _unitOfWork.SaveChangesAsync();
+
+                var companyDto = _mapper.Map<CompanyDto>(company);
+                return await Result<CompanyDto>.SuccessAsync(companyDto, "Company created successfully");
             }
+            catch (Exception ex)
+            {
+                return await Result<CompanyDto>.FailureAsync($"Error creating company: {ex.Message}");
+            }
+        }
 
-            company.Name = dto.Name;
-            company.Address = dto.Address;
-            company.PhoneNumber = dto.PhoneNumber;
-            company.Email = dto.Email;
-            company.TaxNumber = dto.TaxNumber;
-            company.Description = dto.Description;
-            company.TradeName = dto.TradeName;
-            company.IsActive = dto.IsActive;
+        public async Task<Result<CompanyDto>?> UpdateCompanyAsync(int id, CompanyDto dto)
+        {
+            try
+            {
+                var existingCompany = await _unitOfWork.Repository<Company>().GetByIdAsync(id);
+                if (existingCompany == null)
+                    return null;
 
-            _unitOfWork.Repository<Company>().Update(company);
-            await _unitOfWork.SaveChangesAsync();
+                _mapper.Map(dto, existingCompany);
+                existingCompany.UpdatedAt = DateTime.UtcNow;
+
+                _unitOfWork.Repository<Company>().Update(existingCompany);
+                await _unitOfWork.SaveChangesAsync();
+
+                var companyDto = _mapper.Map<CompanyDto>(existingCompany);
+                return await Result<CompanyDto>.SuccessAsync(companyDto, "Company updated successfully");
+            }
+            catch (Exception ex)
+            {
+                return await Result<CompanyDto>.FailureAsync($"Error updating company: {ex.Message}");
+            }
+        }
+
+        public async Task<Result<bool>> DeleteCompanyAsync(int id)
+        {
+            try
+            {
+                var company = await _unitOfWork.Repository<Company>().GetByIdAsync(id);
+                if (company == null)
+                    return await Result<bool>.FailureAsync("Company not found");
+
+                _unitOfWork.Repository<Company>().Remove(company);
+                await _unitOfWork.SaveChangesAsync();
+
+                return await Result<bool>.SuccessAsync(true, "Company deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                return await Result<bool>.FailureAsync($"Error deleting company: {ex.Message}");
+            }
         }
     }
 }

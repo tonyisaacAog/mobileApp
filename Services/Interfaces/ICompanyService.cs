@@ -1,11 +1,13 @@
-﻿using CompanyApi.DTOs;
+using CompanyApi.DTOs;
 
 namespace CompanyApi.Services.Interfaces
 {
     public interface ICompanyService
     {
-        Task CreateCompanyAsync(CompanyDto dto);
-        Task<Result<CompanyDto>> GetCompanyAsync();
-        Task UpdateCompanyAsync(CompanyDto dto);
+        Task<Result<List<CompanyDto>>> GetAllCompaniesAsync();
+        Task<Result<CompanyDto>?> GetCompanyByIdAsync(int id);
+        Task<Result<CompanyDto>> CreateCompanyAsync(CompanyDto dto);
+        Task<Result<CompanyDto>?> UpdateCompanyAsync(int id, CompanyDto dto);
+        Task<Result<bool>> DeleteCompanyAsync(int id);
     }
 }

@@ -1,4 +1,4 @@
-using CompanyApi.DTOs;
+using CompanyApi.DTOs.ResponseDtos;
 using System.Linq.Expressions;
 
 namespace CompanyApi.Repositories.Interfaces

@@ -1,5 +1,6 @@
 using AutoMapper;
-using CompanyApi.DTOs;
+using CompanyApi.DTOs.ResponseDtos;
+using CompanyApi.DTOs.UserDtos;
 using CompanyApi.Models;
 using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Services.Interfaces;
@@ -41,6 +42,7 @@ namespace CompanyApi.Services
         {
             var users = await _unitOfWork.Repository<User>().GetProjectedPaginatedAsync(obj => new UserDto
             {
+                Id = obj.Id,
                 Email = obj.Email,
                 FirstName = obj.FirstName,
                 LastName = obj.LastName,
@@ -52,8 +54,9 @@ namespace CompanyApi.Services
             return await PagedResult<UserDto>.SuccessAsync(users.Items, users.TotalCount, paginationParams.PageNumber, paginationParams.PageSize);
         }
 
-        public async Task<Result<UserDto>> CreateUserAsync(User user)
+        public async Task<Result<UserDto>> CreateUserAsync(CreateUserDto user)
         {
+            var newUser = _mapper.Map<User>(user);
             // Check if username or email already exists
             if (await _authService.IsUsernameTaken(user.Username))
                 throw new ArgumentException("Username already exists");
@@ -62,18 +65,19 @@ namespace CompanyApi.Services
                 throw new ArgumentException("Email already exists");
 
             // Hash password
-            user.PasswordHash = _authService.HashPassword(user.PasswordHash);
-            user.CreatedAt = DateTime.UtcNow;
-            user.IsActive = true;
+            newUser.PasswordHash = _authService.HashPassword(user.Password);
+            newUser.CreatedAt = DateTime.UtcNow;
+            newUser.IsActive = true;
 
-            await _unitOfWork.Repository<User>().AddAsync(user);
+            await _unitOfWork.Repository<User>().AddAsync(newUser);
             await _unitOfWork.SaveChangesAsync();
 
             return await Result<UserDto>.SuccessAsync(_mapper.Map<UserDto>(user));
         }
 
-        public async Task<Result<UserDto>?> UpdateUserAsync(int id, User user)
+        public async Task<Result<UserDto>?> UpdateUserAsync(int id, UpdateUserDto user)
         {
+
             var existingUser = await _unitOfWork.Repository<User>().GetByIdAsync(id);
             if (existingUser == null)
                 return null;
@@ -84,7 +88,6 @@ namespace CompanyApi.Services
 
             if (await _unitOfWork.Repository<User>().AnyAsync(u => u.Email == user.Email && u.Id != id))
                 throw new ArgumentException("Email already exists");
-
             // Update fields
             existingUser.Username = user.Username;
             existingUser.Email = user.Email;
@@ -94,9 +97,9 @@ namespace CompanyApi.Services
             existingUser.IsAdmin = user.IsAdmin;
 
             // Only update password if provided
-            if (!string.IsNullOrEmpty(user.PasswordHash))
+            if (!string.IsNullOrEmpty(user.Password))
             {
-                existingUser.PasswordHash = _authService.HashPassword(user.PasswordHash);
+                existingUser.PasswordHash = _authService.HashPassword(user.Password);
             }
 
             _unitOfWork.Repository<User>().Update(existingUser);
@@ -165,6 +168,10 @@ namespace CompanyApi.Services
             return await Result<bool>.FailureAsync(true, "deactive user");
         }
 
-
+        public async Task<Result<int>> GetCountUsers()
+        {
+            var count = await _unitOfWork.Repository<User>().CountAsync();
+            return await Result<int>.SuccessAsync(count);
+        }
     }
 }

@@ -1,5 +1,6 @@
 using AutoMapper;
-using CompanyApi.DTOs;
+using CompanyApi.DTOs.CompanyDtos;
+using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Models;
 using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Services.Interfaces;
@@ -107,6 +108,12 @@ namespace CompanyApi.Services
             {
                 return await Result<bool>.FailureAsync($"Error deleting company: {ex.Message}");
             }
+        }
+
+        public async Task<Result<int>> GetCountCompanies()
+        {
+            var count = await _unitOfWork.Repository<Company>().CountAsync();
+            return await Result<int>.SuccessAsync(count);
         }
     }
 }

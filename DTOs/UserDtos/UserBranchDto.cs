@@ -1,4 +1,4 @@
-﻿namespace CompanyApi.DTOs
+﻿namespace CompanyApi.DTOs.UserDtos
 {
     public class UserBranchDto
     {

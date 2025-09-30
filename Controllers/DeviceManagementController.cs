@@ -1,4 +1,6 @@
 using CompanyApi.DTOs;
+using CompanyApi.DTOs.DeviceDtos;
+using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +18,9 @@ namespace CompanyApi.Controllers
         }
 
         // GET: DeviceManagement
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(PaginationParameters paginationParameters)
         {
-            var result = await _deviceService.GetAllDevicesAsync(new PaginationParameters());
+            var result = await _deviceService.GetAllDevicesAsync(paginationParameters);
             return View(result.Data ?? new List<DeviceDto>());
         }
 

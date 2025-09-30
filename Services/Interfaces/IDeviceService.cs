@@ -1,4 +1,5 @@
-﻿using CompanyApi.DTOs;
+﻿using CompanyApi.DTOs.DeviceDtos;
+using CompanyApi.DTOs.ResponseDtos;
 
 namespace CompanyApi.Services.Interfaces
 {

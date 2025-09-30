@@ -1,4 +1,5 @@
-using CompanyApi.DTOs;
+using CompanyApi.DTOs.ProductDtos;
+using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,9 @@ namespace CompanyApi.Controllers
         }
 
         // GET: ProductManagement
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(PaginationParameters paginationParameters)
         {
-            var result = await _productService.GetAllProductsAsync(new PaginationParameters());
+            var result = await _productService.GetAllProductsAsync(paginationParameters);
             return View(result.Data ?? new List<ProductDto>());
         }
 

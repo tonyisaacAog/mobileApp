@@ -1,4 +1,4 @@
-using CompanyApi.DTOs;
+using CompanyApi.DTOs.CompanyDtos;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

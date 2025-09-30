@@ -1,4 +1,4 @@
-using CompanyApi.DTOs;
+using CompanyApi.DTOs.BranchDtos;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,13 +36,13 @@ namespace CompanyApi.Controllers
         // GET: BranchManagement/Create
         public IActionResult Create()
         {
-            return View(new BranchDto());
+            return View(new CreateBranchDto());
         }
 
         // POST: BranchManagement/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(BranchDto branchDto)
+        public async Task<IActionResult> Create(CreateBranchDto branchDto)
         {
             if (ModelState.IsValid)
             {

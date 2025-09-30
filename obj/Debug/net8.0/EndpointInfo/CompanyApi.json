@@ -36,37 +36,6 @@
         }
       }
     },
-    "/api/Auth/register": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Auth/add-admin": {
       "post": {
         "tags": [
@@ -278,17 +247,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BranchDto"
+                "$ref": "#/components/schemas/CreateBranchDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/BranchDto"
+                "$ref": "#/components/schemas/CreateBranchDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/BranchDto"
+                "$ref": "#/components/schemas/CreateBranchDto"
               }
             }
           }
@@ -730,6 +699,43 @@
         },
         "additionalProperties": false
       },
+      "CreateBranchDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "governate": {
+            "type": "string",
+            "nullable": true
+          },
+          "regionCity": {
+            "type": "string",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "nullable": true
+          },
+          "buildingNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateUserDto": {
         "required": [
           "email",
@@ -754,7 +760,8 @@
           "password": {
             "maxLength": 100,
             "minLength": 6,
-            "type": "string"
+            "type": "string",
+            "format": "password"
           },
           "firstName": {
             "maxLength": 50,
@@ -1003,51 +1010,6 @@
         },
         "additionalProperties": false
       },
-      "RegisterDto": {
-        "required": [
-          "email",
-          "firstName",
-          "lastName",
-          "password",
-          "username"
-        ],
-        "type": "object",
-        "properties": {
-          "username": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string"
-          },
-          "email": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "format": "email"
-          },
-          "password": {
-            "maxLength": 100,
-            "minLength": 6,
-            "type": "string"
-          },
-          "firstName": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string"
-          },
-          "lastName": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string"
-          },
-          "phoneNumber": {
-            "maxLength": 20,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "UpdateUserDto": {
         "type": "object",
         "properties": {
@@ -1089,6 +1051,9 @@
             "nullable": true
           },
           "isAdmin": {
+            "type": "boolean"
+          },
+          "isActive": {
             "type": "boolean"
           }
         },

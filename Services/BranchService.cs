@@ -1,4 +1,5 @@
-﻿using CompanyApi.DTOs;
+﻿using CompanyApi.DTOs.BranchDtos;
+using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Models;
 using CompanyApi.Repositories;
 using CompanyApi.Repositories.Interfaces;
@@ -14,7 +15,7 @@ namespace CompanyApi.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task CreateBranchAsync(BranchDto dto)
+        public async Task CreateBranchAsync(CreateBranchDto dto)
         {
             var isUnique = await IsBranchNameUniqueAsync(dto.Name);
             if( !isUnique )
@@ -39,6 +40,7 @@ namespace CompanyApi.Services
         {
             var branches = await _unitOfWork.Repository<Branch>().GetProjectedAsync<BranchDto>(b => new BranchDto
             {
+                Id = b.Id,
                 Name = b.Name,
                 Code = b.Code,
                 Country = b.Country,
@@ -98,6 +100,12 @@ namespace CompanyApi.Services
             var existingBranch = await _unitOfWork.Repository<Branch>()
                 .FirstOrDefaultAsync(b => b.Name == branchName);
             return existingBranch == null;
+        }
+
+        public async Task<Result<int>> GetCountBranches()
+        {
+            var count = await _unitOfWork.Repository<Branch>().CountAsync();
+            return await Result<int>.SuccessAsync(count);
         }
     }
 }

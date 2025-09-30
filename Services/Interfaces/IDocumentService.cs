@@ -1,4 +1,5 @@
-using CompanyApi.DTOs;
+using CompanyApi.DTOs.DocumentDtos;
+using CompanyApi.DTOs.ResponseDtos;
 
 namespace CompanyApi.Services.Interfaces
 {

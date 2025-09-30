@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "createUserDto",
-        "Type": "CompanyApi.DTOs.CreateUserDto",
+        "Type": "CompanyApi.DTOs.UserDtos.CreateUserDto",
         "IsRequired": true
       }
     ],
@@ -25,23 +25,7 @@
     "Parameters": [
       {
         "Name": "loginDto",
-        "Type": "CompanyApi.DTOs.LoginDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CompanyApi.Controllers.AuthController",
-    "Method": "Register",
-    "RelativePath": "api/Auth/register",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "registerDto",
-        "Type": "CompanyApi.DTOs.RegisterDto",
+        "Type": "CompanyApi.DTOs.AuthDtos.LoginDto",
         "IsRequired": true
       }
     ],
@@ -78,7 +62,7 @@
       },
       {
         "Name": "updateUserDto",
-        "Type": "CompanyApi.DTOs.UpdateUserDto",
+        "Type": "CompanyApi.DTOs.UserDtos.UpdateUserDto",
         "IsRequired": true
       }
     ],
@@ -142,7 +126,7 @@
     "Parameters": [
       {
         "Name": "paginationParameters",
-        "Type": "CompanyApi.DTOs.PaginationParameters",
+        "Type": "CompanyApi.DTOs.ResponseDtos.PaginationParameters",
         "IsRequired": true
       }
     ],
@@ -168,7 +152,7 @@
     "Parameters": [
       {
         "Name": "branch",
-        "Type": "CompanyApi.DTOs.BranchDto",
+        "Type": "CompanyApi.DTOs.BranchDtos.CreateBranchDto",
         "IsRequired": true
       }
     ],
@@ -205,7 +189,7 @@
       },
       {
         "Name": "branch",
-        "Type": "CompanyApi.DTOs.BranchDto",
+        "Type": "CompanyApi.DTOs.BranchDtos.BranchDto",
         "IsRequired": true
       }
     ],
@@ -268,7 +252,7 @@
     "Parameters": [
       {
         "Name": "document",
-        "Type": "CompanyApi.DTOs.DocumentDto",
+        "Type": "CompanyApi.DTOs.DocumentDtos.DocumentDto",
         "IsRequired": true
       }
     ],
@@ -305,7 +289,7 @@
       },
       {
         "Name": "document",
-        "Type": "CompanyApi.DTOs.DocumentDto",
+        "Type": "CompanyApi.DTOs.DocumentDtos.DocumentDto",
         "IsRequired": true
       }
     ],
@@ -337,7 +321,7 @@
     "Parameters": [
       {
         "Name": "paginationParameters",
-        "Type": "CompanyApi.DTOs.PaginationParameters",
+        "Type": "CompanyApi.DTOs.ResponseDtos.PaginationParameters",
         "IsRequired": true
       }
     ],
@@ -353,7 +337,7 @@
     "Parameters": [
       {
         "Name": "branch",
-        "Type": "CompanyApi.DTOs.ProductDto",
+        "Type": "CompanyApi.DTOs.ProductDtos.ProductDto",
         "IsRequired": true
       }
     ],
@@ -390,7 +374,7 @@
       },
       {
         "Name": "branch",
-        "Type": "CompanyApi.DTOs.ProductDto",
+        "Type": "CompanyApi.DTOs.ProductDtos.ProductDto",
         "IsRequired": true
       }
     ],

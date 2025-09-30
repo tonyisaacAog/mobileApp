@@ -1,6 +1,6 @@
 using CompanyApi.Models;
 
-namespace CompanyApi.DTOs
+namespace CompanyApi.DTOs.DocumentDtos
 {
     public class DocumentDto
     {

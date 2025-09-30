@@ -1,4 +1,7 @@
+using AutoMapper;
 using CompanyApi.DTOs;
+using CompanyApi.DTOs.ResponseDtos;
+using CompanyApi.DTOs.UserDtos;
 using CompanyApi.Models;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -10,16 +13,17 @@ namespace CompanyApi.Controllers
     public class UserManagementController : Controller
     {
         private readonly IUserService _userService;
-
-        public UserManagementController(IUserService userService)
+        private readonly IMapper _mapper;
+        public UserManagementController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
         // GET: UserManagement
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(PaginationParameters paginationParameters)
         {
-            var result = await _userService.GetAllUsersAsync(new PaginationParameters());
+            var result = await _userService.GetAllUsersAsync(paginationParameters);
             return View(result.Data ?? new List<UserDto>());
         }
 
@@ -37,28 +41,17 @@ namespace CompanyApi.Controllers
         // GET: UserManagement/Create
         public IActionResult Create()
         {
-            return View(new UserDto());
+            return View(new CreateUserDto());
         }
 
         // POST: UserManagement/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([FromForm] UserDto userDto)
+        public async Task<IActionResult> Create([FromForm] CreateUserDto userDto)
         {
             if (ModelState.IsValid)
             {
-                var user = new User
-                {
-                    Username = userDto.Username,
-                    Email = userDto.Email,
-                    FirstName = userDto.FirstName,
-                    LastName = userDto.LastName,
-                    PhoneNumber = userDto.PhoneNumber,
-                    IsActive = userDto.IsActive,
-                    IsAdmin = userDto.IsAdmin
-                };
-
-                await _userService.CreateUserAsync(user);
+                await _userService.CreateUserAsync(userDto);
                 TempData["SuccessMessage"] = "User created successfully.";
                 return RedirectToAction(nameof(Index));
             }
@@ -73,31 +66,22 @@ namespace CompanyApi.Controllers
             if (userResult == null || userResult.Data == null)
                 return NotFound();
 
-            return View(userResult.Data);
+            var updateUser = _mapper.Map<UpdateUserDto>(userResult.Data);
+
+            return View(updateUser);
         }
 
         // POST: UserManagement/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, UserDto userDto)
+        public async Task<IActionResult> Edit(int id, UpdateUserDto userDto)
         { 
         //    if (id != userDto.Id)
         //        return NotFound();
 
             if (ModelState.IsValid)
             {
-                var user = new User
-                {
-                    Username = userDto.Username,
-                    Email = userDto.Email,
-                    FirstName = userDto.FirstName,
-                    LastName = userDto.LastName,
-                    PhoneNumber = userDto.PhoneNumber,
-                    IsActive = userDto.IsActive,
-                    IsAdmin = userDto.IsAdmin
-                };
-
-                await _userService.UpdateUserAsync(id, user);
+                await _userService.UpdateUserAsync(id, userDto);
                 TempData["SuccessMessage"] = "User updated successfully.";
                 return RedirectToAction(nameof(Index));
             }

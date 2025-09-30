@@ -1,4 +1,5 @@
-using CompanyApi.DTOs;
+using CompanyApi.DTOs.DocumentDtos;
+using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Repositories.Utilities;
 using CompanyApi.Services.Interfaces;

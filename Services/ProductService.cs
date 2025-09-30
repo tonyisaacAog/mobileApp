@@ -1,4 +1,6 @@
-using CompanyApi.DTOs;
+using CompanyApi.DTOs.ProductDtos;
+using CompanyApi.DTOs.ResponseDtos;
+using CompanyApi.Models;
 using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Repositories.Utilities;
 using CompanyApi.Services.Interfaces;
@@ -98,6 +100,12 @@ namespace CompanyApi.Services
                 .FirstOrDefaultAsync(b => b.SKU == productCode);
 
             return existingProduct == null;
+        }
+
+        public async Task<Result<int>> GetCountProducts()
+        {
+            var count = await _unitOfWork.Repository<Product>().CountAsync();
+            return await Result<int>.SuccessAsync(count);
         }
     }
 

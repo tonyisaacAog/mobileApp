@@ -1,5 +1,5 @@
 using CompanyApi.Data;
-using CompanyApi.DTOs;
+using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;

@@ -1,5 +1,7 @@
 using AutoMapper;
-using CompanyApi.DTOs;
+using CompanyApi.DTOs.AuthDtos;
+using CompanyApi.DTOs.ResponseDtos;
+using CompanyApi.DTOs.UserDtos;
 using CompanyApi.Models;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -53,28 +55,27 @@ namespace CompanyApi.Controllers
             }
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
-        {
-            try
-            {
-                var user = _mapper.Map<User>(registerDto);
-                user.IsAdmin = false; // Regular users are not admins by default
+        //[HttpPost("register")]
+        //public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+        //{
+        //    try
+        //    {
+        //        registerDto.IsAdmin = false; // Regular users are not admins by default
 
-                var createdUser = await _userService.CreateUserAsync(user);
-                var userDto = _mapper.Map<UserDto>(createdUser);
+        //        var createdUser = await _userService.CreateUserAsync(registerDto);
+        //        var userDto = _mapper.Map<UserDto>(createdUser);
 
-                return Ok(createdUser);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "An error occurred during registration", error = ex.Message });
-            }
-        }
+        //        return Ok(createdUser);
+        //    }
+        //    catch (ArgumentException ex)
+        //    {
+        //        return BadRequest(new { message = ex.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { message = "An error occurred during registration", error = ex.Message });
+        //    }
+        //}
 
         [HttpPost("add-admin")]
         [Authorize(Roles = "Admin")]
@@ -82,10 +83,9 @@ namespace CompanyApi.Controllers
         {
             try
             {
-                var user = _mapper.Map<User>(createUserDto);
-                user.IsAdmin = true;
+                createUserDto.IsAdmin = true;
 
-                var createdUser = await _userService.CreateUserAsync(user);
+                var createdUser = await _userService.CreateUserAsync(createUserDto);
                 var userDto = _mapper.Map<UserDto>(createdUser);
 
                 return Ok(userDto);
@@ -158,8 +158,7 @@ namespace CompanyApi.Controllers
                     return Forbid();
                 }
 
-                var user = _mapper.Map<User>(updateUserDto);
-                var updatedUser = await _userService.UpdateUserAsync(id, user);
+                var updatedUser = await _userService.UpdateUserAsync(id, updateUserDto);
 
                 if (updatedUser == null)
                 {

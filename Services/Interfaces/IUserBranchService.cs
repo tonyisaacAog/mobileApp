@@ -1,4 +1,6 @@
-﻿using CompanyApi.DTOs;
+﻿using CompanyApi.DTOs.BranchDtos;
+using CompanyApi.DTOs.ResponseDtos;
+using CompanyApi.DTOs.UserDtos;
 
 namespace CompanyApi.Services.Interfaces
 {

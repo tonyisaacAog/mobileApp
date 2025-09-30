@@ -1,4 +1,5 @@
-﻿using CompanyApi.DTOs;
+﻿using CompanyApi.DTOs.BranchDtos;
+using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,10 +38,10 @@ namespace CompanyApi.Controllers
 
         // POST api/<BranchController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] BranchDto branch)
+        public async Task<IActionResult> Post([FromBody] CreateBranchDto branch)
         {
             await _branchService.CreateBranchAsync(branch);
-            return Ok(await Result<BranchDto>.SuccessAsync(branch, "Branch created successfully", 201));
+            return Ok(await Result<CreateBranchDto>.SuccessAsync(branch, "Branch created successfully", 201));
         }
 
         // PUT api/<BranchController>/5

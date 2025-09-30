@@ -1,4 +1,5 @@
-﻿using CompanyApi.DTOs;
+﻿using CompanyApi.DTOs.DeviceDtos;
+using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Models;
 using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Repositories.Utilities;

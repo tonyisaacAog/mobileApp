@@ -1,4 +1,5 @@
-using CompanyApi.DTOs;
+using CompanyApi.DTOs.ProductDtos;
+using CompanyApi.DTOs.ResponseDtos;
 
 namespace CompanyApi.Services.Interfaces
 {
@@ -9,5 +10,6 @@ namespace CompanyApi.Services.Interfaces
         Task<Result<ProductDto>?> GetProductByIdAsync(int id);
         Task UpdateProductAsync(int id, ProductDto dto);
         Task DeleteProductAsync(int id);
+        Task<Result<int>> GetCountProducts();
     }
 }

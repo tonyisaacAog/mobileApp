@@ -1,4 +1,4 @@
-namespace CompanyApi.DTOs
+namespace CompanyApi.DTOs.BranchDtos
 {
     // Additional DTOs for other entities
     public class BranchDto

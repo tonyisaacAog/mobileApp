@@ -1,4 +1,4 @@
-namespace CompanyApi.DTOs
+namespace CompanyApi.DTOs.ResponseDtos
 {
     public class PagedResult<T> : Result<IEnumerable<T>>
     {

@@ -15,55 +15,55 @@
 
             <form asp-action="Create" method="post">
                 <div class="mb-4">
-                    <label asp-for="@Model.Name" class="block text-sm font-medium text-gray-700 mb-2">Branch Name</label>
-                    <input asp-for="@Model.Name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
-                    <span asp-validation-for="@Model.Name" class="text-red-500 text-sm mt-1"></span>
+                    <label asp-for="Name" class="block text-sm font-medium text-gray-700 mb-2">Branch Name</label>
+                    <input asp-for="Name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                    <span asp-validation-for="Name" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="mb-4">
-                    <label asp-for="@Model.Code" class="block text-sm font-medium text-gray-700 mb-2">Branch Code</label>
-                    <input asp-for="@Model.Code" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
-                    <span asp-validation-for="@Model.Code" class="text-red-500 text-sm mt-1"></span>
+                    <label asp-for="Code" class="block text-sm font-medium text-gray-700 mb-2">Branch Code</label>
+                    <input asp-for="Code" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                    <span asp-validation-for="Code" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label asp-for="@Model.Country" class="block text-sm font-medium text-gray-700 mb-2">Country</label>
-                        <input asp-for="@Model.Country" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
-                        <span asp-validation-for="@Model.Country" class="text-red-500 text-sm mt-1"></span>
+                        <label asp-for="Country" class="block text-sm font-medium text-gray-700 mb-2">Country</label>
+                        <input asp-for="Country" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                        <span asp-validation-for="Country" class="text-red-500 text-sm mt-1"></span>
                     </div>
 
                     <div>
-                        <label asp-for="@Model.Governate" class="block text-sm font-medium text-gray-700 mb-2">Governorate</label>
-                        <input asp-for="@Model.Governate" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
-                        <span asp-validation-for="@Model.Governate" class="text-red-500 text-sm mt-1"></span>
+                        <label asp-for="Governate" class="block text-sm font-medium text-gray-700 mb-2">Governorate</label>
+                        <input asp-for="Governate" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                        <span asp-validation-for="Governate" class="text-red-500 text-sm mt-1"></span>
                     </div>
                 </div>
 
                 <div class="mb-4">
-                    <label asp-for="@Model.RegionCity" class="block text-sm font-medium text-gray-700 mb-2">Region/City</label>
-                    <input asp-for="@Model.RegionCity" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
-                    <span asp-validation-for="@Model.RegionCity" class="text-red-500 text-sm mt-1"></span>
+                    <label asp-for="RegionCity" class="block text-sm font-medium text-gray-700 mb-2">Region/City</label>
+                    <input asp-for="RegionCity" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
+                    <span asp-validation-for="RegionCity" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="mb-4">
-                    <label asp-for="@Model.Street" class="block text-sm font-medium text-gray-700 mb-2">Street</label>
-                    <input asp-for="@Model.Street" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
-                    <span asp-validation-for="@Model.Street" class="text-red-500 text-sm mt-1"></span>
+                    <label asp-for="Street" class="block text-sm font-medium text-gray-700 mb-2">Street</label>
+                    <input asp-for="Street" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                    <span asp-validation-for="Street" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="mb-4">
-                    <label asp-for="@Model.BuildingNumber" class="block text-sm font-medium text-gray-700 mb-2">Building Number</label>
-                    <input asp-for="@Model.BuildingNumber" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
-                    <span asp-validation-for="@Model.BuildingNumber" class="text-red-500 text-sm mt-1"></span>
+                    <label asp-for="BuildingNumber" class="block text-sm font-medium text-gray-700 mb-2">Building Number</label>
+                    <input asp-for="BuildingNumber" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" />
+                    <span asp-validation-for="BuildingNumber" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="mb-4">
                     <div class="flex items-center">
-                        <input asp-for="@Model.IsActive" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded" />
-                        <label asp-for="@Model.IsActive" class="ml-2 block text-sm text-gray-900">Active</label>
+                        <input asp-for="IsActive" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded" />
+                        <label asp-for="IsActive" class="ml-2 block text-sm text-gray-900">Active</label>
                     </div>
-                    <span asp-validation-for="@Model.IsActive" class="text-red-500 text-sm mt-1"></span>
+                    <span asp-validation-for="IsActive" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="flex justify-between items-center pt-6">

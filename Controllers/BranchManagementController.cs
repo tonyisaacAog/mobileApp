@@ -36,7 +36,7 @@ namespace CompanyApi.Controllers
         // GET: BranchManagement/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new BranchDto());
         }
 
         // POST: BranchManagement/Create

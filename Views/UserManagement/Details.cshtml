@@ -13,7 +13,7 @@
                     <h1 class="text-2xl font-bold text-gray-900 mb-2">User Details</h1>
                     <p class="text-gray-600">View user account information and permissions.</p>
                 </div>
-                <div class="flex space-x-2">
+           @*      <div class="flex space-x-2">
                     <a href="@Url.Action("Edit", "UserManagement", new { id = Model.Id })"
                        class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors">
                         <i class="fas fa-edit mr-2"></i>Edit
@@ -22,7 +22,7 @@
                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
                         <i class="fas fa-arrow-left mr-2"></i>Back to List
                     </a>
-                </div>
+                </div> *@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -70,17 +70,17 @@
                 </div>
             </div>
 
-            <div class="mt-8 pt-6 border-t border-gray-200">
+          @*   <div class="mt-8 pt-6 border-t border-gray-200">
                 <div class="flex justify-between items-center">
                     <span class="text-sm text-gray-500">
-                        User ID: @Model.Id
+                         User ID: @Model.Id 
                     </span>
                     <button onclick="confirmDelete(@Model.Id, '@Model.Username')"
                             class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
                         <i class="fas fa-trash mr-2"></i>Delete User
                     </button>
                 </div>
-            </div>
+            </div> *@
         </div>
     </div>
 </div>

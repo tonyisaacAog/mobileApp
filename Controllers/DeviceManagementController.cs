@@ -36,7 +36,7 @@ namespace CompanyApi.Controllers
         // GET: DeviceManagement/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new DeviceDto());
         }
 
         // POST: DeviceManagement/Create

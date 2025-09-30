@@ -24,7 +24,6 @@ namespace CompanyApi.Services
         {
             var user = await _unitOfWork.Repository<User>().GetByIdAsync<UserDto>(obj => obj.Id == id, obj => new UserDto
             {
-                Id = obj.Id,
                 Email = obj.Email,
                 FirstName = obj.FirstName,
                 LastName = obj.LastName,
@@ -42,7 +41,6 @@ namespace CompanyApi.Services
         {
             var users = await _unitOfWork.Repository<User>().GetProjectedPaginatedAsync(obj => new UserDto
             {
-                Id = obj.Id,
                 Email = obj.Email,
                 FirstName = obj.FirstName,
                 LastName = obj.LastName,
@@ -130,7 +128,6 @@ namespace CompanyApi.Services
             var users = await _unitOfWork.Repository<User>().GetProjectedPaginatedAsync<UserDto>
                 (u => u.IsActive, obj => new UserDto
                 {
-                    Id = obj.Id,
                     Email = obj.Email,
                     FirstName = obj.FirstName,
                     LastName = obj.LastName,

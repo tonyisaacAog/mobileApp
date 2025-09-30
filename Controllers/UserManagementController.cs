@@ -37,13 +37,13 @@ namespace CompanyApi.Controllers
         // GET: UserManagement/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new UserDto());
         }
 
         // POST: UserManagement/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UserDto userDto)
+        public async Task<IActionResult> Create([FromForm] UserDto userDto)
         {
             if (ModelState.IsValid)
             {
@@ -80,15 +80,14 @@ namespace CompanyApi.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, UserDto userDto)
-        {
-            if (id != userDto.Id)
-                return NotFound();
+        { 
+        //    if (id != userDto.Id)
+        //        return NotFound();
 
             if (ModelState.IsValid)
             {
                 var user = new User
                 {
-                    Id = userDto.Id,
                     Username = userDto.Username,
                     Email = userDto.Email,
                     FirstName = userDto.FirstName,

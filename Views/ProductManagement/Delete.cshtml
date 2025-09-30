@@ -52,7 +52,7 @@
             </div>
 
             <form asp-action="DeleteConfirmed" method="post" class="flex justify-between items-center">
-                <input type="hidden" asp-for="@Model.Id" />
+                <input type="hidden" asp-for="Id" />
                 <a href="@Url.Action("Index", "ProductManagement")" class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                     <i class="fas fa-arrow-left mr-2"></i>Cancel
                 </a>

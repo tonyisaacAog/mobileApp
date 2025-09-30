@@ -36,7 +36,7 @@ namespace CompanyApi.Controllers
         // GET: ProductManagement/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new ProductDto());
         }
 
         // POST: ProductManagement/Create

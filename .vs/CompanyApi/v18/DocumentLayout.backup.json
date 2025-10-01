@@ -45,19 +45,6 @@
           "SelectedChildIndex": 11,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "IDocumentService.cs",
-              "DocumentMoniker": "G:\\Company Projects\\MobileApp\\CompanyApi\\Services\\Interfaces\\IDocumentService.cs",
-              "RelativeDocumentMoniker": "Services\\Interfaces\\IDocumentService.cs",
-              "ToolTip": "G:\\Company Projects\\MobileApp\\CompanyApi\\Services\\Interfaces\\IDocumentService.cs",
-              "RelativeToolTip": "Services\\Interfaces\\IDocumentService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T12:09:45.118Z",
-              "EditorCaption": ""
-            },
-            {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
@@ -87,6 +74,18 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IDocumentService.cs",
+              "DocumentMoniker": "G:\\Company Projects\\MobileApp\\CompanyApi\\Services\\Interfaces\\IDocumentService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\IDocumentService.cs",
+              "ToolTip": "G:\\Company Projects\\MobileApp\\CompanyApi\\Services\\Interfaces\\IDocumentService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\IDocumentService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-01T12:09:45.118Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 4,
               "Title": "DocumentDetailsLinesDto.cs",
               "DocumentMoniker": "G:\\Company Projects\\MobileApp\\CompanyApi\\DTOs\\DocumentDtos\\DocumentDetailsLinesDto.cs",
@@ -95,8 +94,7 @@
               "RelativeToolTip": "DTOs\\DocumentDtos\\DocumentDetailsLinesDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T12:08:40.684Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T12:08:40.684Z"
             },
             {
               "$type": "Document",
@@ -108,8 +106,7 @@
               "RelativeToolTip": "DTOs\\DocumentDtos\\DocumentDetailsDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T12:07:53.41Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T12:07:53.41Z"
             },
             {
               "$type": "Document",
@@ -121,8 +118,7 @@
               "RelativeToolTip": "Controllers\\DocumentController.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAAAB4AAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T11:54:02.088Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T11:54:02.088Z"
             },
             {
               "$type": "Document",
@@ -132,7 +128,7 @@
               "RelativeDocumentMoniker": "Services\\DocumentService.cs",
               "ToolTip": "G:\\Company Projects\\MobileApp\\CompanyApi\\Services\\DocumentService.cs",
               "RelativeToolTip": "Services\\DocumentService.cs",
-              "ViewState": "AgIAAGYAAAAAAAAAAIAwwHcAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAGYAAAAAAAAAAIAwwGoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-01T11:54:08.569Z",
               "EditorCaption": ""
@@ -147,8 +143,7 @@
               "RelativeToolTip": "DTOs\\DocumentDtos\\DocumentLinesDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T12:08:02.421Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T12:08:02.421Z"
             },
             {
               "$type": "Document",
@@ -160,8 +155,7 @@
               "RelativeToolTip": "DTOs\\DocumentDtos\\DocumentSummaryDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T12:07:42.716Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T12:07:42.716Z"
             },
             {
               "$type": "Document",
@@ -173,8 +167,7 @@
               "RelativeToolTip": "DTOs\\DocumentDtos\\DocumentDto.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAA/wB8AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T11:36:30.683Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T11:36:30.683Z"
             }
           ]
         }

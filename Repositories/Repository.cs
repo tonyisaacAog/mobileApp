@@ -101,6 +101,14 @@ namespace CompanyApi.Repositories
             }
             finally { ResetQuery(); }
         }
+        public async Task<int> SumAsync(Expression<Func<T, bool>> predicate)
+        {
+            try
+            {
+                return await CurrentQuery.CountAsync(predicate);
+            }
+            finally { ResetQuery(); }
+        }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
         {

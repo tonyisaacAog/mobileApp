@@ -1,3 +1,4 @@
+using AutoMapper;
 using CompanyApi.DTOs.DocumentDtos;
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Models;
@@ -10,10 +11,12 @@ namespace CompanyApi.Services
     public class DocumentService : IDocumentService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public DocumentService(IUnitOfWork unitOfWork)
+        public DocumentService(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task CreateDocumentAsync(CreateDocumentDto document)
@@ -121,11 +124,62 @@ namespace CompanyApi.Services
             );
         }
 
+        //public async Task<PagedResult<DocumentDto>> GetDocumentsStatsAsync(PaginationParameters paginationParams)
+        //{
+        //    var selectors = MappingUtilities.CreateMapExpression<Models.Document, DocumentsTotalsDto>();
+        //    var documents = await _unitOfWork.Repository<Models.Document>()
+        //        .SumAsync(x => x.CreatedAt.Date == DateTime.Now.Date);
+
+        //    return await PagedResult<DocumentDto>.SuccessAsync(
+        //        documents.Items,
+        //        documents.TotalCount,
+        //        paginationParams.PageNumber,
+        //        paginationParams.PageSize
+        //    );
+        //}
+
         public async Task<Result<DocumentDetailsDto>?> GetDocumentByIdAsync(int id)
         {
-            var selectors = MappingUtilities.CreateMapExpression<Models.Document, DocumentDetailsDto>();
+            //var selectors = MappingUtilities.CreateMapExpression<Models.Document, DocumentDetailsDto>();
             var document = await _unitOfWork.Repository<Models.Document>()
-                .GetByIdAsync(obj => obj.Id == id, selectors);
+                .GetByIdAsync(obj => obj.Id == id, x => new DocumentDetailsDto
+                {
+                    BranchId = x.BranchId,
+                    CustomerBuilding = x.CustomerBuilding,
+                    CustomerCity = x.CustomerCity,
+                    CustomerCode = x.CustomerCode,
+                    CustomerCountryCode = x.CustomerCountryCode,
+                    CustomerGovernate = x.CustomerGovernate,
+                    CustomerName = x.CustomerName,
+                    CustomerPhone = x.CustomerPhone,
+                    CustomerTaxId = x.CustomerTaxId,
+                    CustomerStreet = x.CustomerStreet,
+                    CustomerType = x.CustomerType,
+                    DocumentType = x.DocumentType,
+                    ExtraDiscount = x.ExtraDiscount,
+                    Id = x.Id,
+                    Notes = x.Notes,
+                    PaymentMethod = x.PaymentMethod,
+                    ReceiptDate = x.ReceiptDate,
+                    ReceiptNumber = x.ReceiptNumber,
+                    ReferenceNumber = x.ReferenceNumber,
+                    Subtotal = x.Subtotal,
+                    TaxAmount = x.TaxAmount,
+                    TotalAmount = x.TotalAmount,
+                    TotalDiscount = x.TotalDiscount,
+                    TotalVAT = x.TotalVAT,
+                    UserId = x.UserId,
+                    ReceiptItems = x.ReceiptItems.Select(ri => new DocumentLinesDto
+                    {
+                        ProductId = ri.ProductId,
+                        Quantity = ri.Quantity,
+                        UnitPrice = ri.UnitPrice,
+                        DiscountAmount = ri.DiscountAmount,
+                        ProductName = ri.Product != null ? ri.Product.Name : string.Empty,
+                        VAT = ri.VAT,
+                        Notes = ri.Notes
+                    }).ToList()
+                });
 
             return document == null
                 ? null

@@ -30,5 +30,6 @@ namespace CompanyApi.DTOs.DocumentDtos
         public string Notes { get; set; } = string.Empty;
         public int? UserId { get; set; }
         public int? BranchId { get; set; }
+        public virtual ICollection<DocumentLinesDto> ReceiptItems { get; set; } = new List<DocumentLinesDto>();
     }
 }

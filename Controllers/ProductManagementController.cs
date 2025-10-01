@@ -17,7 +17,7 @@ namespace CompanyApi.Controllers
         }
 
         // GET: ProductManagement
-        public async Task<IActionResult> Index(PaginationParameters paginationParameters)
+        public async Task<IActionResult> Index([FromQuery]PaginationParameters paginationParameters)
         {
             var result = await _productService.GetAllProductsAsync(paginationParameters);
             return View(result.Data ?? new List<ProductDto>());

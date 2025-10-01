@@ -1,5 +1,6 @@
 using CompanyApi.Data;
 using CompanyApi.Mappings;
+using CompanyApi.Models;
 using CompanyApi.Repositories;
 using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Services;
@@ -63,6 +64,8 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -71,16 +74,46 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Admin}/{action=Index}/{id?}");
 
 app.MapControllers();
+// Seed admin user
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    var authService = services.GetRequiredService<IAuthService>();
+    await SeedUsers(context, authService);
+}
 
 app.Run();
+
+static async Task SeedUsers(ApplicationDbContext context, IAuthService authService)
+    {
+        if (!context.Users.Any())
+        {
+            var adminUser = new User
+            {
+                Username = "Admin",
+                Email = "admin@company.com",
+                PasswordHash = authService.HashPassword("Admin@123"),
+                FirstName = "System",
+                LastName = "Administrator",
+                PhoneNumber = "",
+                IsActive = true,
+                IsAdmin = true,
+                CreatedBy = "System"
+            };
+
+            context.Users.Add(adminUser);
+            await context.SaveChangesAsync();
+        }
+    }

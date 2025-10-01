@@ -212,9 +212,16 @@ namespace CompanyApi.Repositories
             IQueryable<TProjection> query,
             PaginationParameters parameters)
         {
-            var totalCount = await query.CountAsync();
-            var items = await query.Skip(parameters.Skip()).Take(parameters.PageSize).ToListAsync();
-            return (items, totalCount);
+            try
+            {
+                var totalCount = await query.CountAsync();
+                var skip = parameters.Skip();
+                var items = await query.Skip(skip).Take(parameters.PageSize).ToListAsync();
+                return (items, totalCount);
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private static IQueryable<T> ApplySorting(IQueryable<T> query, PaginationParameters parameters)

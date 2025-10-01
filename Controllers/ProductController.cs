@@ -18,7 +18,7 @@ namespace CompanyApi.Controllers
         }
         // GET: api/<ProductController>
         [HttpGet]
-        public async Task<IActionResult> Get(PaginationParameters paginationParameters)
+        public async Task<IActionResult> Get([FromQuery]PaginationParameters paginationParameters)
         {
             var products = await _productService.GetAllProductsAsync(paginationParameters);
             return Ok(products);

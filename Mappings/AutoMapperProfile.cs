@@ -26,6 +26,11 @@ namespace CompanyApi.Mappings
             CreateMap<Company, CompanyDto>().ReverseMap();
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<Document, DocumentDto>().ReverseMap();
+            CreateMap<Document, DocumentDto>().ReverseMap();
+            CreateMap<Document,DocumentDetailsDto>()
+                .ForMember(d => d.ReceiptItems,
+                           opt => opt.MapFrom(s => s.ReceiptItems));
+            CreateMap<DocumentLines,DocumentLinesDto>();
         }
     }
 }

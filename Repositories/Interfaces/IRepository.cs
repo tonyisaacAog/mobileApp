@@ -25,5 +25,6 @@ namespace CompanyApi.Repositories.Interfaces
         Task<TProjection?> GetByIdAsync<TProjection>(Expression<Func<T, bool>> predicate, Expression<Func<T, TProjection>> selector);
         Task<(IEnumerable<TProjection> Items, int TotalCount)> GetProjectedPaginatedAsync<TProjection>(Expression<Func<T, TProjection>> selector, PaginationParameters parameters);
         Task<(IEnumerable<TProjection> Items, int TotalCount)> GetProjectedPaginatedAsync<TProjection>(Expression<Func<T, bool>> predicate, Expression<Func<T, TProjection>> selector, PaginationParameters parameters);
+        Task<int> SumAsync(Expression<Func<T,bool>> predicate);
     }
 }

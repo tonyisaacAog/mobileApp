@@ -15,7 +15,6 @@ D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\FluentValidation.AspNetCor
 D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll
 D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Humanizer.dll
 D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
 D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
@@ -296,3 +295,7 @@ G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\CompanyApi.pdb
 G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\CompanyApi.genruntimeconfig.cache
 G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\ref\CompanyApi.dll
 G:\Company Projects\MobileApp\CompanyApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\package.json
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\CompanyApi.staticwebassets.runtime.json
+D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.RazorAssemblyInfo.cache
+D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.RazorAssemblyInfo.cs

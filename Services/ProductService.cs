@@ -32,6 +32,8 @@ namespace CompanyApi.Services
                 Price = dto.Price,
                 Category = dto.Category,
                 Cost = dto.Cost,
+                IsActive = dto.IsActive,
+                IsTaxable = dto.IsTaxable,
                 CreatedAt = DateTime.UtcNow,
             };
 

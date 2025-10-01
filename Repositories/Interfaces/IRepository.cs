@@ -22,7 +22,7 @@ namespace CompanyApi.Repositories.Interfaces
         Task<(IEnumerable<T> Items, int TotalCount)> GetPaginatedAsync(Expression<Func<T, bool>> predicate, PaginationParameters parameters);
         Task<IEnumerable<TProjection>> GetProjectedAsync<TProjection>(Expression<Func<T, TProjection>> selector);
         Task<IEnumerable<TProjection>> GetProjectedAsync<TProjection>(Expression<Func<T, bool>> predicate, Expression<Func<T, TProjection>> selector);
-        Task<TProjection> GetByIdAsync<TProjection>(Expression<Func<T, bool>> predicate, Expression<Func<T, TProjection>> selector);
+        Task<TProjection?> GetByIdAsync<TProjection>(Expression<Func<T, bool>> predicate, Expression<Func<T, TProjection>> selector);
         Task<(IEnumerable<TProjection> Items, int TotalCount)> GetProjectedPaginatedAsync<TProjection>(Expression<Func<T, TProjection>> selector, PaginationParameters parameters);
         Task<(IEnumerable<TProjection> Items, int TotalCount)> GetProjectedPaginatedAsync<TProjection>(Expression<Func<T, bool>> predicate, Expression<Func<T, TProjection>> selector, PaginationParameters parameters);
     }

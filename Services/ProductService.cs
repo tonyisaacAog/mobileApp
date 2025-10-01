@@ -1,3 +1,4 @@
+using AutoMapper;
 using CompanyApi.DTOs.ProductDtos;
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Models;
@@ -10,10 +11,11 @@ namespace CompanyApi.Services
     public class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public ProductService(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public ProductService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task CreateProductAsync(ProductDto dto)
@@ -39,23 +41,21 @@ namespace CompanyApi.Services
 
         public async Task<PagedResult<ProductDto>> GetAllProductsAsync(PaginationParameters paginationParams)
         {
-            var selectors = MappingUtilities.CreateMapExpression<Models.Product, ProductDto>();
             var products = await _unitOfWork.Repository<Models.Product>()
-                .GetProjectedPaginatedAsync<ProductDto>(selectors, paginationParams);
-
+                .GetPaginatedAsync(paginationParams);
+                var list = _mapper.Map<List<ProductDto>>(products.Items);
             return await PagedResult<ProductDto>.SuccessAsync(
-                products.Items, products.TotalCount, paginationParams.PageNumber, paginationParams.PageSize
+               list, products.TotalCount, paginationParams.PageNumber, paginationParams.PageSize
             );
         }
 
         public async Task<Result<ProductDto>?> GetProductByIdAsync(int id)
         {
-            var selectors = MappingUtilities.CreateMapExpression<Models.Product, ProductDto>();
             var product = await _unitOfWork.Repository<Models.Product>()
-                .GetByIdAsync(obj => obj.Id == id, selectors);
-
+                .GetByIdAsync(id);
+            var dto = _mapper.Map<ProductDto>(product);
             if (product == null) return null;
-            return await Result<ProductDto>.SuccessAsync(product);
+            return await Result<ProductDto>.SuccessAsync(dto);
         }
 
         public async Task UpdateProductAsync(int id, ProductDto dto)

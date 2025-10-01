@@ -3,7 +3,6 @@ using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace CompanyApi.Repositories
 {
@@ -177,8 +176,8 @@ namespace CompanyApi.Repositories
         {
             try
             {
-                var query = CurrentQuery.Select(selector);
-                return await ApplyPaginationAsync(query, parameters);
+                var query = CurrentQuery;
+                return await ApplyPaginationAsync(query, selector, parameters);
             }
             finally { ResetQuery(); }
         }
@@ -190,8 +189,8 @@ namespace CompanyApi.Repositories
         {
             try
             {
-                var query = CurrentQuery.Where(predicate).Select(selector);
-                return await ApplyPaginationAsync(query, parameters);
+                var query = CurrentQuery.Where(predicate);
+                return await ApplyPaginationAsync(query, selector, parameters);
             }
             finally { ResetQuery(); }
         }
@@ -202,44 +201,22 @@ namespace CompanyApi.Repositories
             IQueryable<T> query,
             PaginationParameters parameters)
         {
-            query = ApplySorting(query, parameters);
             var totalCount = await query.CountAsync();
             var items = await query.Skip(parameters.Skip()).Take(parameters.PageSize).ToListAsync();
             return (items, totalCount);
         }
 
         private async Task<(IEnumerable<TProjection> Items, int TotalCount)> ApplyPaginationAsync<TProjection>(
-            IQueryable<TProjection> query,
+            IQueryable<T> originalQuery,
+            Expression<Func<T, TProjection>> selector,
             PaginationParameters parameters)
         {
-            try
-            {
-                var totalCount = await query.CountAsync();
-                var skip = parameters.Skip();
-                var items = await query.Skip(skip).Take(parameters.PageSize).ToListAsync();
-                return (items, totalCount);
-            }catch(Exception ex)
-            {
-                throw ex;
-            }
+            var totalCount = await originalQuery.CountAsync();
+            var query = originalQuery.Select(selector);
+            var items = await query.Skip(parameters.Skip()).Take(parameters.PageSize).ToListAsync();
+            return (items, totalCount);
         }
 
-        private static IQueryable<T> ApplySorting(IQueryable<T> query, PaginationParameters parameters)
-        {
-            if (string.IsNullOrWhiteSpace(parameters.SortBy))
-                return query;
-
-            var propertyInfo = typeof(T).GetProperty(parameters.SortBy,
-                BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-
-            if (propertyInfo == null) return query;
-
-            var parameter = Expression.Parameter(typeof(T), "x");
-            var property = Expression.Property(parameter, propertyInfo);
-            var lambda = Expression.Lambda<Func<T, object>>(Expression.Convert(property, typeof(object)), parameter);
-
-            return parameters.SortDescending ? query.OrderByDescending(lambda) : query.OrderBy(lambda);
-        }
         #endregion
     }
 

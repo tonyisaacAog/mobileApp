@@ -252,7 +252,7 @@
     "Parameters": [
       {
         "Name": "document",
-        "Type": "CompanyApi.DTOs.DocumentDtos.DocumentDto",
+        "Type": "CompanyApi.DTOs.DocumentDtos.CreateDocumentDto",
         "IsRequired": true
       }
     ],

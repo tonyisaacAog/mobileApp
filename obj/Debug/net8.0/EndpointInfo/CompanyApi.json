@@ -404,17 +404,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DocumentDto"
+                "$ref": "#/components/schemas/CreateDocumentDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/DocumentDto"
+                "$ref": "#/components/schemas/CreateDocumentDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/DocumentDto"
+                "$ref": "#/components/schemas/CreateDocumentDto"
               }
             }
           }
@@ -749,6 +749,90 @@
         },
         "additionalProperties": false
       },
+      "CreateDocumentDto": {
+        "type": "object",
+        "properties": {
+          "receiptDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "extraDiscount": {
+            "type": "number",
+            "format": "double"
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/PaymentType"
+          },
+          "documentType": {
+            "$ref": "#/components/schemas/DocumentType"
+          },
+          "customerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerTaxId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerPhone": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerCountryCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerGovernate": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerCity": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerStreet": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerBuilding": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerType": {
+            "$ref": "#/components/schemas/CustomerType"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "branchId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentLinesDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateUserDto": {
         "required": [
           "email",
@@ -810,6 +894,10 @@
       "DocumentDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "receiptNumber": {
             "type": "string",
             "nullable": true
@@ -912,6 +1000,36 @@
         },
         "additionalProperties": false
       },
+      "DocumentLinesDto": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "discountAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "vat": {
+            "type": "number",
+            "format": "double"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "DocumentType": {
         "enum": [
           0,
@@ -996,10 +1114,6 @@
             "type": "number",
             "format": "double"
           },
-          "stockQuantity": {
-            "type": "integer",
-            "format": "int32"
-          },
           "sku": {
             "type": "string",
             "nullable": true
@@ -1011,14 +1125,8 @@
           "isActive": {
             "type": "boolean"
           },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "branchId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
+          "isTaxable": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

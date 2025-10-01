@@ -1,19 +1,11 @@
-using CompanyApi.Models;
+﻿using CompanyApi.Models;
 
 namespace CompanyApi.DTOs.DocumentDtos
 {
-    public class DocumentDto
+    public class CreateDocumentDto
     {
-        public int Id { get; set; }
-        public string ReceiptNumber { get; set; }
         public DateTime ReceiptDate { get; set; }
-        public decimal Subtotal { get; set; }
-        public decimal TaxAmount { get; set; }
-        public decimal DiscountAmount { get; set; }
-        public decimal TotalAmount { get; set; }
-        public decimal TotalDiscount { get; set; }
         public decimal ExtraDiscount { get; set; }
-        public decimal TotalVAT { get; set; }
         public PaymentType PaymentMethod { get; set; }
         public DocumentType DocumentType { get; set; }
         public string CustomerName { get; set; }
@@ -30,5 +22,7 @@ namespace CompanyApi.DTOs.DocumentDtos
         public string Notes { get; set; } = string.Empty;
         public int? UserId { get; set; }
         public int? BranchId { get; set; }
+        public List<DocumentLinesDto> Items { get; set; } = new List<DocumentLinesDto>();
+
     }
 }

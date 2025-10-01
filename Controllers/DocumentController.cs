@@ -31,17 +31,17 @@ namespace CompanyApi.Controllers
             var documentResult = await _documentService.GetDocumentByIdAsync(id);
 
             if (documentResult == null || documentResult.Data == null)
-                return NotFound(await Result<DocumentDto>.FailureAsync("Document not found", 404));
+                return NotFound(await Result<DocumentDetailsDto>.FailureAsync("Document not found", 404));
 
-            return Ok(await Result<DocumentDto>.SuccessAsync(documentResult.Data, "Document retrieved successfully", 200));
+            return Ok(await Result<DocumentDetailsDto>.SuccessAsync(documentResult.Data, "Document retrieved successfully", 200));
         }
 
         // POST api/<DocumentController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] DocumentDto document)
+        public async Task<IActionResult> Post([FromBody] CreateDocumentDto document)
         {
             await _documentService.CreateDocumentAsync(document);
-            return Ok(await Result<DocumentDto>.SuccessAsync(document, "Document created successfully", 201));
+            return Ok(await Result<CreateDocumentDto>.SuccessAsync(document, "Document created successfully", 201));
         }
 
         // PUT api/<DocumentController>/5

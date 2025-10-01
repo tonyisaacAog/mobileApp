@@ -1,5 +1,6 @@
 using CompanyApi.DTOs.DocumentDtos;
 using CompanyApi.DTOs.ResponseDtos;
+using CompanyApi.Models;
 using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Repositories.Utilities;
 using CompanyApi.Services.Interfaces;
@@ -15,24 +16,36 @@ namespace CompanyApi.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task CreateDocumentAsync(DocumentDto document)
+        public async Task CreateDocumentAsync(CreateDocumentDto document)
         {
-            var isUnique = await IsDocumentUniqueAsync(document.ReceiptNumber);
-            if (!isUnique)
-            {
-                throw new InvalidOperationException("Receipt number must be unique.");
-            }
+            const decimal VAT_RATE = 0.14m;
 
+            // 1. Validate branch
+            if (document.BranchId == null)
+                throw new InvalidOperationException("Branch is required.");
+
+            var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
+            if (branch == null)
+                throw new InvalidOperationException($"Branch with ID {document.BranchId} does not exist.");
+
+            // 2. Validate user
+            if (document.UserId == null)
+                throw new InvalidOperationException("User is required.");
+
+            //var user = await _unitOfWork.Repository<UserBranch>()
+            //    .FirstOrDefaultAsync(obj=>obj.BranchId== document.BranchId && obj.UserId== document.UserId.Value);
+            //if (user == null)
+            //    throw new InvalidOperationException($"User with ID {document.UserId} does not exist.");
+
+            //// 3. Check user belongs to branch
+            //if (user.BranchId != document.BranchId)
+            //    throw new UnauthorizedAccessException("This user does not have access to the specified branch.");
+
+            // 4. Create Document
             var newDocument = new Models.Document
             {
-                ReceiptNumber = document.ReceiptNumber,
+                ReceiptNumber = Guid.NewGuid().ToString(),
                 ReceiptDate = document.ReceiptDate,
-                Subtotal = document.Subtotal,
-                TaxAmount = document.TaxAmount,
-                TotalDiscount = document.TotalDiscount,
-                TotalAmount = document.TotalAmount,
-                ExtraDiscount = document.ExtraDiscount,
-                TotalVAT = document.TotalVAT,
                 PaymentMethod = document.PaymentMethod,
                 DocumentType = document.DocumentType,
                 Notes = document.Notes,
@@ -52,9 +65,47 @@ namespace CompanyApi.Services
                 CreatedAt = DateTime.UtcNow
             };
 
+            decimal subtotal = 0;
+            decimal totalDiscount = 0;
+            decimal totalVAT = 0;
+
+            foreach (var item in document.Items)
+            {
+                var lineTotal = item.Quantity * item.UnitPrice; // before discount
+                var lineNet = lineTotal - item.DiscountAmount;  // after discount
+                var lineVAT = lineNet * VAT_RATE;
+
+                subtotal += lineTotal;
+                totalDiscount += item.DiscountAmount;
+                totalVAT += lineVAT;
+
+                var lineEntity = new Models.DocumentLines
+                {
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.UnitPrice,
+                    DiscountAmount = item.DiscountAmount,
+                    TotalPrice = lineTotal,
+                    NetTotal = lineNet,
+                    VAT = lineVAT,
+                    Notes = item.Notes
+                };
+
+                newDocument.ReceiptItems.Add(lineEntity);
+            }
+
+            totalDiscount += document.ExtraDiscount;
+
+            newDocument.Subtotal = subtotal;
+            newDocument.TotalDiscount = totalDiscount;
+            newDocument.TotalVAT = totalVAT;
+            newDocument.ExtraDiscount = document.ExtraDiscount;
+            newDocument.TotalAmount = subtotal - totalDiscount + totalVAT;
+
             await _unitOfWork.Repository<Models.Document>().AddAsync(newDocument);
             await _unitOfWork.SaveChangesAsync();
         }
+
 
         public async Task<PagedResult<DocumentDto>> GetAllDocumentsAsync(PaginationParameters paginationParams)
         {
@@ -70,15 +121,15 @@ namespace CompanyApi.Services
             );
         }
 
-        public async Task<Result<DocumentDto>?> GetDocumentByIdAsync(int id)
+        public async Task<Result<DocumentDetailsDto>?> GetDocumentByIdAsync(int id)
         {
-            var selectors = MappingUtilities.CreateMapExpression<Models.Document, DocumentDto>();
+            var selectors = MappingUtilities.CreateMapExpression<Models.Document, DocumentDetailsDto>();
             var document = await _unitOfWork.Repository<Models.Document>()
                 .GetByIdAsync(obj => obj.Id == id, selectors);
 
             return document == null
                 ? null
-                : Result<DocumentDto>.Success(document);
+                : Result<DocumentDetailsDto>.Success(document);
         }
 
         public async Task UpdateDocumentAsync(int id, DocumentDto document)

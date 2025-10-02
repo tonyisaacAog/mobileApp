@@ -11,9 +11,6 @@ namespace CompanyApi.Models
         public string ReceiptNumber { get; set; } = string.Empty;
         public string DeviceSerial { get; set; }
 
-        [ForeignKey("DeviceSerial")]
-        public virtual Device? Device { get; set; }
-
         public DateTime ReceiptDate { get; set; } = DateTime.UtcNow;
         [Column(TypeName = "decimal(18,2)")]
         public decimal Subtotal { get; set; }

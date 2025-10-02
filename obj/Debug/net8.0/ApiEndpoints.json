@@ -420,5 +420,26 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CompanyApi.Controllers.AdminController",
+    "Method": "SetLanguage",
+    "RelativePath": "SetLanguage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "culture",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "returnUrl",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

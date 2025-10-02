@@ -1,14 +1,15 @@
-using CompanyApi.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using CompanyApi.Models;
-using System;
-using System.Linq;
-using CompanyApi.DTOs.UserDtos;
 using CompanyApi.DTOs.BranchDtos;
 using CompanyApi.DTOs.CompanyDtos;
 using CompanyApi.DTOs.ProductDtos;
 using CompanyApi.DTOs.ResponseDtos;
+using CompanyApi.DTOs.UserDtos;
+using CompanyApi.Models;
+using CompanyApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace CompanyApi.Controllers
 {
@@ -30,6 +31,18 @@ namespace CompanyApi.Controllers
             _userService = userService;
             _companyService = companyService;
             _productService = productService;
+        }
+
+        [HttpPost("SetLanguage")]
+        public IActionResult SetLanguage(string culture,string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
         }
 
         public async Task<IActionResult> Index()

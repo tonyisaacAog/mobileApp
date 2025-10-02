@@ -30,6 +30,7 @@ namespace CompanyApi.Services
                 Governate = dto.Governate,
                 RegionCity = dto.RegionCity,
                 Street = dto.Street,
+                IsActive = dto.IsActive,
                 BuildingNumber = dto.BuildingNumber,
             };
             await _unitOfWork.Repository<Branch>().AddAsync(branch);
@@ -82,6 +83,7 @@ namespace CompanyApi.Services
             branch.Governate = dto.Governate;
             branch.RegionCity = dto.RegionCity;
             branch.Street = dto.Street;
+            branch.IsActive = dto.IsActive;
             branch.BuildingNumber = dto.BuildingNumber;
             _unitOfWork.Repository<Branch>().Update(branch);
             await _unitOfWork.SaveChangesAsync();

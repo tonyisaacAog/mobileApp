@@ -1,5 +1,7 @@
 D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\appsettings.Development.json
 D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\appsettings.json
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\package.json
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\CompanyApi.staticwebassets.runtime.json
 D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\CompanyApi.staticwebassets.endpoints.json
 D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\CompanyApi.exe
 D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\CompanyApi.deps.json
@@ -128,6 +130,8 @@ D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.AssemblyInfo.cs
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.csproj.CoreCompileInputs.cache
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.MvcApplicationPartsAssemblyInfo.cs
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.MvcApplicationPartsAssemblyInfo.cache
+D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.RazorAssemblyInfo.cache
+D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.RazorAssemblyInfo.cs
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.sourcelink.json
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\rjimswa.dswa.cache.json
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
@@ -144,7 +148,15 @@ D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\refint\CompanyApi.dll
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.pdb
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.genruntimeconfig.cache
 D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\ref\CompanyApi.dll
-D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\package.json
-D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\CompanyApi.staticwebassets.runtime.json
-D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.RazorAssemblyInfo.cache
-D:\Company\Islam\MobileApp\mobileApp\obj\Debug\net8.0\CompanyApi.RazorAssemblyInfo.cs
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Resources\ar.json
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Resources\en.json
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\AspNetCore.Localizer.Json.dll
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.AspNetCore.Authorization.dll
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.AspNetCore.Components.dll
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.AspNetCore.Metadata.dll
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.Extensions.Localization.dll
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.Extensions.Localization.Abstractions.dll
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Company\Islam\MobileApp\mobileApp\bin\Debug\net8.0\Microsoft.Extensions.Options.dll

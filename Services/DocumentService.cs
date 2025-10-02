@@ -48,6 +48,7 @@ namespace CompanyApi.Services
             var newDocument = new Models.Document
             {
                 ReceiptNumber = Guid.NewGuid().ToString(),
+                DeviceSerial = document.DeviceSerial,
                 ReceiptDate = document.ReceiptDate,
                 PaymentMethod = document.PaymentMethod,
                 DocumentType = document.DocumentType,
@@ -124,19 +125,19 @@ namespace CompanyApi.Services
             );
         }
 
-        //public async Task<PagedResult<DocumentDto>> GetDocumentsStatsAsync(PaginationParameters paginationParams)
-        //{
-        //    var selectors = MappingUtilities.CreateMapExpression<Models.Document, DocumentsTotalsDto>();
-        //    var documents = await _unitOfWork.Repository<Models.Document>()
-        //        .SumAsync(x => x.CreatedAt.Date == DateTime.Now.Date);
+        public async Task<PagedResult<DocumentDto>> GetDocumentsStatsAsync(PaginationParameters paginationParams)
+        {
+            var selectors = MappingUtilities.CreateMapExpression<Models.Document,DocumentsTotalsDto>();
+            var documents = await _unitOfWork.Repository<Models.Document>()
+                .SumAsync(x => x.CreatedAt.Date == DateTime.Now.Date);
 
-        //    return await PagedResult<DocumentDto>.SuccessAsync(
-        //        documents.Items,
-        //        documents.TotalCount,
-        //        paginationParams.PageNumber,
-        //        paginationParams.PageSize
-        //    );
-        //}
+            return await PagedResult<DocumentDto>.SuccessAsync(
+                documents.Items,
+                documents.TotalCount,
+                paginationParams.PageNumber,
+                paginationParams.PageSize
+            );
+        }
 
         public async Task<Result<DocumentDetailsDto>?> GetDocumentByIdAsync(int id)
         {
@@ -206,6 +207,7 @@ namespace CompanyApi.Services
             }
 
             existingDocument.ReceiptNumber = document.ReceiptNumber;
+            existingDocument.DeviceSerial = document.DeviceSerial;
             existingDocument.ReceiptDate = document.ReceiptDate;
             existingDocument.Subtotal = document.Subtotal;
             existingDocument.TaxAmount = document.TaxAmount;

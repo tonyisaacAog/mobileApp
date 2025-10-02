@@ -54,6 +54,17 @@ namespace CompanyApi.Repositories
             finally { ResetQuery(); }
         }
 
+        public async Task<IEnumerable<TProjection>> GetAllByConditionAsync<TProjection>(
+            Expression<Func<T,bool>> predicate,
+            Expression<Func<T,TProjection>> selector)
+        {
+            try
+            {
+                return await CurrentQuery.Where(predicate).Select(selector).ToListAsync();
+            }
+            finally { ResetQuery(); }
+        }
+
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         {
             try
@@ -101,14 +112,20 @@ namespace CompanyApi.Repositories
             }
             finally { ResetQuery(); }
         }
-        public async Task<int> SumAsync(Expression<Func<T, bool>> predicate)
+        public async Task<decimal> SumAsync(
+            Expression<Func<T,bool>> predicate,
+            Expression<Func<T,decimal>> selector,
+            CancellationToken cancellationToken = default)
         {
             try
             {
-                return await CurrentQuery.CountAsync(predicate);
+                return await CurrentQuery
+                    .Where(predicate)
+                    .SumAsync(selector,cancellationToken);
             }
             finally { ResetQuery(); }
         }
+
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
         {

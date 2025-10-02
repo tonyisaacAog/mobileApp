@@ -770,6 +770,10 @@
             "type": "string",
             "nullable": true
           },
+          "deviceSerial": {
+            "type": "string",
+            "nullable": true
+          },
           "customerCode": {
             "type": "string",
             "nullable": true
@@ -899,6 +903,10 @@
             "format": "int32"
           },
           "receiptNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceSerial": {
             "type": "string",
             "nullable": true
           },

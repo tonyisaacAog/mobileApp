@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "D:\\Company\\Islam\\MobileApp\\mobileApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\services\\documentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|solutionrelative:services\\documentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\models\\document.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|solutionrelative:models\\document.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\models\\device.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|solutionrelative:models\\device.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\repositories\\interfaces\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -15,16 +19,28 @@
       "RelativeMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|solutionrelative:repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\models\\document.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|solutionrelative:models\\document.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\services\\documentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|solutionrelative:services\\documentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\dtos\\documentdtos\\documentstotalsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|solutionrelative:dtos\\documentdtos\\documentstotalsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\migrations\\20251002080101_deviceserial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|solutionrelative:migrations\\20251002080101_deviceserial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\dtos\\documentdtos\\createdocumentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|solutionrelative:dtos\\documentdtos\\createdocumentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\controllers\\documentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|solutionrelative:controllers\\documentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\dtos\\documentdtos\\documentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|solutionrelative:dtos\\documentdtos\\documentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\dtos\\documentdtos\\documentstotalsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|solutionrelative:dtos\\documentdtos\\documentstotalsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F1FB0402-3475-82BC-3235-ED92E58216E6}|CompanyApi.csproj|d:\\company\\islam\\mobileapp\\mobileapp\\dtos\\documentdtos\\documentdetailsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -114,7 +130,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 197,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -138,20 +154,59 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "20251002080101_DeviceSerial.cs",
+              "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Migrations\\20251002080101_DeviceSerial.cs",
+              "RelativeDocumentMoniker": "Migrations\\20251002080101_DeviceSerial.cs",
+              "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Migrations\\20251002080101_DeviceSerial.cs",
+              "RelativeToolTip": "Migrations\\20251002080101_DeviceSerial.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAzwBwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-02T08:01:02.981Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DocumentDto.cs",
+              "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\DTOs\\DocumentDtos\\DocumentDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\DocumentDtos\\DocumentDto.cs",
+              "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\DTOs\\DocumentDtos\\DocumentDto.cs",
+              "RelativeToolTip": "DTOs\\DocumentDtos\\DocumentDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-02T07:57:38.266Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Device.cs",
+              "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Models\\Device.cs",
+              "RelativeDocumentMoniker": "Models\\Device.cs",
+              "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Models\\Device.cs",
+              "RelativeToolTip": "Models\\Device.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-02T07:56:28.336Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "IRepository.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Repositories\\Interfaces\\IRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Interfaces\\IRepository.cs",
               "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Repositories\\Interfaces\\IRepository.cs",
               "RelativeToolTip": "Repositories\\Interfaces\\IRepository.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAIA6wBsAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-01T15:15:53.908Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "DocumentsTotalsDto.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\DTOs\\DocumentDtos\\DocumentsTotalsDto.cs",
               "RelativeDocumentMoniker": "DTOs\\DocumentDtos\\DocumentsTotalsDto.cs",
@@ -159,51 +214,76 @@
               "RelativeToolTip": "DTOs\\DocumentDtos\\DocumentsTotalsDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T14:57:42.66Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T14:57:42.66Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Document.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Models\\Document.cs",
               "RelativeDocumentMoniker": "Models\\Document.cs",
               "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Models\\Document.cs",
               "RelativeToolTip": "Models\\Document.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAAwAUAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAkAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-01T14:56:28.279Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "DocumentService.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Services\\DocumentService.cs",
               "RelativeDocumentMoniker": "Services\\DocumentService.cs",
               "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Services\\DocumentService.cs",
               "RelativeToolTip": "Services\\DocumentService.cs",
-              "ViewState": "AgIAAHUAAAAAAAAAAAAuwIoAAAALAAAAAAAAAA==",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAgwIsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-28T14:49:21.627Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Repositories\\Repository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Repository.cs",
+              "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Repositories\\Repository.cs",
+              "RelativeToolTip": "Repositories\\Repository.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAhwDgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-28T13:59:56.851Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CreateDocumentDto.cs",
+              "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\DTOs\\DocumentDtos\\CreateDocumentDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\DocumentDtos\\CreateDocumentDto.cs",
+              "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\DTOs\\DocumentDtos\\CreateDocumentDto.cs",
+              "RelativeToolTip": "DTOs\\DocumentDtos\\CreateDocumentDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-02T07:59:33.921Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "DocumentController.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Controllers\\DocumentController.cs",
               "RelativeDocumentMoniker": "Controllers\\DocumentController.cs",
               "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Controllers\\DocumentController.cs",
               "RelativeToolTip": "Controllers\\DocumentController.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAcwB4AAAA7AAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAcwCIAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-29T08:01:09.251Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "UnitOfWork.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Repositories\\UnitOfWork.cs",
               "RelativeDocumentMoniker": "Repositories\\UnitOfWork.cs",
@@ -211,12 +291,11 @@
               "RelativeToolTip": "Repositories\\UnitOfWork.cs",
               "ViewState": "AgIAABcAAAAAAAAAAAAawCMAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T14:00:46.856Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T14:00:46.856Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -224,25 +303,11 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAawBYAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T08:22:02.623Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T08:22:02.623Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Repository.cs",
-              "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Repositories\\Repository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Repository.cs",
-              "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Repositories\\Repository.cs",
-              "RelativeToolTip": "Repositories\\Repository.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAwwGcAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-28T13:59:56.851Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "ProductManagementController.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Controllers\\ProductManagementController.cs",
               "RelativeDocumentMoniker": "Controllers\\ProductManagementController.cs",
@@ -255,7 +320,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "DocumentDetailsDto.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\DTOs\\DocumentDtos\\DocumentDetailsDto.cs",
               "RelativeDocumentMoniker": "DTOs\\DocumentDtos\\DocumentDetailsDto.cs",
@@ -263,12 +328,11 @@
               "RelativeToolTip": "DTOs\\DocumentDtos\\DocumentDetailsDto.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAQwCAAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T12:27:10.97Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T12:27:10.97Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "DocumentLinesDto.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\DTOs\\DocumentDtos\\DocumentLinesDto.cs",
               "RelativeDocumentMoniker": "DTOs\\DocumentDtos\\DocumentLinesDto.cs",
@@ -276,12 +340,11 @@
               "RelativeToolTip": "DTOs\\DocumentDtos\\DocumentLinesDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T12:27:35.044Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T12:27:35.044Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "AutoMapperProfile.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Mappings\\AutoMapperProfile.cs",
               "RelativeDocumentMoniker": "Mappings\\AutoMapperProfile.cs",
@@ -289,12 +352,11 @@
               "RelativeToolTip": "Mappings\\AutoMapperProfile.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAxwCAAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T13:49:07.692Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T13:49:07.692Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "ProductController.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Controllers\\ProductController.cs",
               "RelativeDocumentMoniker": "Controllers\\ProductController.cs",
@@ -307,7 +369,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "ProductService.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Services\\ProductService.cs",
               "RelativeDocumentMoniker": "Services\\ProductService.cs",
@@ -315,12 +377,11 @@
               "RelativeToolTip": "Services\\ProductService.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAQwCMAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-29T08:20:59.53Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T08:20:59.53Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -328,12 +389,11 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-29T08:48:31.695Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T08:48:31.695Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "BranchController.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Controllers\\BranchController.cs",
               "RelativeDocumentMoniker": "Controllers\\BranchController.cs",
@@ -345,7 +405,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "launchSettings.json",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -353,12 +413,11 @@
               "RelativeToolTip": "Properties\\launchSettings.json",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-29T10:14:47.303Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-29T10:14:47.303Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "DocumentLines.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Models\\DocumentLines.cs",
               "RelativeDocumentMoniker": "Models\\DocumentLines.cs",
@@ -366,12 +425,11 @@
               "RelativeToolTip": "Models\\DocumentLines.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAUAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-01T12:28:22.674Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-01T12:28:22.674Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "BranchService.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Services\\BranchService.cs",
               "RelativeDocumentMoniker": "Services\\BranchService.cs",
@@ -383,7 +441,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "CompanyApi",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\CompanyApi.csproj",
               "RelativeDocumentMoniker": "CompanyApi.csproj",
@@ -394,7 +452,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 28,
               "Title": "CustomerType.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Models\\CustomerType.cs",
               "RelativeDocumentMoniker": "Models\\CustomerType.cs",
@@ -406,7 +464,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 27,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
@@ -418,7 +476,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "Company.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Models\\Company.cs",
               "RelativeDocumentMoniker": "Models\\Company.cs",
@@ -430,7 +488,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "BaseEntity.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Models\\BaseEntity.cs",
               "RelativeDocumentMoniker": "Models\\BaseEntity.cs",
@@ -442,7 +500,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 24,
               "Title": "Branch.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Models\\Branch.cs",
               "RelativeDocumentMoniker": "Models\\Branch.cs",
@@ -454,7 +512,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 29,
               "Title": "AuthService.cs",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Services\\AuthService.cs",

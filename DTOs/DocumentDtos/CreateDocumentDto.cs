@@ -9,6 +9,7 @@ namespace CompanyApi.DTOs.DocumentDtos
         public PaymentType PaymentMethod { get; set; }
         public DocumentType DocumentType { get; set; }
         public string CustomerName { get; set; }
+        public string DeviceSerial { get; set; }
         public string? CustomerCode { get; set; } = string.Empty;
         public string? CustomerTaxId { get; set; } = string.Empty;
         public string? CustomerPhone { get; set; } = string.Empty;

@@ -35,6 +35,17 @@ namespace CompanyApi.Services
             if (document.UserId == null)
                 throw new InvalidOperationException("User is required.");
 
+
+            if(document.DeviceCode != null)
+            {
+                var device = await _unitOfWork.Repository<Device>()
+                    .FirstOrDefaultAsync(d => d.Code == document.DeviceCode && d.BranchId == document.BranchId);
+                if (device == null)
+                    throw new InvalidOperationException($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
+                // Optionally, you can associate the device with the document here if needed
+                // newDocument.DeviceId = device.Id;
+            }
+
             //var user = await _unitOfWork.Repository<UserBranch>()
             //    .FirstOrDefaultAsync(obj=>obj.BranchId== document.BranchId && obj.UserId== document.UserId.Value);
             //if (user == null)

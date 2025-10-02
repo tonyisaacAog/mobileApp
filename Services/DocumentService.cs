@@ -125,18 +125,18 @@ namespace CompanyApi.Services
             );
         }
 
-        public async Task<PagedResult<DocumentDto>> GetDocumentsStatsAsync(PaginationParameters paginationParams)
+        public async Task<Result<DocumentsTotalsDto>> GetDocumentsStatsAsync(PaginationParameters paginationParams)
         {
-            var selectors = MappingUtilities.CreateMapExpression<Models.Document,DocumentsTotalsDto>();
+            //var selectors = MappingUtilities.CreateMapExpression<Models.Document,DocumentsTotalsDto>();
             var documents = await _unitOfWork.Repository<Models.Document>()
-                .SumAsync(x => x.CreatedAt.Date == DateTime.Now.Date);
-
-            return await PagedResult<DocumentDto>.SuccessAsync(
-                documents.Items,
-                documents.TotalCount,
-                paginationParams.PageNumber,
-                paginationParams.PageSize
-            );
+                .GetAllByConditionAsync(x => x.CreatedAt.Date == DateTime.Now.Date, x => new { x.TotalAmount, x.TotalDiscount, x.TotalVAT });
+            var totals = new DocumentsTotalsDto
+            {
+                SumOfTotals = documents.Sum(d => d.TotalAmount),
+                SumOfDiscount = documents.Sum(d => d.TotalDiscount),
+                SumOfTaxes = documents.Sum(d => d.TotalVAT)
+            };
+            return await Result<DocumentsTotalsDto>.SuccessAsync(totals);
         }
 
         public async Task<Result<DocumentDetailsDto>?> GetDocumentByIdAsync(int id)

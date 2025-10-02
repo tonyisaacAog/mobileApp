@@ -2,9 +2,9 @@
 {
     public class DocumentsTotalsDto
     {
-        public int SumOfSubtotal { get; set; }
-        public int SumOfTaxes { get; set; }
-        public int SumOfTotals { get; set; }
+        public decimal SumOfDiscount { get; set; }
+        public decimal SumOfTaxes { get; set; }
+        public decimal SumOfTotals { get; set; }
 
     }
 }

@@ -46,6 +46,7 @@ namespace CompanyApi.Models
         public int? UserId { get; set; }
         public int? BranchId { get; set; }
         public int? CompanyId { get; set; }
+        public int? DeviceId { get; set; }
         // Navigation properties
         [ForeignKey("UserId")]
         public virtual User? User { get; set; }
@@ -55,7 +56,8 @@ namespace CompanyApi.Models
 
         [ForeignKey("CompanyId")]
         public virtual Company? Company { get; set; }
-
+        [ForeignKey("DeviceId")]
+        public virtual Device? Device { get; set; }
         public virtual ICollection<DocumentLines> ReceiptItems { get; set; } = new List<DocumentLines>();
     }
 }

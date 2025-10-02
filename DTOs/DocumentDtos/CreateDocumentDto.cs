@@ -22,6 +22,7 @@ namespace CompanyApi.DTOs.DocumentDtos
         public string Notes { get; set; } = string.Empty;
         public int? UserId { get; set; }
         public int? BranchId { get; set; }
+        public string? DeviceCode { get; set; }
         public List<DocumentLinesDto> Items { get; set; } = new List<DocumentLinesDto>();
 
     }

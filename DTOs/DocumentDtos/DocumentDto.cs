@@ -6,6 +6,7 @@ namespace CompanyApi.DTOs.DocumentDtos
     {
         public int Id { get; set; }
         public string ReceiptNumber { get; set; }
+        public string DeviceSerial { get; set; }
         public DateTime ReceiptDate { get; set; }
         public decimal Subtotal { get; set; }
         public decimal TaxAmount { get; set; }

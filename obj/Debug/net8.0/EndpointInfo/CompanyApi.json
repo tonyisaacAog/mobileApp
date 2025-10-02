@@ -426,6 +426,18 @@
         }
       }
     },
+    "/api/Document/GetDocumentStats": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Document/{id}": {
       "get": {
         "tags": [
@@ -825,6 +837,10 @@
           "branchId": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "deviceCode": {
+            "type": "string",
             "nullable": true
           },
           "items": {

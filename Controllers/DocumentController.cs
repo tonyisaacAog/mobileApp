@@ -24,13 +24,13 @@ namespace CompanyApi.Controllers
             return Ok(result);
         }
 
-        //// GET: api/<DocumentController>
-        //[HttpGet]
-        //public async Task<IActionResult> GetDocumentStats([FromQuery] PaginationParameters paginationParams)
-        //{
-        //    var result = await _documentService.GetAllDocumentsAsync(paginationParams);
-        //    return Ok(result);
-        //}
+        // GET: api/<DocumentController>
+        [HttpGet("GetDocumentStats")]
+        public async Task<IActionResult> GetDocumentStats()
+        {
+            var result = await _documentService.GetDocumentsStatsAsync();
+            return Ok(result);
+        }
 
         // GET api/<DocumentController>/5
         [HttpGet("{id}")]

@@ -246,6 +246,9 @@ namespace CompanyApi.Migrations
                     b.Property<int>("CustomerType")
                         .HasColumnType("int");
 
+                    b.Property<int?>("DeviceId")
+                        .HasColumnType("int");
+
                     b.Property<string>("DeviceSerial")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -308,6 +311,8 @@ namespace CompanyApi.Migrations
                     b.HasIndex("BranchId");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("DeviceId");
 
                     b.HasIndex("UserId");
 
@@ -540,6 +545,10 @@ namespace CompanyApi.Migrations
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.HasOne("CompanyApi.Models.Device", "Device")
+                        .WithMany()
+                        .HasForeignKey("DeviceId");
+
                     b.HasOne("CompanyApi.Models.User", "User")
                         .WithMany("Receipts")
                         .HasForeignKey("UserId")
@@ -548,6 +557,8 @@ namespace CompanyApi.Migrations
                     b.Navigation("Branch");
 
                     b.Navigation("Company");
+
+                    b.Navigation("Device");
 
                     b.Navigation("User");
                 });

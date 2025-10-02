@@ -244,37 +244,6 @@
   },
   {
     "ContainingType": "CompanyApi.Controllers.DocumentController",
-    "Method": "GetDocumentStats",
-    "RelativePath": "api/Document",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "PageNumber",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "PageSize",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "SortBy",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "SortDescending",
-        "Type": "System.Boolean",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CompanyApi.Controllers.DocumentController",
     "Method": "Post",
     "RelativePath": "api/Document",
     "HttpMethod": "POST",
@@ -340,6 +309,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CompanyApi.Controllers.DocumentController",
+    "Method": "GetDocumentStats",
+    "RelativePath": "api/Document/GetDocumentStats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

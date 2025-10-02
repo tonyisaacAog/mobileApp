@@ -136,7 +136,7 @@ namespace CompanyApi.Services
             );
         }
 
-        public async Task<Result<DocumentsTotalsDto>> GetDocumentsStatsAsync(PaginationParameters paginationParams)
+        public async Task<Result<DocumentsTotalsDto>> GetDocumentsStatsAsync()
         {
             //var selectors = MappingUtilities.CreateMapExpression<Models.Document,DocumentsTotalsDto>();
             var documents = await _unitOfWork.Repository<Models.Document>()

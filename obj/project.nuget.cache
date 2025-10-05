@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "i+Kk/6IYhoE=",
+  "dgSpecHash": "ICh66pw6sBk=",
   "success": true,
   "projectFilePath": "D:\\Company\\Islam\\MobileApp\\mobileApp\\CompanyApi.csproj",
   "expectedPackageFiles": [
@@ -13,6 +13,8 @@
     "C:\\Users\\anton\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
     "C:\\Users\\anton\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.1\\fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",
     "C:\\Users\\anton\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\anton\\.nuget\\packages\\linqkit.core\\1.2.5\\linqkit.core.1.2.5.nupkg.sha512",
+    "C:\\Users\\anton\\.nuget\\packages\\linqkit.microsoft.entityframeworkcore\\8.1.5\\linqkit.microsoft.entityframeworkcore.8.1.5.nupkg.sha512",
     "C:\\Users\\anton\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.0\\microsoft.aspnetcore.authentication.jwtbearer.8.0.0.nupkg.sha512",
     "C:\\Users\\anton\\.nuget\\packages\\microsoft.aspnetcore.authorization\\8.0.17\\microsoft.aspnetcore.authorization.8.0.17.nupkg.sha512",
     "C:\\Users\\anton\\.nuget\\packages\\microsoft.aspnetcore.components\\8.0.17\\microsoft.aspnetcore.components.8.0.17.nupkg.sha512",

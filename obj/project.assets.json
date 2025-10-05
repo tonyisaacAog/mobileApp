@@ -152,6 +152,36 @@
           }
         }
       },
+      "LinqKit.Core/1.2.5": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/LinqKit.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/LinqKit.Core.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "LinqKit.Microsoft.EntityFrameworkCore/8.1.5": {
+        "type": "package",
+        "dependencies": {
+          "LinqKit.Core": "1.2.5",
+          "Microsoft.EntityFrameworkCore": "8.0.0"
+        },
+        "compile": {
+          "lib/net8.0/LinqKit.Microsoft.EntityFrameworkCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/LinqKit.Microsoft.EntityFrameworkCore.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authentication.JwtBearer/8.0.0": {
         "type": "package",
         "dependencies": {
@@ -1875,6 +1905,49 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "LinqKit.Core/1.2.5": {
+      "sha512": "+5UKyagtVX33TSeOGorYzDXus/ypAISfM7HFfrix4BEmuuGF+nhSjf8P9csejLQ79ny5ms33M5/lQ2SkwC0Jxw==",
+      "type": "package",
+      "path": "linqkit.core/1.2.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/LinqKit.Core.dll",
+        "lib/net35/LinqKit.Core.xml",
+        "lib/net40/LinqKit.Core.dll",
+        "lib/net40/LinqKit.Core.xml",
+        "lib/net45/LinqKit.Core.dll",
+        "lib/net45/LinqKit.Core.xml",
+        "lib/netstandard1.3/LinqKit.Core.dll",
+        "lib/netstandard1.3/LinqKit.Core.xml",
+        "lib/netstandard2.0/LinqKit.Core.dll",
+        "lib/netstandard2.0/LinqKit.Core.xml",
+        "lib/netstandard2.1/LinqKit.Core.dll",
+        "lib/netstandard2.1/LinqKit.Core.xml",
+        "lib/portable40-net40+sl5+win8+wp8+wpa81/LinqKit.Core.dll",
+        "lib/portable40-net40+sl5+win8+wp8+wpa81/LinqKit.Core.xml",
+        "lib/portable45-net45+win8+wp8+wpa81/LinqKit.Core.dll",
+        "lib/portable45-net45+win8+wp8+wpa81/LinqKit.Core.xml",
+        "lib/uap10.0.10240/LinqKit.Core.dll",
+        "lib/uap10.0.10240/LinqKit.Core.pri",
+        "lib/uap10.0.10240/LinqKit.Core.xml",
+        "linqkit.core.1.2.5.nupkg.sha512",
+        "linqkit.core.nuspec"
+      ]
+    },
+    "LinqKit.Microsoft.EntityFrameworkCore/8.1.5": {
+      "sha512": "2nTqWs9ZrxNoYrV7nNWjDvAquepoeOyHoJ80fJTAieIVINfZx7n2HVlNtWOGdN0uc7LcftKBFpIu4qua5r7ivQ==",
+      "type": "package",
+      "path": "linqkit.microsoft.entityframeworkcore/8.1.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net8.0/LinqKit.Microsoft.EntityFrameworkCore.dll",
+        "lib/net8.0/LinqKit.Microsoft.EntityFrameworkCore.xml",
+        "linqkit.microsoft.entityframeworkcore.8.1.5.nupkg.sha512",
+        "linqkit.microsoft.entityframeworkcore.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Authentication.JwtBearer/8.0.0": {
@@ -4649,6 +4722,7 @@
       "AutoMapper >= 12.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
       "FluentValidation.AspNetCore >= 11.3.0",
+      "LinqKit.Microsoft.EntityFrameworkCore >= 8.1.5",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.0",
@@ -4721,6 +4795,10 @@
           "FluentValidation.AspNetCore": {
             "target": "Package",
             "version": "[11.3.0, )"
+          },
+          "LinqKit.Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[8.1.5, )"
           },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",

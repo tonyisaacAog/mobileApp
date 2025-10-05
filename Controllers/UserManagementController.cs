@@ -1,13 +1,8 @@
 using AutoMapper;
-using CompanyApi.DTOs;
 using CompanyApi.DTOs.BranchDtos;
-using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.DTOs.UserDtos;
-using CompanyApi.Models;
 using CompanyApi.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CompanyApi.Controllers
 {
@@ -18,11 +13,12 @@ namespace CompanyApi.Controllers
         private readonly IBranchService _branchService;
         private readonly IUserBranchService _userBranchService;
         private readonly IMapper _mapper;
-        public UserManagementController(IUserService userService,IBranchService branchService,IMapper mapper)
+        public UserManagementController(IUserService userService,IBranchService branchService,IMapper mapper,IUserBranchService userBranchService)
         {
             _userService = userService;
             _branchService = branchService;
             _mapper = mapper;
+            _userBranchService = userBranchService;
         }
 
         // GET: UserManagement

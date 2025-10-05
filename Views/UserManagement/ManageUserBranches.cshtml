@@ -81,7 +81,7 @@
                                            name="SelectedBranches"
                                            value="@branch.Id"
                                            class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                                           @(branch.IsActive ? "checked" : "") />
+                                           @(user.UserBranches.Any(x => x.BranchId == branch.Id) ? "checked" : "") />
                                     <span class="mr-2 text-sm text-gray-700">
                                         @(branch.IsActive ? "نشط" : "غير نشط")
                                     </span>

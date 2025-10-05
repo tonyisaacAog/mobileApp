@@ -142,8 +142,7 @@
               "RelativeToolTip": "Repositories\\Repository.cs",
               "ViewState": "AgIAAIgAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T14:22:03.95Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T14:22:03.95Z"
             },
             {
               "$type": "Document",
@@ -155,8 +154,7 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-05T13:58:04.782Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T13:58:04.782Z"
             },
             {
               "$type": "Document",
@@ -168,8 +166,7 @@
               "RelativeToolTip": "DTOs\\QueryParameters\\DocumentQueryParamters.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T13:37:47.853Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T13:37:47.853Z"
             },
             {
               "$type": "Document",
@@ -179,7 +176,7 @@
               "RelativeDocumentMoniker": "Services\\DocumentService.cs",
               "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Services\\DocumentService.cs",
               "RelativeToolTip": "Services\\DocumentService.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAMwEMAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAMwJ0AAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-05T13:36:37.228Z",
               "EditorCaption": ""
@@ -194,8 +191,7 @@
               "RelativeToolTip": "Services\\Interfaces\\IDocumentService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T13:36:10.282Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T13:36:10.282Z"
             },
             {
               "$type": "Document",
@@ -207,8 +203,7 @@
               "RelativeToolTip": "Controllers\\DocumentController.cs",
               "ViewState": "AgIAACMAAAAAAAAAAAAgwDAAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T13:35:53.016Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T13:35:53.016Z"
             },
             {
               "$type": "Document",
@@ -220,21 +215,19 @@
               "RelativeToolTip": "Views\\UserManagement\\ManageUserBranches.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAHgAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-05T08:23:22.642Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T08:23:22.642Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "CompanyApi",
+              "Title": "CompanyApi.csproj",
               "DocumentMoniker": "D:\\Company\\Islam\\MobileApp\\mobileApp\\CompanyApi.csproj",
               "RelativeDocumentMoniker": "CompanyApi.csproj",
               "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\CompanyApi.csproj",
               "RelativeToolTip": "CompanyApi.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-05T13:55:33.051Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T13:55:33.051Z"
             },
             {
               "$type": "Document",
@@ -246,8 +239,7 @@
               "RelativeToolTip": "Migrations\\20251005124509_UserBranchUpdate.cs",
               "ViewState": "AgIAACsAAAAAAAAAAAAQwAoAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T12:45:10.26Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T12:45:10.26Z"
             },
             {
               "$type": "Document",
@@ -259,8 +251,7 @@
               "RelativeToolTip": "Services\\UserService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAIBJwBsAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T12:22:34.835Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T12:22:34.835Z"
             },
             {
               "$type": "Document",
@@ -272,8 +263,7 @@
               "RelativeToolTip": "Services\\UserBranchService.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAIBJwAoAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T11:42:13.823Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T11:42:13.823Z"
             },
             {
               "$type": "Document",
@@ -285,8 +275,7 @@
               "RelativeToolTip": "DTOs\\BranchDtos\\BranchSelectionDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T11:33:19.014Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T11:33:19.014Z"
             },
             {
               "$type": "Document",
@@ -298,8 +287,7 @@
               "RelativeToolTip": "Controllers\\UserManagementController.cs",
               "ViewState": "AgIAAIUAAAAAAAAAAAAowJ4AAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T11:31:11.564Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T11:31:11.564Z"
             },
             {
               "$type": "Document",
@@ -311,8 +299,7 @@
               "RelativeToolTip": "Views\\Admin\\Index.cshtml",
               "ViewState": "AgIAABIAAAAAAAAAAIBJwBgAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-05T12:50:48.27Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T12:50:48.27Z"
             },
             {
               "$type": "Document",
@@ -324,8 +311,7 @@
               "RelativeToolTip": "Views\\UserManagement\\Index.cshtml",
               "ViewState": "AgIAAFcAAAAAAAAAAIBJwHAAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-05T12:51:08.057Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T12:51:08.057Z"
             },
             {
               "$type": "Document",
@@ -337,8 +323,7 @@
               "RelativeToolTip": "DTOs\\UserDtos\\UserDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAQAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T11:37:42.83Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T11:37:42.83Z"
             },
             {
               "$type": "Document",
@@ -350,8 +335,7 @@
               "RelativeToolTip": "Services\\Interfaces\\IUserBranchService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAABbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T11:59:23.205Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T11:59:23.205Z"
             },
             {
               "$type": "Document",
@@ -363,8 +347,7 @@
               "RelativeToolTip": "DTOs\\UserDtos\\AssignBranchesToUserDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAQAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T11:32:16.713Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T11:32:16.713Z"
             },
             {
               "$type": "Document",
@@ -376,8 +359,7 @@
               "RelativeToolTip": "Models\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T08:23:43.274Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T08:23:43.274Z"
             },
             {
               "$type": "Document",
@@ -389,8 +371,7 @@
               "RelativeToolTip": "Models\\Branch.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T10:54:40.223Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T10:54:40.223Z"
             },
             {
               "$type": "Document",
@@ -402,8 +383,7 @@
               "RelativeToolTip": "Controllers\\BranchController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T11:35:38.485Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T11:35:38.485Z"
             },
             {
               "$type": "Document",
@@ -415,8 +395,7 @@
               "RelativeToolTip": "Models\\UserBranch.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T08:23:30.834Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T08:23:30.834Z"
             },
             {
               "$type": "Document",
@@ -428,8 +407,7 @@
               "RelativeToolTip": "Views\\DeviceManagement\\Details.cshtml",
               "ViewState": "AgIAAC0AAAAAAAAAAIBJwCIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-05T07:58:28.723Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T07:58:28.723Z"
             },
             {
               "$type": "Document",
@@ -441,8 +419,7 @@
               "RelativeToolTip": "Views\\DeviceManagement\\Delete.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-05T07:58:25.178Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T07:58:25.178Z"
             },
             {
               "$type": "Document",
@@ -454,8 +431,7 @@
               "RelativeToolTip": "Views\\DeviceManagement\\Create.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-05T07:58:21.347Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T07:58:21.347Z"
             }
           ]
         },

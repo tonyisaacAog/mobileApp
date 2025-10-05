@@ -1,4 +1,4 @@
-@using CompanyApi.DTOs.CompanyDtos
+﻿@using CompanyApi.DTOs.CompanyDtos
 @model List<CompanyDto>
 
 @{
@@ -13,19 +13,19 @@
             <h1 class="text-2xl font-bold text-gray-900">إدارة الشركات</h1>
             <p class="text-gray-600 mt-1">إدارة معلومات الشركة والإعدادات</p>
         </div>
-        <a href="@Url.Action("Create", "CompanyManagement")"
+        <a href="@Url.Action("Create","CompanyManagement")"
            class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-            <i class="fas fa-plus mr-2"></i>
+            <i class="fas fa-plus ml-2"></i>
             إضافة شركة جديدة
         </a>
     </div>
 
-    <!-- Table -->
+    <!-- الجدول -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        @if (Model.Any())
+        @if( Model.Any() )
         {
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="min-w-full divide-y divide-gray-200 text-right">
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -40,10 +40,13 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 الإجراءات
                             </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                الإجراءات
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach (var company in Model)
+                        @foreach( var company in Model )
                         {
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-6 py-4">
@@ -63,17 +66,17 @@
                                     <div class="text-sm text-gray-500">@company.PhoneNumber</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    @if (company.IsActive)
+                                    @if( company.IsActive )
                                     {
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                            <i class="fas fa-check-circle mr-1"></i>
+                                            <i class="fas fa-check-circle ml-1"></i>
                                             نشطة
                                         </span>
                                     }
                                     else
                                     {
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                            <i class="fas fa-pause-circle mr-1"></i>
+                                            <i class="fas fa-pause-circle ml-2"></i>
                                             غير نشطة
                                         </span>
                                     }
@@ -81,15 +84,15 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
                                     <div class="flex items-center justify-start space-x-2 rtl:space-x-reverse">
                                         <a href="@Url.Action("Details", "CompanyManagement", new { id = company.Id })"
-                                           class="text-primary hover:text-blue-700 transition-colors">
+                                           class="text-primary hover:text-blue-700 transition-colors ml-2">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="@Url.Action("Edit", "CompanyManagement", new { id = company.Id })"
-                                           class="text-yellow-600 hover:text-yellow-700 transition-colors">
+                                        <a href="@Url.Action("Edit","CompanyManagement",new { id = company.Id })"
+                                           class="text-yellow-600 hover:text-yellow-700 transition-colors" title="تعديل">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <button onclick="confirmDelete(@company.Id, '@company.Name')"
-                                                class="text-red-600 hover:text-red-700 transition-colors">
+                                                class="text-red-600 hover:text-red-700 transition-colors" title="حذف">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
@@ -110,7 +113,7 @@
                 <p class="text-gray-500 mb-6">ابدأ بإضافة شركتك الأولى.</p>
                 <a href="@Url.Action("Create", "CompanyManagement")"
                    class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                    <i class="fas fa-plus mr-2"></i>
+                    <i class="fas fa-plus ml-2"></i>
                     إنشاء شركة جديدة
                 </a>
             </div>

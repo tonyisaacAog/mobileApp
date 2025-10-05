@@ -453,9 +453,6 @@ namespace CompanyApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BranchId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -511,8 +508,6 @@ namespace CompanyApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
-
                     b.HasIndex("Email")
                         .IsUnique();
 
@@ -520,6 +515,47 @@ namespace CompanyApi.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CompanyApi.Models.UserBranch", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserBranch");
                 });
 
             modelBuilder.Entity("CompanyApi.Models.Device", b =>
@@ -589,11 +625,23 @@ namespace CompanyApi.Migrations
                         .HasForeignKey("BranchId");
                 });
 
-            modelBuilder.Entity("CompanyApi.Models.User", b =>
+            modelBuilder.Entity("CompanyApi.Models.UserBranch", b =>
                 {
-                    b.HasOne("CompanyApi.Models.Branch", null)
-                        .WithMany("Users")
-                        .HasForeignKey("BranchId");
+                    b.HasOne("CompanyApi.Models.Branch", "Branch")
+                        .WithMany("UserBranches")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CompanyApi.Models.User", "User")
+                        .WithMany("UserBranches")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CompanyApi.Models.Branch", b =>
@@ -602,7 +650,7 @@ namespace CompanyApi.Migrations
 
                     b.Navigation("Receipts");
 
-                    b.Navigation("Users");
+                    b.Navigation("UserBranches");
                 });
 
             modelBuilder.Entity("CompanyApi.Models.Company", b =>
@@ -618,6 +666,8 @@ namespace CompanyApi.Migrations
             modelBuilder.Entity("CompanyApi.Models.User", b =>
                 {
                     b.Navigation("Receipts");
+
+                    b.Navigation("UserBranches");
                 });
 #pragma warning restore 612, 618
         }

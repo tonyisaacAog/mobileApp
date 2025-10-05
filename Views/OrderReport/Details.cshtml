@@ -15,11 +15,11 @@
         </div>
         <div class="flex gap-2">
             <a href="@Url.Action("Index", "OrderReport")" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                <i class="fas fa-arrow-right mr-2"></i>العودة للتقرير
+                <i class="fas fa-arrow-right ml-2"></i>العودة للتقرير
             </a>
             <a href="@Url.Action("Print", "OrderReport", new { id = Model.Id })" target="_blank"
                class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                <i class="fas fa-print mr-2"></i>طباعة الإيصال
+                <i class="fas fa-print ml-2"></i>طباعة الإيصال
             </a>
         </div>
     </div>
@@ -175,7 +175,7 @@
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <h3 class="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2 mb-4">ملخص الطلب</h3>
 
-        <div class="space-y-2 max-w-md mr-auto rtl:ml-auto rtl:mr-0">
+        <div class="space-y-2 max-w-md ml-auto rtl:ml-auto rtl:ml-0">
             <div class="flex justify-between">
                 <span class="text-gray-600">المجموع الفرعي:</span>
                 <span class="font-medium">@Model.Subtotal.ToString("C")</span>

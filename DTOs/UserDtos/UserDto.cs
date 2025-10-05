@@ -1,3 +1,5 @@
+using CompanyApi.Models;
+
 namespace CompanyApi.DTOs.UserDtos
 {
     public class UserDto
@@ -10,5 +12,6 @@ namespace CompanyApi.DTOs.UserDtos
         public string PhoneNumber { get; set; } = string.Empty;
         public bool IsActive { get; set; }
         public bool IsAdmin { get; set; }
+        public virtual ICollection<UserBranch> UserBranches { get; set; } = [];
     }
 }

@@ -1,4 +1,4 @@
-@using CompanyApi.DTOs.CompanyDtos
+﻿@using CompanyApi.DTOs.CompanyDtos
 @model CompanyDto
 
 @{
@@ -8,7 +8,7 @@
 
 <div class="p-6" dir="rtl">
     <div class="max-w-2xl mx-auto">
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-right">
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-gray-900 mb-2">حذف الشركة</h1>
                 <p class="text-gray-600">هل أنت متأكد من حذف هذه الشركة؟ لا يمكن التراجع عن هذا الإجراء.</p>
@@ -46,14 +46,17 @@
                         <p class="text-gray-900">@(Model.IsActive ? "نشطة" : "غير نشطة")</p>
                     </div>
                 </div>
+
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">العنوان</label>
                     <p class="text-gray-900">@Model.Address</p>
                 </div>
+
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">البريد الإلكتروني</label>
                     <p class="text-gray-900">@(string.IsNullOrEmpty(Model.Email) ? "غير محدد" : Model.Email)</p>
                 </div>
+
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">الهاتف</label>
                     <p class="text-gray-900">@(string.IsNullOrEmpty(Model.PhoneNumber) ? "غير محدد" : Model.PhoneNumber)</p>
@@ -63,10 +66,10 @@
             <form asp-action="DeleteConfirmed" method="post" class="flex justify-between items-center">
                 <input type="hidden" asp-for="Id" />
                 <a href="@Url.Action("Index", "CompanyManagement")" class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                    <i class="fas fa-arrow-right mr-2"></i>إلغاء
+                    <i class="fas fa-arrow-right ml-2"></i>إلغاء
                 </a>
                 <button type="submit" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-                    <i class="fas fa-trash mr-2"></i>حذف الشركة
+                    <i class="fas fa-trash ml-2"></i>حذف الشركة
                 </button>
             </form>
         </div>

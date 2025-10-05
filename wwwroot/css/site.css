@@ -61,7 +61,7 @@ main {
 .card {
     border-radius: 8px;
     border: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
@@ -80,7 +80,7 @@ main {
 }
 
 .nav-link {
-    color: rgba(255,255,255,0.8) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
 }
 
 .nav-link:hover {
@@ -135,8 +135,8 @@ main {
 /* Responsive improvements */
 @media (max-width: 768px) {
     .container {
-        padding-left: 15px;
         padding-right: 15px;
+        padding-left: 15px;
     }
 
     .card {
@@ -163,9 +163,9 @@ main {
     border-radius: 4px;
 }
 
-    ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
-    }
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
 
 /* Ensure proper form styling */
 .form-input:focus {
@@ -188,6 +188,6 @@ main {
     }
 
     100% {
-        transform: rotate(360deg);
+        transform: rotate(-360deg);
     }
 }

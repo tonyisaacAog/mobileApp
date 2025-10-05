@@ -7,6 +7,7 @@ using CompanyApi.Models;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyApi.Controllers
 {
@@ -15,8 +16,9 @@ namespace CompanyApi.Controllers
     {
         private readonly IUserService _userService;
         private readonly IBranchService _branchService;
+        private readonly IUserBranchService _userBranchService;
         private readonly IMapper _mapper;
-        public UserManagementController(IUserService userService, IBranchService branchService, IMapper mapper)
+        public UserManagementController(IUserService userService,IBranchService branchService,IMapper mapper)
         {
             _userService = userService;
             _branchService = branchService;
@@ -35,7 +37,7 @@ namespace CompanyApi.Controllers
         {
             var userResult = await _userService.GetUserByIdAsync(id);
 
-            if (userResult == null || userResult.Data == null)
+            if( userResult == null || userResult.Data == null )
                 return NotFound();
 
             return View(userResult.Data);
@@ -52,7 +54,7 @@ namespace CompanyApi.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromForm] CreateUserDto userDto)
         {
-            if (ModelState.IsValid)
+            if( ModelState.IsValid )
             {
                 await _userService.CreateUserAsync(userDto);
                 TempData["SuccessMessage"] = "User created successfully.";
@@ -66,7 +68,7 @@ namespace CompanyApi.Controllers
         {
             var userResult = await _userService.GetUserByIdAsync(id);
 
-            if (userResult == null || userResult.Data == null)
+            if( userResult == null || userResult.Data == null )
                 return NotFound();
 
             var updateUser = _mapper.Map<UpdateUserDto>(userResult.Data);
@@ -77,14 +79,14 @@ namespace CompanyApi.Controllers
         // POST: UserManagement/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, UpdateUserDto userDto)
-        { 
-        //    if (id != userDto.Id)
-        //        return NotFound();
+        public async Task<IActionResult> Edit(int id,UpdateUserDto userDto)
+        {
+            //    if (id != userDto.Id)
+            //        return NotFound();
 
-            if (ModelState.IsValid)
+            if( ModelState.IsValid )
             {
-                await _userService.UpdateUserAsync(id, userDto);
+                await _userService.UpdateUserAsync(id,userDto);
                 TempData["SuccessMessage"] = "User updated successfully.";
                 return RedirectToAction(nameof(Index));
             }
@@ -96,7 +98,7 @@ namespace CompanyApi.Controllers
         {
             var userResult = await _userService.GetUserByIdAsync(id);
 
-            if (userResult == null || userResult.Data == null)
+            if( userResult == null || userResult.Data == null )
                 return NotFound();
 
             return View(userResult.Data);
@@ -116,7 +118,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> ManageUserBranches(int id)
         {
             var userResult = await _userService.GetUserByIdAsync(id);
-            if (userResult == null || userResult.Data == null)
+            if( userResult == null || userResult.Data == null )
                 return NotFound();
 
             var branchesResult = await _branchService.GetAllBranchesAsync();
@@ -126,5 +128,42 @@ namespace CompanyApi.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AssignBranches(int id)
+        {
+            var user = await _userService.GetUserByIdAsync(id);
+            if( user == null )
+                return NotFound();
+
+            var branches = await _branchService.GetAllBranchesAsync();
+            if( branches?.Data == null )
+                return NotFound();
+
+            ViewBag.User = user.Data;
+            ViewBag.AllBranches = branches.Data;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignBranches(int userId,int[] SelectedBranches)
+        {
+            var user = await _userService.GetUserByIdAsync(userId);
+            if( user == null || user.Data == null )
+                return NotFound();
+
+            if( user.Data.UserBranches.Any() )
+                await _userBranchService.RemoveBranchFromUserAsync(user.Data.Id);
+
+            if( SelectedBranches != null && SelectedBranches.Length > 0 )
+            {
+                await _userBranchService.AddBranchToUserAsync(user.Data.Id,SelectedBranches);
+            }
+
+            TempData["SuccessMessage"] = "تم تحديث الفروع الخاصة بالمستخدم بنجاح.";
+            return RedirectToAction("Details",new { id = user.Data.Id });
+        }
+
     }
 }

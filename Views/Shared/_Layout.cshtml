@@ -1,5 +1,6 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -58,34 +59,86 @@
         }
 
         /* Margin and padding fixes */
-        [dir="rtl"] .rtl-mr-2 { margin-right: 0.5rem; margin-left: 0 !important; }
-        [dir="rtl"] .rtl-ml-2 { margin-left: 0.5rem; margin-right: 0 !important; }
-        [dir="rtl"] .rtl-mr-1 { margin-right: 0.25rem; margin-left: 0 !important; }
-        [dir="rtl"] .rtl-ml-1 { margin-left: 0.25rem; margin-right: 0 !important; }
-        [dir="rtl"] .rtl-mr-3 { margin-right: 0.75rem; margin-left: 0 !important; }
-        [dir="rtl"] .rtl-ml-3 { margin-left: 0.75rem; margin-right: 0 !important; }
-        [dir="rtl"] .rtl-mr-4 { margin-right: 1rem; margin-left: 0 !important; }
-        [dir="rtl"] .rtl-ml-4 { margin-left: 1rem; margin-right: 0 !important; }
+        [dir="rtl"] .rtl-mr-2 {
+            margin-right: 0.5rem;
+            margin-left: 0 !important;
+        }
+
+        [dir="rtl"] .rtl-ml-2 {
+            margin-left: 0.5rem;
+            margin-right: 0 !important;
+        }
+
+        [dir="rtl"] .rtl-mr-1 {
+            margin-right: 0.25rem;
+            margin-left: 0 !important;
+        }
+
+        [dir="rtl"] .rtl-ml-1 {
+            margin-left: 0.25rem;
+            margin-right: 0 !important;
+        }
+
+        [dir="rtl"] .rtl-mr-3 {
+            margin-right: 0.75rem;
+            margin-left: 0 !important;
+        }
+
+        [dir="rtl"] .rtl-ml-3 {
+            margin-left: 0.75rem;
+            margin-right: 0 !important;
+        }
+
+        [dir="rtl"] .rtl-mr-4 {
+            margin-right: 1rem;
+            margin-left: 0 !important;
+        }
+
+        [dir="rtl"] .rtl-ml-4 {
+            margin-left: 1rem;
+            margin-right: 0 !important;
+        }
 
         /* Space between fixes */
-        [dir="rtl"] .rtl\:space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+        [dir="rtl"] .rtl\:space-x-reverse> :not([hidden])~ :not([hidden]) {
             margin-right: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
             margin-left: calc(0.5rem * var(--tw-space-x-reverse));
         }
 
         /* Text alignment */
-        [dir="rtl"] .rtl\:text-right { text-align: right; }
-        [dir="rtl"] .rtl\:text-left { text-align: left; }
+        [dir="rtl"] .rtl\:text-right {
+            text-align: right;
+        }
+
+        [dir="rtl"] .rtl\:text-left {
+            text-align: left;
+        }
 
         /* Flex direction fixes */
-        [dir="rtl"] .rtl\:flex-row-reverse { flex-direction: row-reverse; }
-        [dir="rtl"] .rtl\:justify-start { justify-content: flex-start; }
-        [dir="rtl"] .rtl\:justify-end { justify-content: flex-end; }
+        [dir="rtl"] .rtl\:flex-row-reverse {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .rtl\:justify-start {
+            justify-content: flex-start;
+        }
+
+        [dir="rtl"] .rtl\:justify-end {
+            justify-content: flex-end;
+        }
 
         /* Table fixes */
-        [dir="rtl"] table { direction: rtl; }
-        [dir="rtl"] th { text-align: right; }
-        [dir="rtl"] td { text-align: right; }
+        [dir="rtl"] table {
+            direction: rtl;
+        }
+
+        [dir="rtl"] th {
+            text-align: right;
+        }
+
+        [dir="rtl"] td {
+            text-align: right;
+        }
 
         /* Form elements */
         [dir="rtl"] input[type="text"],
@@ -207,115 +260,134 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-50 min-h-screen">
-    <!-- Navigation -->
+
+    <!-- شريط التنقل -->
     <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
+                <!-- الشعار -->
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <h1 class="text-xl font-bold text-gray-900">لوحة التحكم</h1>
                     </div>
                 </div>
 
-                <!-- Desktop Navigation -->
+                <!-- التنقل (شاشات كبيرة) -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4 rtl:space-x-reverse">
                         <a href="@Url.Action("Index", "Admin")"
-                           class="px-3 py-2 rounded-md text-sm font-medium @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Admin" ? "bg-primary text-white" : "text-gray-700 hover:bg-gray-100")">
-                            <i class="fas fa-tachometer-alt ml-2 rtl:mr-2 rtl:ml-0"></i>الرئيسية
+                            class="px-3 py-2 rounded-md text-sm font-medium @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Admin" ? "bg-primary text-white" : "text-gray-700 hover:bg-gray-100")">
+                            <i class="fas fa-tachometer-alt ml-2 rtl:ml-2"></i>الرئيسية
                         </a>
 
                         <div class="relative group">
-                            <button class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 flex items-center rtl:flex-row-reverse">
-                                <i class="fas fa-cog mr-2 rtl:ml-2 rtl:mr-0"></i>الإدارة
-                                <i class="fas fa-chevron-down ml-1 rtl:mr-1 rtl:ml-0 text-xs"></i>
+                            <button
+                                class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 flex items-center rtl:flex-row-reverse">
+                                <i class="fas fa-cog ml-2 rtl:ml-2 "></i>الإدارة
+                                <i class="fas fa-chevron-down ml-1 rtl:ml-1 text-xs"></i>
                             </button>
 
                             <!-- Dropdown Menu -->
-                            <div class="absolute right-0 rtl:right-auto rtl:left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                <a href="@Url.Action("Index", "BranchManagement")" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rtl:text-right">
-                                    <i class="fas fa-code-branch mr-2 rtl:ml-2 rtl:mr-0"></i>الفروع
+                            <div
+                                class="absolute right-0 rtl:right-auto rtl:left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <a href="@Url.Action("Index", "BranchManagement")"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rtl:text-right">
+                                    <i class="fas fa-code-branch ml-2 rtl:ml-2 "></i>الفروع
                                 </a>
-                                <a href="@Url.Action("Index", "UserManagement")" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rtl:text-right">
-                                    <i class="fas fa-users mr-2 rtl:ml-2 rtl:mr-0"></i>المستخدمين
+                                <a href="@Url.Action("Index", "UserManagement")"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rtl:text-right">
+                                    <i class="fas fa-users ml-2 rtl:ml-2 "></i>المستخدمين
                                 </a>
-                                <a href="@Url.Action("Index", "CompanyManagement")" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rtl:text-right">
-                                    <i class="fas fa-building mr-2 rtl:ml-2 rtl:mr-0"></i>الشركات
+                                <a href="@Url.Action("Index", "CompanyManagement")"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rtl:text-right">
+                                    <i class="fas fa-building ml-2 rtl:ml-2 "></i>الشركات
                                 </a>
-                                <a href="@Url.Action("Index", "DeviceManagement")" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rtl:text-right">
-                                    <i class="fas fa-mobile-alt mr-2 rtl:ml-2 rtl:mr-0"></i>الأجهزة
+                                <a href="@Url.Action("Index", "DeviceManagement")"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rtl:text-right">
+                                    <i class="fas fa-mobile-alt ml-2 rtl:ml-2 "></i>الأجهزة
                                 </a>
-                                <a href="@Url.Action("Index", "ProductManagement")" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rtl:text-right">
-                                    <i class="fas fa-box mr-2 rtl:ml-2 rtl:mr-0"></i>المنتجات
+                                <a href="@Url.Action("Index", "ProductManagement")"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rtl:text-right">
+                                    <i class="fas fa-box ml-2 rtl:ml-2 "></i>المنتجات
                                 </a>
-                                <a href="@Url.Action("Index", "OrderReport")" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rtl:text-right">
-                                    <i class="fas fa-chart-bar mr-2 rtl:ml-2 rtl:mr-0"></i>تقرير الطلبات
+                                <a href="@Url.Action("Index", "OrderReport")"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rtl:text-right">
+                                    <i class="fas fa-chart-bar ml-2 rtl:ml-2 "></i>تقرير الطلبات
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- User Menu -->
+                <!-- قائمة المستخدم -->
                 <div class="hidden md:block">
-                    <div class="ml-4 flex items-center md:ml-6 rtl:mr-4 rtl:ml-0">
-                        <button class="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors rtl:flex-row-reverse">
-                            <i class="fas fa-sign-out-alt mr-2 rtl:ml-2 rtl:mr-0"></i>تسجيل الخروج
+                    <div class="ml-4 flex items-center md:ml-6 rtl:ml-4 rtl:ml-0">
+                        <button
+                            class="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors rtl:flex-row-reverse">
+                            <i class="fas fa-sign-out-alt ml-2 rtl:ml-2 "></i>تسجيل الخروج
                         </button>
                     </div>
                 </div>
 
-                <!-- Mobile menu button -->
+                <!-- زر القائمة للجوال -->
                 <div class="md:hidden">
                     <button type="button"
-                            class="mobile-menu-button bg-gray-100 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
-                            aria-controls="mobile-menu"
-                            aria-expanded="false">
+                        class="mobile-menu-button bg-gray-100 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
+                        aria-controls="mobile-menu" aria-expanded="false">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Mobile Menu -->
+        <!-- قائمة الجوال -->
         <div id="mobile-menu" class="mobile-menu hidden md:hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
-                <a href="@Url.Action("Index", "Admin")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
-                    <i class="fas fa-tachometer-alt mr-2 rtl:ml-2 rtl:mr-0"></i>الرئيسية
+                <a href="@Url.Action("Index", "Admin")"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
+                    <i class="fas fa-tachometer-alt ml-2 rtl:ml-2 "></i>الرئيسية
                 </a>
-                <a href="@Url.Action("Index", "BranchManagement")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
-                    <i class="fas fa-code-branch mr-2 rtl:ml-2 rtl:mr-0"></i>الفروع
+                <a href="@Url.Action("Index", "BranchManagement")"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
+                    <i class="fas fa-code-branch ml-2 rtl:ml-2 "></i>الفروع
                 </a>
-                <a href="@Url.Action("Index", "UserManagement")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
-                    <i class="fas fa-users mr-2 rtl:ml-2 rtl:mr-0"></i>المستخدمين
+                <a href="@Url.Action("Index", "UserManagement")"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
+                    <i class="fas fa-users ml-2 rtl:ml-2 "></i>المستخدمين
                 </a>
-                <a href="@Url.Action("Index", "CompanyManagement")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
-                    <i class="fas fa-building mr-2 rtl:ml-2 rtl:mr-0"></i>الشركات
+                <a href="@Url.Action("Index", "CompanyManagement")"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
+                    <i class="fas fa-building ml-2 rtl:ml-2 "></i>الشركات
                 </a>
-                <a href="@Url.Action("Index", "DeviceManagement")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
-                    <i class="fas fa-mobile-alt mr-2 rtl:ml-2 rtl:mr-0"></i>الأجهزة
+                <a href="@Url.Action("Index", "DeviceManagement")"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
+                    <i class="fas fa-mobile-alt ml-2 rtl:ml-2 "></i>الأجهزة
                 </a>
-                <a href="@Url.Action("Index", "ProductManagement")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
-                    <i class="fas fa-box mr-2 rtl:ml-2 rtl:mr-0"></i>المنتجات
+                <a href="@Url.Action("Index", "ProductManagement")"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
+                    <i class="fas fa-box ml-2 rtl:ml-2 "></i>المنتجات
                 </a>
-                <a href="@Url.Action("Index", "OrderReport")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
-                    <i class="fas fa-chart-bar mr-2 rtl:ml-2 rtl:mr-0"></i>تقرير الطلبات
+                <a href="@Url.Action("Index", "OrderReport")"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 rtl:text-right">
+                    <i class="fas fa-chart-bar ml-2 rtl:ml-2 "></i>تقرير الطلبات
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- المحتوى الرئيسي -->
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <!-- Flash Messages -->
         @if (TempData["SuccessMessage"] != null)
         {
-            <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg flex items-center alert-auto-hide rtl:flex-row-reverse">
-                <i class="fas fa-check-circle mr-2 rtl:ml-2 rtl:mr-0"></i>
+            <div
+                class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg flex items-center alert-auto-hide rtl:flex-row-reverse">
+                <i class="fas fa-check-circle ml-2 rtl:ml-2 "></i>
                 @TempData["SuccessMessage"]
-                <button type="button" class="ml-auto rtl:mr-auto rtl:ml-0 text-green-500 hover:text-green-700 dismiss-alert">
+                <button type="button"
+                    class="ml-auto rtl:ml-auto rtl:ml-0 text-green-500 hover:text-green-700 dismiss-alert">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -323,22 +395,23 @@
 
         @if (TempData["ErrorMessage"] != null)
         {
-            <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg flex items-center alert-auto-hide rtl:flex-row-reverse">
-                <i class="fas fa-exclamation-circle mr-2 rtl:ml-2 rtl:mr-0"></i>
+            <div
+                class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg flex items-center alert-auto-hide rtl:flex-row-reverse">
+                <i class="fas fa-exclamation-circle ml-2 rtl:ml-2 "></i>
                 @TempData["ErrorMessage"]
-                <button type="button" class="ml-auto rtl:mr-auto rtl:ml-0 text-red-500 hover:text-red-700 dismiss-alert">
+                <button type="button" class="ml-auto rtl:ml-auto rtl:ml-0 text-red-500 hover:text-red-700 dismiss-alert">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
         }
 
-        <!-- Page Content -->
+        <!-- محتوى الصفحة -->
         <div class="bg-white rounded-lg shadow-sm">
             @RenderBody()
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- التذييل -->
     <footer class="bg-white border-t border-gray-200 mt-12">
         <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center rtl:flex-row-reverse">
@@ -350,23 +423,23 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- السكربتات -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        // Mobile menu toggle with accessibility
+        // تبديل قائمة الجوال
         $('.mobile-menu-button').on('click', function () {
             $('#mobile-menu').toggleClass('hidden');
             const expanded = $(this).attr('aria-expanded') === 'true';
             $(this).attr('aria-expanded', !expanded);
         });
 
-        // Dismiss alerts
+        // إغلاق الرسائل يدويًا
         $('.dismiss-alert').on('click', function () {
             $(this).parent().fadeOut();
         });
 
-        // Auto-hide alerts after 5 seconds
+        // إخفاء الرسائل تلقائيًا بعد 5 ثوانٍ
         setTimeout(() => {
             $('.alert-auto-hide').fadeOut();
         }, 5000);
@@ -386,27 +459,28 @@
         if ($('html').attr('dir') === 'rtl') {
             // Fix for jQuery slide animations in RTL
             $.fn.extend({
-                slideDownRTL: function() {
-                    return this.each(function() {
+                slideDownRTL: function () {
+                    return this.each(function () {
                         $(this).show('slide', { direction: 'right' }, 300);
                     });
                 },
-                slideUpRTL: function() {
-                    return this.each(function() {
+                slideUpRTL: function () {
+                    return this.each(function () {
                         $(this).hide('slide', { direction: 'right' }, 300);
                     });
                 }
             });
         }
 
-        // Add loading state to forms
+        // حالة تحميل عند إرسال النماذج
         $('form').on('submit', function () {
             $(this).find('button[type="submit"]')
                 .prop('disabled', true)
-                .html('<i class="fas fa-spinner fa-spin mr-2 rtl:ml-2 rtl:mr-0"></i>جاري المعالجة...');
+                .html('<i class="fas fa-spinner fa-spin ml-2 rtl:ml-2 "></i>جاري المعالجة...');
         });
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

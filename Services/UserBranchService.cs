@@ -17,56 +17,53 @@ namespace CompanyApi.Services
             _context = unitOfWork;
         }
 
-        public async Task<Result<UserBranchDto>> AddBranchToUserAsync(int userId, int branchId)
+        public async Task<Result<List<UserBranchDto>>> AddBranchToUserAsync(int userId,int[] branchIds)
         {
-            var exists = await _context.Repository<UserBranch>().FirstOrDefaultAsync(ub => ub.UserId == userId && ub.BranchId == branchId);
+            if( branchIds == null || branchIds.Length == 0 )
+                return Result<List<UserBranchDto>>.Failure("No branches provided.");
 
-            if (exists != null)
-            {
-                if (!exists.IsActive)
+            // Get all existing user-branch relations for that user
+            var existingUserBranches = await _context.Repository<UserBranch>()
+                .FindAsync(ub => ub.UserId == userId);
+
+            // Filter out branches that already exist
+            var newBranches = branchIds
+                .Where(bid => !existingUserBranches.Any(ub => ub.BranchId == bid))
+                .Select(bid => new UserBranch
                 {
-                    exists.IsActive = true;
-                    _context.Repository<UserBranch>().Update(exists);
-                    await _context.SaveChangesAsync();
+                    UserId = userId,
+                    BranchId = bid,
+                    IsActive = true
+                })
+                .ToList();
 
-                    return Result<UserBranchDto>.Success(new UserBranchDto
-                    {
-                        UserId = exists.UserId,
-                        BranchId = exists.BranchId,
-                        IsActive = exists.IsActive
-                    }, "Branch reactivated for user");
-                }
+            if( !newBranches.Any() )
+                return Result<List<UserBranchDto>>.Failure("User already has all selected branches.");
 
-                return Result<UserBranchDto>.Failure("User already has this branch");
-            }
-
-            var userBranch = new UserBranch
-            {
-                UserId = userId,
-                BranchId = branchId,
-                IsActive = true
-            };
-
-            await _context.Repository<UserBranch>().AddAsync(userBranch);
+            // Add new relations
+            await _context.Repository<UserBranch>().AddRangeAsync(newBranches);
             await _context.SaveChangesAsync();
 
-            return Result<UserBranchDto>.Success(new UserBranchDto
+            var resultDtos = newBranches.Select(nb => new UserBranchDto
             {
-                UserId = userId,
-                BranchId = branchId,
-                IsActive = true
-            }, "Branch added to user successfully");
+                UserId = nb.UserId,
+                BranchId = nb.BranchId,
+                IsActive = nb.IsActive
+            }).ToList();
+
+            return Result<List<UserBranchDto>>.Success(resultDtos,"Branches added to user successfully.");
         }
 
-        public async Task<Result<bool>> RemoveBranchFromUserAsync(int userId, int branchId)
+
+        public async Task<Result<bool>> RemoveBranchFromUserAsync(int userId)//, int branchId
         {
             var userBranch = await _context.Repository<UserBranch>()
-                .FirstOrDefaultAsync(ub => ub.UserId == userId && ub.BranchId == branchId);
+                .FindAsync(ub => ub.UserId == userId); // && ub.BranchId == branchId
 
-            if (userBranch == null)
-                return Result<bool>.Failure("User does not have this branch");
+            if( userBranch == null || !userBranch.Any() )
+                return Result<bool>.Failure("User does not have any branches");
 
-            _context.Repository<UserBranch>().Remove(userBranch);
+            _context.Repository<UserBranch>().RemoveRange(userBranch);
             await _context.SaveChangesAsync();
 
             return Result<bool>.Success(true, "Branch removed from user successfully");

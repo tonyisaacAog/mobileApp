@@ -26,9 +26,9 @@ namespace CompanyApi.Controllers
 
         // GET: api/<DocumentController>
         [HttpGet("GetDocumentStats")]
-        public async Task<IActionResult> GetDocumentStats()
+        public async Task<IActionResult> GetDocumentStats([FromQuery]string deviceCode)
         {
-            var result = await _documentService.GetDocumentsStatsAsync();
+            var result = await _documentService.GetDocumentsStatsAsync(deviceCode);
             return Ok(result);
         }
 

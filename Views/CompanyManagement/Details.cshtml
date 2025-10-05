@@ -1,4 +1,4 @@
-@using CompanyApi.DTOs.CompanyDtos
+﻿@using CompanyApi.DTOs.CompanyDtos
 @model CompanyDto
 
 @{
@@ -8,7 +8,7 @@
 
 <div class="p-6" dir="rtl">
     <div class="max-w-4xl mx-auto">
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-right">
             <div class="flex justify-between items-start mb-6">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900 mb-2">تفاصيل الشركة</h1>
@@ -16,12 +16,12 @@
                 </div>
                 <div class="flex space-x-2 rtl:space-x-reverse">
                     <a href="@Url.Action("Edit", "CompanyManagement", new { id = Model.Id })"
-                       class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors">
-                        <i class="fas fa-edit mr-2"></i>تعديل
+                       class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors ml-2">
+                        <i class="fas fa-edit ml-2"></i>تعديل
                     </a>
-                    <a href="@Url.Action("Index", "CompanyManagement")"
+                    <a href="@Url.Action("Index","CompanyManagement")"
                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                        <i class="fas fa-arrow-right mr-2"></i>العودة للقائمة
+                        <i class="fas fa-arrow-right ml-2"></i>العودة للقائمة
                     </a>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     </span>
                     <button onclick="confirmDelete(@Model.Id, '@Model.Name')"
                             class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-                        <i class="fas fa-trash mr-2"></i>حذف الشركة
+                        <i class="fas fa-trash ml-2"></i>حذف الشركة
                     </button>
                 </div>
             </div>
@@ -96,14 +96,14 @@ function confirmDelete(id, name) {
         form.method = 'POST';
         form.action = '@Url.Action("Delete", "CompanyManagement")/' + id;
 
-        var token = document.createElement('input');
-        token.type = 'hidden';
-        token.name = '__RequestVerificationToken';
-        token.value = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
-        form.appendChild(token);
+            var token = document.createElement('input');
+            token.type = 'hidden';
+            token.name = '__RequestVerificationToken';
+            token.value = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+            form.appendChild(token);
 
-        document.body.appendChild(form);
-        form.submit();
+            document.body.appendChild(form);
+            form.submit();
+        }
     }
-}
 </script>

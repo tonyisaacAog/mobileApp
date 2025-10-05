@@ -1,15 +1,17 @@
 using AutoMapper;
-using CompanyApi.DTOs.DeviceDtos;
 using CompanyApi.DTOs.DocumentDtos;
 using CompanyApi.DTOs.OrderReportDtos;
+using CompanyApi.DTOs.ProductDtos;
 using CompanyApi.DTOs.QueryParameters;
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.DTOs.UserDtos;
+using CompanyApi.Migrations;
 using CompanyApi.Models;
 using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Repositories.Utilities;
 using CompanyApi.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using LinqKit;
+using System.Linq.Expressions;
 
 namespace CompanyApi.Services
 {
@@ -40,10 +42,14 @@ namespace CompanyApi.Services
             if (document.UserId == null)
                 throw new InvalidOperationException("User is required.");
 
+            if (document.DeviceCode == null)
+                throw new InvalidOperationException("DeviceCode is required.");
+
+            var device = new Models.Device();
 
             if(document.DeviceCode != null)
             {
-                var device = await _unitOfWork.Repository<Device>()
+                 device = await _unitOfWork.Repository<Models.Device>()
                     .FirstOrDefaultAsync(d => d.Code == document.DeviceCode && d.BranchId == document.BranchId);
                 if (device == null)
                     throw new InvalidOperationException($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
@@ -82,18 +88,24 @@ namespace CompanyApi.Services
                 ReferenceNumber = document.ReferenceNumber,
                 UserId = document.UserId,
                 BranchId = document.BranchId,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                DeviceId = device.Id
             };
 
             decimal subtotal = 0;
             decimal totalDiscount = 0;
             decimal totalVAT = 0;
 
+            //var selector = MappingUtilities.CreateMapExpression<Product, ProductDto>();
+            //var products = await _unitOfWork.Repository<Product>().GetAllByConditionAsync(o => document.Items.Any(id=>id.ProductId == o.Id), selector);
+
             foreach (var item in document.Items)
             {
+                //var vatproduct = products.FirstOrDefault(obj => obj.Id == item.ProductId);
                 var lineTotal = item.Quantity * item.UnitPrice; // before discount
                 var lineNet = lineTotal - item.DiscountAmount;  // after discount
-                var lineVAT = lineNet * VAT_RATE;
+               
+                var lineVAT = item.VAT>0? lineNet * VAT_RATE:0;
 
                 subtotal += lineTotal;
                 totalDiscount += item.DiscountAmount;
@@ -128,13 +140,27 @@ namespace CompanyApi.Services
 
 
         public async Task<PagedResult<DocumentDto>> GetAllDocumentsAsync(DocumentQueryParamters paginationParams)
-        {   
-            var selectors = MappingUtilities.CreateMapExpression<Models.Document, DocumentDto>();
+        {
+            var selectors = MappingUtilities.CreateMapExpression<Models.Document,DocumentDto>();
+
+            // نبدأ بشرط دائم صحيح (يعني لا يمنع أي نتائج)
+            Expression<Func<Models.Document,bool>> predicate = x => true;
+
+            // نضيف الشروط لو اتوفر قيمها
+            if( paginationParams.DateFrom.HasValue )
+                predicate = predicate.And(x => x.ReceiptDate.Date >= paginationParams.DateFrom  );
+
+            if( paginationParams.DateTo.HasValue )
+                predicate = predicate.And(x => x.ReceiptDate.Date <= paginationParams.DateTo.Value);
+
+            if( !string.IsNullOrEmpty(paginationParams.DeviceCode) )
+                predicate = predicate.And(x => x.Device != null && x.Device.Code == paginationParams.DeviceCode);
+
+            if( paginationParams.UserId.HasValue )
+                predicate = predicate.And(x => x.UserId == paginationParams.UserId.Value);
+
             var documents = await _unitOfWork.Repository<Models.Document>()
-                .GetProjectedPaginatedAsync(x => x.ReceiptDate.Date >= paginationParams.DateFrom 
-                && x.ReceiptDate.Date <= paginationParams.DateTo
-                && x.Device != null && x.Device.Code == paginationParams.DeviceCode
-                && x.UserId == paginationParams.UserId,selectors, paginationParams);
+                .GetProjectedPaginatedAsync(predicate,selectors,paginationParams);
 
             return await PagedResult<DocumentDto>.SuccessAsync(
                 documents.Items,
@@ -144,11 +170,17 @@ namespace CompanyApi.Services
             );
         }
 
-        public async Task<Result<DocumentsTotalsDto>> GetDocumentsStatsAsync()
+
+        public async Task<Result<DocumentsTotalsDto>> GetDocumentsStatsAsync(string deviceCode)
         {
             //var selectors = MappingUtilities.CreateMapExpression<Models.Document,DocumentsTotalsDto>();
+            var device = await _unitOfWork.Repository<Models.Device>()
+                .FirstOrDefaultAsync(d => d.Code == deviceCode);
+
             var documents = await _unitOfWork.Repository<Models.Document>()
-                .GetAllByConditionAsync(x => x.CreatedAt.Date == DateTime.Now.Date, x => new { x.TotalAmount, x.TotalDiscount, x.TotalVAT });
+                .GetAllByConditionAsync(x =>
+                    (x.ReceiptDate.Date == DateTime.Now.Date && device!=null && x.DeviceId == device.Id)
+                , x => new { x.TotalAmount, x.TotalDiscount, x.TotalVAT });
             var totals = new DocumentsTotalsDto
             {
                 SumOfTotals = documents.Sum(d => d.TotalAmount),
@@ -314,10 +346,10 @@ namespace CompanyApi.Services
                     var user = await _unitOfWork.Repository<User>().GetByIdAsync(document.UserId ?? 0);
 
                     // Get device
-                    Device? device = null;
+                    Models.Device? device = null;
                     if (document.DeviceId.HasValue)
                     {
-                        device = await _unitOfWork.Repository<Device>().GetByIdAsync(document.DeviceId.Value);
+                        device = await _unitOfWork.Repository<Models.Device>().GetByIdAsync(document.DeviceId.Value);
                     }
 
                     // Get branch
@@ -375,10 +407,10 @@ namespace CompanyApi.Services
                 var user = await _unitOfWork.Repository<User>().GetByIdAsync(document.UserId ?? 0);
 
                 // Get device
-                Device? device = null;
+                Models.Device? device = null;
                 if (document.DeviceId.HasValue)
                 {
-                    device = await _unitOfWork.Repository<Device>().GetByIdAsync(document.DeviceId.Value);
+                    device = await _unitOfWork.Repository<Models.Device>().GetByIdAsync(document.DeviceId.Value);
                 }
 
                 // Get branch

@@ -51,7 +51,7 @@
                 <div class="mb-4">
                     <div class="flex items-center">
                         <input asp-for="IsActive" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded" />
-                        <label asp-for="IsActive" class="ml-2 block text-sm text-gray-900">Active</label>
+                        <label asp-for="IsActive" class="mr-2 block text-sm text-gray-900">Active</label>
                     </div>
                     <span asp-validation-for="IsActive" class="text-red-500 text-sm mt-1"></span>
                 </div>
@@ -59,17 +59,17 @@
                 <div class="mb-4">
                     <div class="flex items-center">
                         <input asp-for="IsAdmin" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded" />
-                        <label asp-for="IsAdmin" class="ml-2 block text-sm text-gray-900">Administrator</label>
+                        <label asp-for="IsAdmin" class="mr-2 block text-sm text-gray-900">Administrator</label>
                     </div>
                     <span asp-validation-for="IsAdmin" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="flex justify-between items-center pt-6">
                     <a href="@Url.Action("Index", "UserManagement")" class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                        <i class="fas fa-arrow-left mr-2"></i>Back to List
+                        <i class="fas fa-arrow-left ml-2"></i>Back to List
                     </a>
                     <button type="submit" class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
-                        <i class="fas fa-save mr-2"></i>Update User
+                        <i class="fas fa-save ml-2"></i>Update User
                     </button>
                 </div>
             </form>

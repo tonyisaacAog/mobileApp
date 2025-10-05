@@ -1,1 +1,96 @@
-{"Version":1,"Hash":"dy1aW2EEmEM4axPhzYMx46+gebHdWRwryf5OcqQZvJA=","Source":"CompanyApi","BasePath":"_content/CompanyApi","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[{"Name":"CompanyApi\\wwwroot","Source":"CompanyApi","ContentRoot":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\","BasePath":"_content/CompanyApi","Pattern":"**"}],"Assets":[{"Identity":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\css\\admin.css","SourceId":"CompanyApi","SourceType":"Discovered","ContentRoot":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\","BasePath":"_content/CompanyApi","RelativePath":"css/admin#[.{fingerprint}]?.css","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"tjcc53i5j1","Integrity":"d8Rp8y19pNHst8QsbgJikJZ39HjfvAhoiz3l0JHxF6o=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\css\\admin.css","FileLength":1143,"LastWriteTime":"2025-10-01T12:12:08+00:00"},{"Identity":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\css\\receipt.css","SourceId":"CompanyApi","SourceType":"Discovered","ContentRoot":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\","BasePath":"_content/CompanyApi","RelativePath":"css/receipt#[.{fingerprint}]?.css","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"r6o6z2t26q","Integrity":"DaXlg5JAPP76583+wxEFDDCKMo/CsAKaCWp4DRM3C2U=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\css\\receipt.css","FileLength":1494,"LastWriteTime":"2025-10-05T07:49:13+00:00"},{"Identity":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\css\\site.css","SourceId":"CompanyApi","SourceType":"Discovered","ContentRoot":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\","BasePath":"_content/CompanyApi","RelativePath":"css/site#[.{fingerprint}]?.css","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"6ahd6m5o6o","Integrity":"vsb0zkxamxMihA/xQC1cglSDdu/W7NCC5N9fJJ7cFSc=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\css\\site.css","FileLength":3165,"LastWriteTime":"2025-10-01T12:12:08+00:00"},{"Identity":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\js\\site.js","SourceId":"CompanyApi","SourceType":"Discovered","ContentRoot":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\","BasePath":"_content/CompanyApi","RelativePath":"js/site#[.{fingerprint}]?.js","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"u4d34rrnmk","Integrity":"PqVcU0s2SnRHxQwgRwg/mR9lTcS1LXaueccCb99cVcM=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\js\\site.js","FileLength":3089,"LastWriteTime":"2025-10-01T12:12:08+00:00"}],"Endpoints":[{"Route":"css/admin.css","AssetFile":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\css\\admin.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"1143"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"d8Rp8y19pNHst8QsbgJikJZ39HjfvAhoiz3l0JHxF6o=\""},{"Name":"Last-Modified","Value":"Wed, 01 Oct 2025 12:12:08 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-d8Rp8y19pNHst8QsbgJikJZ39HjfvAhoiz3l0JHxF6o="}]},{"Route":"css/admin.tjcc53i5j1.css","AssetFile":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\css\\admin.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"1143"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"d8Rp8y19pNHst8QsbgJikJZ39HjfvAhoiz3l0JHxF6o=\""},{"Name":"Last-Modified","Value":"Wed, 01 Oct 2025 12:12:08 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"tjcc53i5j1"},{"Name":"label","Value":"css/admin.css"},{"Name":"integrity","Value":"sha256-d8Rp8y19pNHst8QsbgJikJZ39HjfvAhoiz3l0JHxF6o="}]},{"Route":"css/receipt.css","AssetFile":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\css\\receipt.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"1494"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"DaXlg5JAPP76583+wxEFDDCKMo/CsAKaCWp4DRM3C2U=\""},{"Name":"Last-Modified","Value":"Sun, 05 Oct 2025 07:49:13 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-DaXlg5JAPP76583+wxEFDDCKMo/CsAKaCWp4DRM3C2U="}]},{"Route":"css/receipt.r6o6z2t26q.css","AssetFile":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\css\\receipt.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"1494"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"DaXlg5JAPP76583+wxEFDDCKMo/CsAKaCWp4DRM3C2U=\""},{"Name":"Last-Modified","Value":"Sun, 05 Oct 2025 07:49:13 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"r6o6z2t26q"},{"Name":"label","Value":"css/receipt.css"},{"Name":"integrity","Value":"sha256-DaXlg5JAPP76583+wxEFDDCKMo/CsAKaCWp4DRM3C2U="}]},{"Route":"css/site.6ahd6m5o6o.css","AssetFile":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\css\\site.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"3165"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"vsb0zkxamxMihA/xQC1cglSDdu/W7NCC5N9fJJ7cFSc=\""},{"Name":"Last-Modified","Value":"Wed, 01 Oct 2025 12:12:08 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"6ahd6m5o6o"},{"Name":"label","Value":"css/site.css"},{"Name":"integrity","Value":"sha256-vsb0zkxamxMihA/xQC1cglSDdu/W7NCC5N9fJJ7cFSc="}]},{"Route":"css/site.css","AssetFile":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\css\\site.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"3165"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"vsb0zkxamxMihA/xQC1cglSDdu/W7NCC5N9fJJ7cFSc=\""},{"Name":"Last-Modified","Value":"Wed, 01 Oct 2025 12:12:08 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-vsb0zkxamxMihA/xQC1cglSDdu/W7NCC5N9fJJ7cFSc="}]},{"Route":"js/site.js","AssetFile":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\js\\site.js","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"3089"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\"PqVcU0s2SnRHxQwgRwg/mR9lTcS1LXaueccCb99cVcM=\""},{"Name":"Last-Modified","Value":"Wed, 01 Oct 2025 12:12:08 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-PqVcU0s2SnRHxQwgRwg/mR9lTcS1LXaueccCb99cVcM="}]},{"Route":"js/site.u4d34rrnmk.js","AssetFile":"D:\\Company\\Islam\\MobileApp\\mobileApp\\wwwroot\\js\\site.js","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"3089"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\"PqVcU0s2SnRHxQwgRwg/mR9lTcS1LXaueccCb99cVcM=\""},{"Name":"Last-Modified","Value":"Wed, 01 Oct 2025 12:12:08 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"u4d34rrnmk"},{"Name":"label","Value":"js/site.js"},{"Name":"integrity","Value":"sha256-PqVcU0s2SnRHxQwgRwg/mR9lTcS1LXaueccCb99cVcM="}]}]}
+{
+  "Version": 1,
+  "Hash": "nVunXAURkk3B+M5eHmOU3P8ee7tKAMt71mMTV+CFQiY=",
+  "Source": "CompanyApi",
+  "BasePath": "_content/CompanyApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "CompanyApi/wwwroot",
+      "Source": "CompanyApi",
+      "ContentRoot": "/home/kareem/Desktop/mobileApp/wwwroot/",
+      "BasePath": "_content/CompanyApi",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/home/kareem/Desktop/mobileApp/wwwroot/css/admin.css",
+      "SourceId": "CompanyApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/kareem/Desktop/mobileApp/wwwroot/",
+      "BasePath": "_content/CompanyApi",
+      "RelativePath": "css/admin.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/admin.css"
+    },
+    {
+      "Identity": "/home/kareem/Desktop/mobileApp/wwwroot/css/receipt.css",
+      "SourceId": "CompanyApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/kareem/Desktop/mobileApp/wwwroot/",
+      "BasePath": "_content/CompanyApi",
+      "RelativePath": "css/receipt.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/receipt.css"
+    },
+    {
+      "Identity": "/home/kareem/Desktop/mobileApp/wwwroot/css/site.css",
+      "SourceId": "CompanyApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/kareem/Desktop/mobileApp/wwwroot/",
+      "BasePath": "_content/CompanyApi",
+      "RelativePath": "css/site.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/site.css"
+    },
+    {
+      "Identity": "/home/kareem/Desktop/mobileApp/wwwroot/js/site.js",
+      "SourceId": "CompanyApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/kareem/Desktop/mobileApp/wwwroot/",
+      "BasePath": "_content/CompanyApi",
+      "RelativePath": "js/site.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/js/site.js"
+    }
+  ]
+}

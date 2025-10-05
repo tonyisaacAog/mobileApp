@@ -16,12 +16,12 @@
                 </div>
                 <div class="flex space-x-2 rtl:space-x-reverse">
                     <a href="@Url.Action("Edit", "CompanyManagement", new { id = Model.Id })"
-                       class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors">
-                        <i class="fas fa-edit mr-2"></i>تعديل
+                       class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors ml-2">
+                        <i class="fas fa-edit ml-2"></i>تعديل
                     </a>
                     <a href="@Url.Action("Index","CompanyManagement")"
                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                        <i class="fas fa-arrow-right mr-2"></i>العودة للقائمة
+                        <i class="fas fa-arrow-right ml-2"></i>العودة للقائمة
                     </a>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     </span>
                     <button onclick="confirmDelete(@Model.Id, '@Model.Name')"
                             class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-                        <i class="fas fa-trash mr-2"></i>حذف الشركة
+                        <i class="fas fa-trash ml-2"></i>حذف الشركة
                     </button>
                 </div>
             </div>

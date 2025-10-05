@@ -10,7 +10,8 @@ namespace CompanyApi.Models
         public string Street { get; set; } = string.Empty;
         public string BuildingNumber { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
-        public virtual ICollection<User> Users { get; set; } = [];
+        //public virtual ICollection<User> Users { get; set; } = [];
+        public virtual ICollection<UserBranch> UserBranches { get; set; } = [];
         public virtual ICollection<Document> Receipts { get; set; } = [];
         public virtual ICollection<Product> Products { get; set; } = [];
     }

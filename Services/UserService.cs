@@ -25,6 +25,7 @@ namespace CompanyApi.Services
         {
             var user = await _unitOfWork.Repository<User>().GetByIdAsync<UserDto>(obj => obj.Id == id, obj => new UserDto
             {
+                Id = obj.Id,
                 Email = obj.Email,
                 FirstName = obj.FirstName,
                 LastName = obj.LastName,
@@ -32,6 +33,7 @@ namespace CompanyApi.Services
                 IsAdmin = obj.IsAdmin,
                 PhoneNumber = obj.PhoneNumber,
                 Username = obj.Username,
+                UserBranches = obj.UserBranches
             });
             return await Result<UserDto>.SuccessAsync(user);
         }

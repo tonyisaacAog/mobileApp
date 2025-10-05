@@ -15,7 +15,7 @@
         </div>
         <div class="flex gap-2">
             <a href="@Url.Action("Index", "Admin")" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                <i class="fas fa-arrow-right mr-2"></i>العودة للوحة التحكم
+                <i class="fas fa-arrow-right ml-2"></i>العودة للوحة التحكم
             </a>
         </div>
     </div>
@@ -63,7 +63,7 @@
 
             <div class="flex justify-center">
                 <button type="submit" class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
-                    <i class="fas fa-search mr-2"></i>تصفية النتائج
+                    <i class="fas fa-search ml-2"></i>تصفية النتائج
                 </button>
             </div>
         </form>
@@ -188,7 +188,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
                                     <div class="flex items-center justify-start space-x-2 rtl:space-x-reverse">
                                         <a href="@Url.Action("Details", "OrderReport", new { id = order.Id })"
-                                           class="text-primary hover:text-blue-700 transition-colors" title="عرض التفاصيل">
+                                           class="text-primary hover:text-blue-700 transition-colors ml-2" title="عرض التفاصيل">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <a href="@Url.Action("Print", "OrderReport", new { id = order.Id })"
@@ -213,7 +213,7 @@
                 <p class="text-gray-500 mb-6">لم يتم العثور على طلبات تطابق معايير البحث المحددة.</p>
                 <button onclick="document.querySelector('form').reset(); document.querySelector('form').submit();"
                         class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
-                    <i class="fas fa-redo mr-2"></i>إعادة تعيين المرشحات
+                    <i class="fas fa-redo ml-2"></i>إعادة تعيين المرشحات
                 </button>
             </div>
         }

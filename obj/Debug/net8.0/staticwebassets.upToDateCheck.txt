@@ -1,4 +1,4 @@
 wwwroot\css\admin.css
-wwwroot\css\receipt.css
 wwwroot\css\site.css
 wwwroot\js\site.js
+wwwroot\css\receipt.css

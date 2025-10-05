@@ -12,16 +12,16 @@
             <div class="flex justify-between items-start mb-6">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900 mb-2">تفاصيل الشركة</h1>
-                    <p class="text-gray-600">عرض معلومات الشركة وبيانات الاتصال الخاصة بها.</p>
+                    <p class="text-gray-600">عرض معلومات الشركة وتفاصيل التواصل.</p>
                 </div>
-                <div class="flex space-x-2 space-x-reverse">
-                    <a href="@Url.Action("Edit","CompanyManagement",new { id = Model.Id })"
+                <div class="flex space-x-2 rtl:space-x-reverse">
+                    <a href="@Url.Action("Edit", "CompanyManagement", new { id = Model.Id })"
                        class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors">
-                        <i class="fas fa-edit ml-2"></i>تعديل
+                        <i class="fas fa-edit mr-2"></i>تعديل
                     </a>
                     <a href="@Url.Action("Index","CompanyManagement")"
                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                        <i class="fas fa-arrow-right ml-2"></i>العودة إلى القائمة
+                        <i class="fas fa-arrow-right mr-2"></i>العودة للقائمة
                     </a>
                 </div>
             </div>
@@ -77,11 +77,11 @@
             <div class="mt-8 pt-6 border-t border-gray-200">
                 <div class="flex justify-between items-center">
                     <span class="text-sm text-gray-500">
-                        رقم الشركة: @Model.Id
+                        معرف الشركة: @Model.Id
                     </span>
                     <button onclick="confirmDelete(@Model.Id, '@Model.Name')"
                             class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-                        <i class="fas fa-trash ml-2"></i>حذف الشركة
+                        <i class="fas fa-trash mr-2"></i>حذف الشركة
                     </button>
                 </div>
             </div>
@@ -90,11 +90,11 @@
 </div>
 
 <script>
-    function confirmDelete(id, name) {
-        if (confirm(`هل أنت متأكد أنك تريد حذف الشركة "${name}"؟ لا يمكن التراجع عن هذا الإجراء.`)) {
-            var form = document.createElement('form');
-            form.method = 'POST';
-            form.action = '@Url.Action("Delete","CompanyManagement")/' + id;
+function confirmDelete(id, name) {
+    if (confirm(`هل أنت متأكد من حذف الشركة "${name}"؟ لا يمكن التراجع عن هذا الإجراء.`)) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '@Url.Action("Delete", "CompanyManagement")/' + id;
 
             var token = document.createElement('input');
             token.type = 'hidden';

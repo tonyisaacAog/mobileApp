@@ -1,10 +1,15 @@
 using AutoMapper;
+using CompanyApi.DTOs.DeviceDtos;
 using CompanyApi.DTOs.DocumentDtos;
+using CompanyApi.DTOs.OrderReportDtos;
+using CompanyApi.DTOs.QueryParameters;
 using CompanyApi.DTOs.ResponseDtos;
+using CompanyApi.DTOs.UserDtos;
 using CompanyApi.Models;
 using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Repositories.Utilities;
 using CompanyApi.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyApi.Services
 {
@@ -122,11 +127,14 @@ namespace CompanyApi.Services
         }
 
 
-        public async Task<PagedResult<DocumentDto>> GetAllDocumentsAsync(PaginationParameters paginationParams)
-        {
+        public async Task<PagedResult<DocumentDto>> GetAllDocumentsAsync(DocumentQueryParamters paginationParams)
+        {   
             var selectors = MappingUtilities.CreateMapExpression<Models.Document, DocumentDto>();
             var documents = await _unitOfWork.Repository<Models.Document>()
-                .GetProjectedPaginatedAsync(selectors, paginationParams);
+                .GetProjectedPaginatedAsync(x => x.ReceiptDate.Date >= paginationParams.DateFrom 
+                && x.ReceiptDate.Date <= paginationParams.DateTo
+                && x.Device != null && x.Device.Code == paginationParams.DeviceCode
+                && x.UserId == paginationParams.UserId,selectors, paginationParams);
 
             return await PagedResult<DocumentDto>.SuccessAsync(
                 documents.Items,
@@ -267,6 +275,209 @@ namespace CompanyApi.Services
 
             repo.Remove(document);
             await _unitOfWork.SaveChangesAsync();
+        }
+
+        // Order Report methods
+        public async Task<Result<IEnumerable<OrderReportDto>>> GetOrdersWithFiltersAsync(OrderReportFilterDto filter)
+        {
+            try
+            {
+                var repo = _unitOfWork.Repository<Models.Document>();
+
+                // Get all documents first
+                var documents = await repo.GetAllAsync();
+
+                // Apply filters manually since we don't have GetAllIncluding
+                var filteredDocuments = documents.AsQueryable();
+
+                if (filter.DateFrom.HasValue)
+                {
+                    filteredDocuments = filteredDocuments.Where(d => d.ReceiptDate >= filter.DateFrom.Value);
+                }
+
+                if (filter.DateTo.HasValue)
+                {
+                    filteredDocuments = filteredDocuments.Where(d => d.ReceiptDate <= filter.DateTo.Value);
+                }
+
+                if (filter.UserId.HasValue)
+                {
+                    filteredDocuments = filteredDocuments.Where(d => d.UserId == filter.UserId.Value);
+                }
+
+                // Get related data for each document
+                var orderReports = new List<OrderReportDto>();
+
+                foreach (var document in filteredDocuments)
+                {
+                    // Get user
+                    var user = await _unitOfWork.Repository<User>().GetByIdAsync(document.UserId ?? 0);
+
+                    // Get device
+                    Device? device = null;
+                    if (document.DeviceId.HasValue)
+                    {
+                        device = await _unitOfWork.Repository<Device>().GetByIdAsync(document.DeviceId.Value);
+                    }
+
+                    // Get branch
+                    Branch? branch = null;
+                    if (document.BranchId.HasValue)
+                    {
+                        branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
+                    }
+
+                    orderReports.Add(new OrderReportDto
+                    {
+                        Id = document.Id,
+                        ReceiptNumber = document.ReceiptNumber,
+                        ReceiptDate = document.ReceiptDate,
+                        CustomerName = document.CustomerName,
+                        TotalAmount = document.TotalAmount,
+                        PaymentMethod = document.PaymentMethod.ToString(),
+                        DeviceName = device?.Name ?? "غير محدد",
+                        DeviceCode = device?.Code ?? "غير محدد",
+                        UserName = user != null ? $"{user.FirstName} {user.LastName}" : "غير محدد",
+                        BranchName = branch?.Name ?? "غير محدد",
+                        ItemsCount = await _unitOfWork.Repository<DocumentLines>().CountAsync(l => l.ReceiptId == document.Id)
+                    });
+                }
+
+                // Order by receipt date descending
+                orderReports = orderReports.OrderByDescending(o => o.ReceiptDate).ToList();
+
+                // Apply device code filter if specified
+                if (!string.IsNullOrEmpty(filter.DeviceCode))
+                {
+                    orderReports = orderReports.Where(o => o.DeviceCode == filter.DeviceCode).ToList();
+                }
+
+                return await Result<IEnumerable<OrderReportDto>>.SuccessAsync(orderReports, "Orders retrieved successfully");
+            }
+            catch (Exception ex)
+            {
+                return await Result<IEnumerable<OrderReportDto>>.FailureAsync($"Error retrieving orders: {ex.Message}");
+            }
+        }
+
+        public async Task<Result<OrderDetailsDto>?> GetOrderDetailsAsync(int id)
+        {
+            try
+            {
+                // Get document
+                var document = await _unitOfWork.Repository<Models.Document>().GetByIdAsync(id);
+                if (document == null)
+                {
+                    return null;
+                }
+
+                // Get user
+                var user = await _unitOfWork.Repository<User>().GetByIdAsync(document.UserId ?? 0);
+
+                // Get device
+                Device? device = null;
+                if (document.DeviceId.HasValue)
+                {
+                    device = await _unitOfWork.Repository<Device>().GetByIdAsync(document.DeviceId.Value);
+                }
+
+                // Get branch
+                Branch? branch = null;
+                if (document.BranchId.HasValue)
+                {
+                    branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
+                }
+
+                // Get company
+                Company? company = null;
+                if (document.CompanyId.HasValue)
+                {
+                    company = await _unitOfWork.Repository<Company>().GetByIdAsync(document.CompanyId.Value);
+                }
+
+                // Get document lines
+                var documentLines = await _unitOfWork.Repository<DocumentLines>()
+                    .FindAsync(l => l.ReceiptId == document.Id);
+
+                var orderDetails = new OrderDetailsDto
+                {
+                    Id = document.Id,
+                    ReceiptNumber = document.ReceiptNumber,
+                    ReceiptDate = document.ReceiptDate,
+                    CustomerName = document.CustomerName,
+                    CustomerPhone = document.CustomerPhone ?? "",
+                    CustomerAddress = $"{document.CustomerCountryCode} {document.CustomerGovernate} {document.CustomerCity} {document.CustomerStreet} {document.CustomerBuilding}".Trim(),
+                    CustomerTaxId = document.CustomerTaxId ?? "",
+                    Subtotal = document.Subtotal,
+                    TaxAmount = document.TaxAmount,
+                    TotalDiscount = document.TotalDiscount,
+                    ExtraDiscount = document.ExtraDiscount,
+                    TotalVAT = document.TotalVAT,
+                    TotalAmount = document.TotalAmount,
+                    PaymentMethod = document.PaymentMethod.ToString(),
+                    Notes = document.Notes,
+                    DeviceName = device?.Name ?? "غير محدد",
+                    DeviceCode = device?.Code ?? "غير محدد",
+                    UserName = user != null ? $"{user.FirstName} {user.LastName}" : "غير محدد",
+                    BranchName = branch?.Name ?? "غير محدد",
+                    CompanyName = company?.Name ?? "غير محدد",
+                    Items = documentLines?.Select(item => new OrderItemDto
+                    {
+                        ProductName = item.Product?.Name ?? "غير محدد",
+                        ProductCode = item.Product?.SKU ?? "",
+                        Quantity = item.Quantity,
+                        UnitPrice = item.UnitPrice,
+                        Discount = item.DiscountAmount,
+                        TotalPrice = item.TotalPrice
+                    }).ToList() ?? new List<OrderItemDto>()
+                };
+
+                return await Result<OrderDetailsDto>.SuccessAsync(orderDetails, "Order details retrieved successfully");
+            }
+            catch (Exception ex)
+            {
+                return await Result<OrderDetailsDto>.FailureAsync($"Error retrieving order details: {ex.Message}");
+            }
+        }
+
+        public async Task<Result<IEnumerable<UserDto>>> GetAllUsersAsync()
+        {
+            try
+            {
+                var repo = _unitOfWork.Repository<User>();
+                var users = await repo.GetAllAsync();
+
+                var userDtos = users.Select(u => new UserDto
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Username = u.Username,
+                    Email = u.Email,
+                    PhoneNumber = u.PhoneNumber,
+                    IsActive = u.IsActive,
+                    IsAdmin = u.IsAdmin
+                });
+
+                return await Result<IEnumerable<UserDto>>.SuccessAsync(userDtos, "Users retrieved successfully");
+            }
+            catch (Exception ex)
+            {
+                return await Result<IEnumerable<UserDto>>.FailureAsync($"Error retrieving users: {ex.Message}");
+            }
+        }
+
+        public async Task<Result<int>> GetDocumentCountAsync()
+        {
+            try
+            {
+                var count = await _unitOfWork.Repository<Models.Document>().CountAsync();
+                return await Result<int>.SuccessAsync(count, "Document count retrieved successfully");
+            }
+            catch (Exception ex)
+            {
+                return await Result<int>.FailureAsync($"Error retrieving document count: {ex.Message}");
+            }
         }
     }
 }

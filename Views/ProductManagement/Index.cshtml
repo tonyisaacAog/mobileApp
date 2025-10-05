@@ -7,15 +7,15 @@
 }
 
 <div class="p-6" dir="rtl">
-    <!-- العنوان -->
+    <!-- Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-        <div class="text-right">
+        <div>
             <h1 class="text-2xl font-bold text-gray-900">إدارة المنتجات</h1>
-            <p class="text-gray-600 mt-1">إدارة كتالوج المنتجات والمخزون.</p>
+            <p class="text-gray-600 mt-1">إدارة كتالوج المنتجات والمخزون</p>
         </div>
         <a href="@Url.Action("Create","ProductManagement")"
            class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-            <i class="fas fa-plus ml-2"></i>
+            <i class="fas fa-plus mr-2"></i>
             إضافة منتج جديد
         </a>
     </div>
@@ -43,6 +43,9 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 الإجراءات
                             </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                الإجراءات
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -50,7 +53,7 @@
                         {
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center justify-end">
+                                    <div class="flex items-center">
                                         <div class="bg-orange-100 rounded-full p-2 ml-3">
                                             <i class="fas fa-box text-orange-600"></i>
                                         </div>
@@ -64,28 +67,28 @@
                                     <div class="text-sm text-gray-900">@product.Price.ToString("C")</div>
                                     <div class="text-sm text-gray-500">التكلفة: @product.Cost.ToString("C")</div>
                                 </td>
-                                <td class="px-6 py-4 text-right">
-                                    <div class="text-sm text-gray-500">رمز المنتج (SKU): @product.SKU</div>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-500">رمز المنتج: @product.SKU</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right">
                                     @if( product.IsActive )
                                     {
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                            <i class="fas fa-check-circle ml-1"></i>
+                                            <i class="fas fa-check-circle mr-1"></i>
                                             نشط
                                         </span>
                                     }
                                     else
                                     {
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                            <i class="fas fa-pause-circle ml-1"></i>
+                                            <i class="fas fa-pause-circle mr-1"></i>
                                             غير نشط
                                         </span>
                                     }
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
-                                    <div class="flex items-center justify-start space-x-2 space-x-reverse">
-                                        <a href="@Url.Action("Details","ProductManagement",new { id = product.Id })"
+                                    <div class="flex items-center justify-start space-x-2 rtl:space-x-reverse">
+                                        <a href="@Url.Action("Details", "ProductManagement", new { id = product.Id })"
                                            class="text-primary hover:text-blue-700 transition-colors">
                                             <i class="fas fa-eye"></i>
                                         </a>
@@ -112,11 +115,11 @@
                     <i class="fas fa-box text-gray-400 text-2xl"></i>
                 </div>
                 <h3 class="text-lg font-medium text-gray-900 mb-2">لا توجد منتجات</h3>
-                <p class="text-gray-500 mb-6">ابدأ بإضافة أول منتج إلى الكتالوج.</p>
-                <a href="@Url.Action("Create","ProductManagement")"
+                <p class="text-gray-500 mb-6">ابدأ بإضافة منتجك الأول إلى الكتالوج.</p>
+                <a href="@Url.Action("Create", "ProductManagement")"
                    class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                    <i class="fas fa-plus ml-2"></i>
-                    إضافة أول منتج
+                    <i class="fas fa-plus mr-2"></i>
+                    إنشاء منتج جديد
                 </a>
             </div>
         }
@@ -124,18 +127,18 @@
 </div>
 
 <script>
-    function confirmDelete(id, name) {
-        if (confirm(`هل أنت متأكد أنك تريد حذف المنتج "${name}"؟`)) {
-            var form = document.createElement('form');
-            form.method = 'POST';
-            form.action = '@Url.Action("Delete","ProductManagement")/' + id;
-            var token = document.createElement('input');
-            token.type = 'hidden';
-            token.name = '__RequestVerificationToken';
-            token.value = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
-            form.appendChild(token);
-            document.body.appendChild(form);
-            form.submit();
-        }
+function confirmDelete(id, name) {
+    if (confirm(`هل أنت متأكد من حذف المنتج "${name}"؟`)) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '@Url.Action("Delete", "ProductManagement")/' + id;
+        var token = document.createElement('input');
+        token.type = 'hidden';
+        token.name = '__RequestVerificationToken';
+        token.value = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+        form.appendChild(token);
+        document.body.appendChild(form);
+        form.submit();
     }
+}
 </script>

@@ -11,7 +11,7 @@
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-right">
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-gray-900 mb-2">حذف الجهاز</h1>
-                <p class="text-gray-600">هل أنت متأكد أنك تريد حذف هذا الجهاز؟ لا يمكن التراجع عن هذا الإجراء.</p>
+                <p class="text-gray-600">هل أنت متأكد من حذف هذا الجهاز؟ لا يمكن التراجع عن هذا الإجراء.</p>
             </div>
 
             <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
@@ -21,7 +21,7 @@
                     </div>
                     <div>
                         <h3 class="font-medium text-red-900 mb-1">تحذير</h3>
-                        <p class="text-red-700 text-sm">سيؤدي حذف هذا الجهاز إلى إزالته نهائيًا من النظام، ولا يمكن استعادة البيانات بعد ذلك.</p>
+                        <p class="text-red-700 text-sm">سيتم حذف هذا الجهاز بشكل دائم من النظام. لا يمكن التراجع عن هذا الإجراء.</p>
                     </div>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                         <p class="text-gray-900">@Model.Model</p>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">رقم الفرع</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">معرف الفرع</label>
                         <p class="text-gray-900">@Model.BranchId</p>
                     </div>
                 </div>
@@ -50,11 +50,11 @@
 
             <form asp-action="DeleteConfirmed" method="post" class="flex justify-between items-center">
                 <input type="hidden" asp-for="Id" />
-                <a href="@Url.Action("Index","DeviceManagement")" class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                    <i class="fas fa-arrow-right ml-2"></i>إلغاء
+                <a href="@Url.Action("Index", "DeviceManagement")" class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                    <i class="fas fa-arrow-right mr-2"></i>إلغاء
                 </a>
                 <button type="submit" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-                    <i class="fas fa-trash ml-2"></i>حذف الجهاز
+                    <i class="fas fa-trash mr-2"></i>حذف الجهاز
                 </button>
             </form>
         </div>

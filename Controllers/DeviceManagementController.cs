@@ -18,9 +18,9 @@ namespace CompanyApi.Controllers
         }
 
         // GET: DeviceManagement
-        public async Task<IActionResult> Index(PaginationParameters paginationParameters)
+        public async Task<IActionResult> Index()
         {
-            var result = await _deviceService.GetAllDevicesAsync(paginationParameters);
+            var result = await _deviceService.GetAllDevicesAsync();
             return View(result.Data ?? new List<DeviceDto>());
         }
 

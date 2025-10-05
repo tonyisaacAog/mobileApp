@@ -1,0 +1,143 @@
+@using CompanyApi.DTOs.OrderReportDtos
+@model OrderDetailsDto
+
+@{
+    Layout = null; // No layout for printing
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <title>إيصال - @Model.ReceiptNumber</title>
+    <link rel="stylesheet" href="~/css/receipt.css" />
+</head>
+<body>
+    <div class="receipt">
+        <!-- Header -->
+        <div class="header">
+            <h2 style="margin: 0; font-size: 16px;">إيصال بيع</h2>
+        </div>
+
+        <!-- Company Info -->
+        <div class="company-info">
+            <div>@Model.CompanyName</div>
+            <div>@Model.BranchName</div>
+        </div>
+
+        <!-- Receipt Info -->
+        <div class="receipt-info">
+            <table>
+                <tr>
+                    <td><strong>رقم الإيصال:</strong></td>
+                    <td>@Model.ReceiptNumber</td>
+                </tr>
+                <tr>
+                    <td><strong>التاريخ:</strong></td>
+                    <td>@Model.ReceiptDate.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+                <tr>
+                    <td><strong>العميل:</strong></td>
+                    <td>@Model.CustomerName</td>
+                </tr>
+                @if (!string.IsNullOrEmpty(Model.CustomerPhone))
+                {
+                    <tr>
+                        <td><strong>الهاتف:</strong></td>
+                        <td>@Model.CustomerPhone</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <!-- Items Table -->
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th style="width: 40%;">المنتج</th>
+                    <th style="width: 15%;">الكمية</th>
+                    <th style="width: 20%;">السعر</th>
+                    <th style="width: 25%;">الإجمالي</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td style="text-align: right; font-size: 10px;">@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UnitPrice.ToString("F2")</td>
+                        <td>@item.TotalPrice.ToString("F2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Totals -->
+        <div class="totals">
+            <div class="total-row">
+                <span>المجموع الفرعي:</span>
+                <span>@Model.Subtotal.ToString("F2")</span>
+            </div>
+
+            @if (Model.TotalDiscount > 0)
+            {
+                <div class="total-row" style="color: #d32f2f;">
+                    <span>الخصم:</span>
+                    <span>-@Model.TotalDiscount.ToString("F2")</span>
+                </div>
+            }
+
+            @if (Model.ExtraDiscount > 0)
+            {
+                <div class="total-row" style="color: #d32f2f;">
+                    <span>خصم إضافي:</span>
+                    <span>-@Model.ExtraDiscount.ToString("F2")</span>
+                </div>
+            }
+
+            @if (Model.TaxAmount > 0)
+            {
+                <div class="total-row">
+                    <span>الضريبة:</span>
+                    <span>@Model.TaxAmount.ToString("F2")</span>
+                </div>
+            }
+
+            @if (Model.TotalVAT > 0)
+            {
+                <div class="total-row">
+                    <span>ضريبة القيمة المضافة:</span>
+                    <span>@Model.TotalVAT.ToString("F2")</span>
+                </div>
+            }
+
+            <div class="total-row grand-total">
+                <span>الإجمالي:</span>
+                <span>@Model.TotalAmount.ToString("F2")</span>
+            </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div style="text-align: center; margin: 10px 0; padding: 5px; border: 1px solid #000;">
+            <strong>طريقة الدفع: @Model.PaymentMethod</strong>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div>شكراً لزيارتكم</div>
+            <div>@DateTime.Now.ToString("yyyy-MM-dd HH:mm")</div>
+        </div>
+    </div>
+
+    <!-- Print Button (hidden when printing) -->
+    <div class="no-print" style="text-align: center; margin-top: 20px;">
+        <button onclick="window.print()" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            طباعة الإيصال
+        </button>
+        <a href="@Url.Action("Details", "OrderReport", new { id = Model.Id })" style="margin-right: 10px; color: #007bff;">
+            العودة للتفاصيل
+        </a>
+    </div>
+</body>
+</html>

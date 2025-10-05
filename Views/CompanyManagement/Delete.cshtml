@@ -11,7 +11,7 @@
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-right">
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-gray-900 mb-2">حذف الشركة</h1>
-                <p class="text-gray-600">هل أنت متأكد أنك تريد حذف هذه الشركة؟ لا يمكن التراجع عن هذا الإجراء.</p>
+                <p class="text-gray-600">هل أنت متأكد من حذف هذه الشركة؟ لا يمكن التراجع عن هذا الإجراء.</p>
             </div>
 
             <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
@@ -21,7 +21,7 @@
                     </div>
                     <div>
                         <h3 class="font-medium text-red-900 mb-1">تحذير</h3>
-                        <p class="text-red-700 text-sm">سيؤدي حذف هذه الشركة إلى إزالتها نهائيًا من النظام، ولا يمكن التراجع عن هذا الإجراء.</p>
+                        <p class="text-red-700 text-sm">سيتم حذف هذه الشركة بشكل دائم من النظام. لا يمكن التراجع عن هذا الإجراء.</p>
                     </div>
                 </div>
             </div>
@@ -58,18 +58,18 @@
                 </div>
 
                 <div class="mt-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">رقم الهاتف</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">الهاتف</label>
                     <p class="text-gray-900">@(string.IsNullOrEmpty(Model.PhoneNumber) ? "غير محدد" : Model.PhoneNumber)</p>
                 </div>
             </div>
 
             <form asp-action="DeleteConfirmed" method="post" class="flex justify-between items-center">
                 <input type="hidden" asp-for="Id" />
-                <a href="@Url.Action("Index","CompanyManagement")" class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                    <i class="fas fa-arrow-left ml-2"></i>إلغاء
+                <a href="@Url.Action("Index", "CompanyManagement")" class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                    <i class="fas fa-arrow-right mr-2"></i>إلغاء
                 </a>
                 <button type="submit" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-                    <i class="fas fa-trash ml-2"></i>حذف الشركة
+                    <i class="fas fa-trash mr-2"></i>حذف الشركة
                 </button>
             </form>
         </div>

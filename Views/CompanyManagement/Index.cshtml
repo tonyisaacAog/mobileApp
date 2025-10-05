@@ -7,15 +7,15 @@
 }
 
 <div class="p-6" dir="rtl">
-    <!-- العنوان -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 text-right">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">إدارة الشركات</h1>
-            <p class="text-gray-600 mt-1">قم بإدارة بيانات الشركات والإعدادات الخاصة بها</p>
+            <p class="text-gray-600 mt-1">إدارة معلومات الشركة والإعدادات</p>
         </div>
         <a href="@Url.Action("Create","CompanyManagement")"
            class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-            <i class="fas fa-plus ml-2"></i>
+            <i class="fas fa-plus mr-2"></i>
             إضافة شركة جديدة
         </a>
     </div>
@@ -32,10 +32,13 @@
                                 تفاصيل الشركة
                             </th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                معلومات التواصل
+                                التواصل
                             </th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 الحالة
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                الإجراءات
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 الإجراءات
@@ -47,8 +50,11 @@
                         {
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center justify-end">
-                                        <div class="ml-3">
+                                    <div class="flex items-center">
+                                        <div class="bg-purple-100 rounded-full p-2 ml-3">
+                                            <i class="fas fa-building text-purple-600"></i>
+                                        </div>
+                                        <div>
                                             <div class="text-sm font-medium text-gray-900">@company.Name</div>
                                             <div class="text-sm text-gray-500">@company.TaxNumber</div>
                                         </div>
@@ -66,22 +72,22 @@
                                     @if( company.IsActive )
                                     {
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                            <i class="fas fa-check-circle ml-1"></i>
+                                            <i class="fas fa-check-circle mr-1"></i>
                                             نشطة
                                         </span>
                                     }
                                     else
                                     {
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                            <i class="fas fa-pause-circle ml-1"></i>
+                                            <i class="fas fa-pause-circle mr-1"></i>
                                             غير نشطة
                                         </span>
                                     }
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
-                                    <div class="flex items-center justify-start space-x-reverse space-x-2">
-                                        <a href="@Url.Action("Details","CompanyManagement",new { id = company.Id })"
-                                           class="text-primary hover:text-blue-700 transition-colors" title="عرض التفاصيل">
+                                    <div class="flex items-center justify-start space-x-2 rtl:space-x-reverse">
+                                        <a href="@Url.Action("Details", "CompanyManagement", new { id = company.Id })"
+                                           class="text-primary hover:text-blue-700 transition-colors">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <a href="@Url.Action("Edit","CompanyManagement",new { id = company.Id })"
@@ -107,11 +113,11 @@
                     <i class="fas fa-building text-gray-400 text-2xl"></i>
                 </div>
                 <h3 class="text-lg font-medium text-gray-900 mb-2">لا توجد شركات</h3>
-                <p class="text-gray-500 mb-6">ابدأ بإضافة أول شركة إلى النظام.</p>
-                <a href="@Url.Action("Create","CompanyManagement")"
+                <p class="text-gray-500 mb-6">ابدأ بإضافة شركتك الأولى.</p>
+                <a href="@Url.Action("Create", "CompanyManagement")"
                    class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                    <i class="fas fa-plus ml-2"></i>
-                    إنشاء أول شركة
+                    <i class="fas fa-plus mr-2"></i>
+                    إنشاء شركة جديدة
                 </a>
             </div>
         }
@@ -119,18 +125,18 @@
 </div>
 
 <script>
-    function confirmDelete(id, name) {
-        if (confirm(`هل أنت متأكد أنك تريد حذف الشركة "${name}"؟`)) {
-            var form = document.createElement('form');
-            form.method = 'POST';
-            form.action = '@Url.Action("Delete","CompanyManagement")/' + id;
-            var token = document.createElement('input');
-            token.type = 'hidden';
-            token.name = '__RequestVerificationToken';
-            token.value = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
-            form.appendChild(token);
-            document.body.appendChild(form);
-            form.submit();
-        }
+function confirmDelete(id, name) {
+    if (confirm(`هل أنت متأكد من حذف الشركة "${name}"؟`)) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '@Url.Action("Delete", "CompanyManagement")/' + id;
+        var token = document.createElement('input');
+        token.type = 'hidden';
+        token.name = '__RequestVerificationToken';
+        token.value = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+        form.appendChild(token);
+        document.body.appendChild(form);
+        form.submit();
     }
+}
 </script>

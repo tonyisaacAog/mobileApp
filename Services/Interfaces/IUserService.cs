@@ -7,7 +7,7 @@ namespace CompanyApi.Services.Interfaces
     public interface IUserService
     {
         Task<Result<UserDto>?> GetUserByIdAsync(int id);
-        Task<PagedResult<UserDto>> GetAllUsersAsync(PaginationParameters paginationParams);
+        Task<Result<IEnumerable<UserDto>>> GetAllUsersAsync();
         Task<Result<UserDto>> CreateUserAsync(CreateUserDto user);
         Task<Result<UserDto>?> UpdateUserAsync(int id, UpdateUserDto user);
         Task<Result<bool>> DeleteUserAsync(int id);

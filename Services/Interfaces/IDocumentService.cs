@@ -1,9 +1,7 @@
-using CompanyApi.DTOs.DeviceDtos;
 using CompanyApi.DTOs.DocumentDtos;
 using CompanyApi.DTOs.OrderReportDtos;
 using CompanyApi.DTOs.QueryParameters;
 using CompanyApi.DTOs.ResponseDtos;
-using CompanyApi.DTOs.UserDtos;
 
 namespace CompanyApi.Services.Interfaces
 {

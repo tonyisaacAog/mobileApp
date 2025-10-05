@@ -26,7 +26,7 @@ namespace CompanyApi.Services
             _mapper = mapper;
         }
 
-        public async Task CreateDocumentAsync(CreateDocumentDto document)
+        public async Task<Document> CreateDocumentAsync(CreateDocumentDto document)
         {
             const decimal VAT_RATE = 0.14m;
 
@@ -136,6 +136,7 @@ namespace CompanyApi.Services
 
             await _unitOfWork.Repository<Models.Document>().AddAsync(newDocument);
             await _unitOfWork.SaveChangesAsync();
+            return newDocument;
         }
 
 
@@ -144,7 +145,7 @@ namespace CompanyApi.Services
             var selectors = MappingUtilities.CreateMapExpression<Models.Document,DocumentDto>();
 
             // نبدأ بشرط دائم صحيح (يعني لا يمنع أي نتائج)
-            Expression<Func<Models.Document,bool>> predicate = x => true;
+            Expression<Func<Models.Document,bool>> predicate = x => x.Device != null && x.Device.Code == paginationParams.DeviceCode;
 
             // نضيف الشروط لو اتوفر قيمها
             if( paginationParams.DateFrom.HasValue )
@@ -152,9 +153,6 @@ namespace CompanyApi.Services
 
             if( paginationParams.DateTo.HasValue )
                 predicate = predicate.And(x => x.ReceiptDate.Date <= paginationParams.DateTo.Value);
-
-            if( !string.IsNullOrEmpty(paginationParams.DeviceCode) )
-                predicate = predicate.And(x => x.Device != null && x.Device.Code == paginationParams.DeviceCode);
 
             if( paginationParams.UserId.HasValue )
                 predicate = predicate.And(x => x.UserId == paginationParams.UserId.Value);

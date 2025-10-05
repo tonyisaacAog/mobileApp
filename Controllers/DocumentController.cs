@@ -3,6 +3,7 @@ using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using CompanyApi.DTOs.QueryParameters;
+using CompanyApi.Models;
 namespace CompanyApi.Controllers
 {
     [Route("api/[controller]")]
@@ -48,8 +49,8 @@ namespace CompanyApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateDocumentDto document)
         {
-            await _documentService.CreateDocumentAsync(document);
-            return Ok(await Result<CreateDocumentDto>.SuccessAsync(document, "Document created successfully", 201));
+            var entity = await _documentService.CreateDocumentAsync(document);
+            return Ok(await Result<Document>.SuccessAsync(entity, "Document created successfully", 201));
         }
 
         // PUT api/<DocumentController>/5

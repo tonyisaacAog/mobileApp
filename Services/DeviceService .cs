@@ -1,4 +1,4 @@
-﻿using CompanyApi.DTOs.DeviceDtos;
+using CompanyApi.DTOs.DeviceDtos;
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Models;
 using CompanyApi.Repositories.Interfaces;
@@ -38,7 +38,7 @@ namespace CompanyApi.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<Result<IEnumerable<DeviceDto>>> GetAllDevicesAsync(PaginationParameters paginationParameters)
+        public async Task<Result<IEnumerable<DeviceDto>>> GetAllDevicesAsync()
         {
             var selectors = MappingUtilities.CreateMapExpression<Device, DeviceDto>();
             var devices = await _unitOfWork.Repository<Device>().GetProjectedAsync(selectors);
@@ -96,6 +96,19 @@ namespace CompanyApi.Services
                 .FirstOrDefaultAsync(d => d.Code == code);
 
             return existingDevice == null;
+        }
+
+        public async Task<Result<int>> GetDeviceCountAsync()
+        {
+            try
+            {
+                var count = await _unitOfWork.Repository<Device>().CountAsync();
+                return await Result<int>.SuccessAsync(count, "Device count retrieved successfully");
+            }
+            catch (Exception ex)
+            {
+                return await Result<int>.FailureAsync($"Error retrieving device count: {ex.Message}");
+            }
         }
     }
 }

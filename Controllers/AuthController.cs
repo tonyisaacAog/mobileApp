@@ -124,11 +124,11 @@ namespace CompanyApi.Controllers
 
         [HttpGet("users")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAllUsers(PaginationParameters paginationParameters)
+        public async Task<IActionResult> GetAllUsers()
         {
             try
             {
-                var users = await _userService.GetAllUsersAsync(paginationParameters);
+                var users = await _userService.GetAllUsersAsync();
                 return Ok(users);
             }
             catch (Exception ex)

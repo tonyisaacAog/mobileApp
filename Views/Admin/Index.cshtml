@@ -83,6 +83,42 @@
                 </a>
             </div>
         </div>
+
+        <!-- Orders Card -->
+        <div class="bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg shadow-lg p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-teal-100 text-sm font-medium">الطلبات</p>
+                    <p class="text-3xl font-bold">@ViewBag.OrderCount</p>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-full p-3">
+                    <i class="fas fa-receipt text-2xl"></i>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="@Url.Action("Index","OrderReport")" class="text-teal-100 hover:text-white text-sm font-medium">
+                    تقرير الطلبات →
+                </a>
+            </div>
+        </div>
+
+        <!-- Devices Card -->
+        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg shadow-lg p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-indigo-100 text-sm font-medium">الأجهزة</p>
+                    <p class="text-3xl font-bold">@ViewBag.DeviceCount</p>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-full p-3">
+                    <i class="fas fa-mobile-alt text-2xl"></i>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="@Url.Action("Index","DeviceManagement")" class="text-indigo-100 hover:text-white text-sm font-medium">
+                    إدارة الأجهزة →
+                </a>
+            </div>
+        </div>
     </div>
 
     <!-- Quick Actions -->
@@ -151,6 +187,18 @@
                     <div class="flex-1">
                         <h3 class="font-medium text-gray-900">إدارة المنتجات</h3>
                         <p class="text-sm text-gray-500">إدارة الكتالوج والمخزون</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </a>
+
+                <a href="@Url.Action("Index","OrderReport")"
+                   class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                    <div class="bg-teal-100 rounded-lg p-2 mr-3 group-hover:bg-teal-200 transition-colors">
+                        <i class="fas fa-receipt text-teal-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-medium text-gray-900">تقرير الطلبات</h3>
+                        <p class="text-sm text-gray-500">عرض وتصفية الطلبات والتقارير</p>
                     </div>
                     <i class="fas fa-chevron-right text-gray-400"></i>
                 </a>

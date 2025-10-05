@@ -2,21 +2,21 @@
 @model List<ProductDto>
 
 @{
-    ViewData["Title"] = "Product Management";
+    ViewData["Title"] = "إدارة المنتجات";
     Layout = "_Layout";
 }
 
-<div class="p-6">
+<div class="p-6" dir="rtl">
     <!-- Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">Product Management</h1>
-            <p class="text-gray-600 mt-1">Manage product catalog and inventory</p>
+            <h1 class="text-2xl font-bold text-gray-900">إدارة المنتجات</h1>
+            <p class="text-gray-600 mt-1">إدارة كتالوج المنتجات والمخزون</p>
         </div>
         <a href="@Url.Action("Create", "ProductManagement")"
            class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
             <i class="fas fa-plus mr-2"></i>
-            Add New Product
+            إضافة منتج جديد
         </a>
     </div>
 
@@ -28,20 +28,20 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Product Details
-                            </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Pricing
-                            </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Inventory
-                            </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                تفاصيل المنتج
                             </th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Actions
+                                التسعير
+                            </th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                المخزون
+                            </th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                الحالة
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                الإجراءات
                             </th>
                         </tr>
                     </thead>
@@ -51,7 +51,7 @@
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center">
-                                        <div class="bg-orange-100 rounded-full p-2 mr-3">
+                                        <div class="bg-orange-100 rounded-full p-2 ml-3">
                                             <i class="fas fa-box text-orange-600"></i>
                                         </div>
                                         <div>
@@ -62,29 +62,29 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="text-sm text-gray-900">@product.Price.ToString("C")</div>
-                                    <div class="text-sm text-gray-500">Cost: @product.Cost.ToString("C")</div>
+                                    <div class="text-sm text-gray-500">التكلفة: @product.Cost.ToString("C")</div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-500">SKU: @product.SKU</div>
+                                    <div class="text-sm text-gray-500">رمز المنتج: @product.SKU</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if (product.IsActive)
                                     {
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                             <i class="fas fa-check-circle mr-1"></i>
-                                            Active
+                                            نشط
                                         </span>
                                     }
                                     else
                                     {
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                                             <i class="fas fa-pause-circle mr-1"></i>
-                                            Inactive
+                                            غير نشط
                                         </span>
                                     }
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <div class="flex items-center justify-end space-x-2">
+                                <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+                                    <div class="flex items-center justify-start space-x-2 rtl:space-x-reverse">
                                         <a href="@Url.Action("Details", "ProductManagement", new { id = product.Id })"
                                            class="text-primary hover:text-blue-700 transition-colors">
                                             <i class="fas fa-eye"></i>
@@ -111,12 +111,12 @@
                 <div class="bg-gray-100 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                     <i class="fas fa-box text-gray-400 text-2xl"></i>
                 </div>
-                <h3 class="text-lg font-medium text-gray-900 mb-2">No products found</h3>
-                <p class="text-gray-500 mb-6">Start by adding your first product to the catalog.</p>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">لا توجد منتجات</h3>
+                <p class="text-gray-500 mb-6">ابدأ بإضافة منتجك الأول إلى الكتالوج.</p>
                 <a href="@Url.Action("Create", "ProductManagement")"
                    class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
                     <i class="fas fa-plus mr-2"></i>
-                    Create First Product
+                    إنشاء منتج جديد
                 </a>
             </div>
         }
@@ -125,7 +125,7 @@
 
 <script>
 function confirmDelete(id, name) {
-    if (confirm(`Are you sure you want to delete the product "${name}"?`)) {
+    if (confirm(`هل أنت متأكد من حذف المنتج "${name}"؟`)) {
         var form = document.createElement('form');
         form.method = 'POST';
         form.action = '@Url.Action("Delete", "ProductManagement")/' + id;

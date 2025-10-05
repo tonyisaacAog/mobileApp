@@ -1,5 +1,6 @@
 using AutoMapper;
 using CompanyApi.DTOs;
+using CompanyApi.DTOs.BranchDtos;
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.DTOs.UserDtos;
 using CompanyApi.Models;
@@ -13,17 +14,19 @@ namespace CompanyApi.Controllers
     public class UserManagementController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IBranchService _branchService;
         private readonly IMapper _mapper;
-        public UserManagementController(IUserService userService, IMapper mapper)
+        public UserManagementController(IUserService userService, IBranchService branchService, IMapper mapper)
         {
             _userService = userService;
+            _branchService = branchService;
             _mapper = mapper;
         }
 
         // GET: UserManagement
-        public async Task<IActionResult> Index(PaginationParameters paginationParameters)
+        public async Task<IActionResult> Index()
         {
-            var result = await _userService.GetAllUsersAsync(paginationParameters);
+            var result = await _userService.GetAllUsersAsync();
             return View(result.Data ?? new List<UserDto>());
         }
 
@@ -105,8 +108,23 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _userService.DeleteUserAsync(id);
-            TempData["SuccessMessage"] = "User deleted successfully.";
+            TempData["SuccessMessage"] = "تم حذف المستخدم بنجاح.";
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: UserManagement/ManageUserBranches/5
+        public async Task<IActionResult> ManageUserBranches(int id)
+        {
+            var userResult = await _userService.GetUserByIdAsync(id);
+            if (userResult == null || userResult.Data == null)
+                return NotFound();
+
+            var branchesResult = await _branchService.GetAllBranchesAsync();
+
+            ViewBag.User = userResult.Data;
+            ViewBag.AllBranches = branchesResult?.Data ?? Enumerable.Empty<BranchDto>();
+
+            return View();
         }
     }
 }

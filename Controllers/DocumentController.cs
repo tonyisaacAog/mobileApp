@@ -2,7 +2,7 @@
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-
+using CompanyApi.DTOs.QueryParameters;
 namespace CompanyApi.Controllers
 {
     [Route("api/[controller]")]
@@ -18,7 +18,7 @@ namespace CompanyApi.Controllers
 
         // GET: api/<DocumentController>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] PaginationParameters paginationParams)
+        public async Task<IActionResult> Get([FromQuery] DocumentQueryParamters paginationParams)
         {
             var result = await _documentService.GetAllDocumentsAsync(paginationParams);
             return Ok(result);

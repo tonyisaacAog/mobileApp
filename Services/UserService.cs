@@ -38,9 +38,9 @@ namespace CompanyApi.Services
 
 
 
-        public async Task<PagedResult<UserDto>> GetAllUsersAsync(PaginationParameters paginationParams)
+        public async Task<Result<IEnumerable<UserDto>>> GetAllUsersAsync()
         {
-            var users = await _unitOfWork.Repository<User>().GetProjectedPaginatedAsync(obj => new UserDto
+            var users = await _unitOfWork.Repository<User>().GetProjectedAsync(obj => new UserDto
             {
                 Id = obj.Id,
                 Email = obj.Email,
@@ -50,8 +50,8 @@ namespace CompanyApi.Services
                 IsAdmin = obj.IsAdmin,
                 PhoneNumber = obj.PhoneNumber,
                 Username = obj.Username,
-            }, paginationParams);
-            return await PagedResult<UserDto>.SuccessAsync(users.Items, users.TotalCount, paginationParams.PageNumber, paginationParams.PageSize);
+            });
+            return await Result<IEnumerable<UserDto>>.SuccessAsync(users);
         }
 
         public async Task<Result<UserDto>> CreateUserAsync(CreateUserDto user)

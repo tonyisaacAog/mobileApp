@@ -184,25 +184,6 @@
         "tags": [
           "Auth"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PaginationParameters"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PaginationParameters"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/PaginationParameters"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
@@ -387,6 +368,37 @@
           "Document"
         ],
         "parameters": [
+          {
+            "name": "DateFrom",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "DateTo",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "DeviceCode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "UserId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
           {
             "name": "PageNumber",
             "in": "query",
@@ -1112,27 +1124,6 @@
           "password": {
             "minLength": 1,
             "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "PaginationParameters": {
-        "type": "object",
-        "properties": {
-          "pageNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sortBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "sortDescending": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false

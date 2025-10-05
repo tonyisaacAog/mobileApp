@@ -1,4 +1,4 @@
-﻿namespace CompanyApi.DTOs.DeviceDtos
+namespace CompanyApi.DTOs.DeviceDtos
 {
     public class DeviceDto
     {
@@ -9,5 +9,7 @@
         public string OS { get; set; } = string.Empty;
         public string Model { get; set; } = string.Empty;
         public int BranchId { get; set; }
+        public string? BranchName { get; set; }
+        public bool IsActive { get; set; }
     }
 }

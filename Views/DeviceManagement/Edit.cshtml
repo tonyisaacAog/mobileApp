@@ -1,64 +1,64 @@
-@using CompanyApi.DTOs.DeviceDtos
+﻿@using CompanyApi.DTOs.DeviceDtos
 @model DeviceDto
 
 @{
-    ViewData["Title"] = "Edit Device";
+    ViewData["Title"] = "تعديل الجهاز";
     Layout = "_Layout";
 }
 
-<div class="p-6">
+<div class="p-6" dir="rtl">
     <div class="max-w-2xl mx-auto">
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-right">
             <div class="mb-6">
-                <h1 class="text-2xl font-bold text-gray-900 mb-2">Edit Device</h1>
-                <p class="text-gray-600">Update device information and settings.</p>
+                <h1 class="text-2xl font-bold text-gray-900 mb-2">تعديل الجهاز</h1>
+                <p class="text-gray-600">تحديث بيانات الجهاز وإعداداته.</p>
             </div>
 
             <form asp-action="Edit" method="post">
                 <input type="hidden" asp-for="Id" />
 
                 <div class="mb-4">
-                    <label asp-for="Name" class="block text-sm font-medium text-gray-700 mb-2">Device Name</label>
+                    <label asp-for="Name" class="block text-sm font-medium text-gray-700 mb-2">اسم الجهاز</label>
                     <input asp-for="Name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
                     <span asp-validation-for="Name" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="mb-4">
-                    <label asp-for="Code" class="block text-sm font-medium text-gray-700 mb-2">Device Code</label>
+                    <label asp-for="Code" class="block text-sm font-medium text-gray-700 mb-2">رمز الجهاز</label>
                     <input asp-for="Code" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
                     <span asp-validation-for="Code" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="mb-4">
-                    <label asp-for="Serial" class="block text-sm font-medium text-gray-700 mb-2">Serial Number</label>
+                    <label asp-for="Serial" class="block text-sm font-medium text-gray-700 mb-2">الرقم التسلسلي</label>
                     <input asp-for="Serial" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
                     <span asp-validation-for="Serial" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="mb-4">
-                    <label asp-for="Model" class="block text-sm font-medium text-gray-700 mb-2">Model</label>
+                    <label asp-for="Model" class="block text-sm font-medium text-gray-700 mb-2">الطراز</label>
                     <input asp-for="Model" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
                     <span asp-validation-for="Model" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="mb-4">
-                    <label asp-for="OS" class="block text-sm font-medium text-gray-700 mb-2">Operating System</label>
+                    <label asp-for="OS" class="block text-sm font-medium text-gray-700 mb-2">نظام التشغيل</label>
                     <input asp-for="OS" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
                     <span asp-validation-for="OS" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="mb-4">
-                    <label asp-for="BranchId" class="block text-sm font-medium text-gray-700 mb-2">Branch ID</label>
+                    <label asp-for="BranchId" class="block text-sm font-medium text-gray-700 mb-2">رقم الفرع</label>
                     <input asp-for="BranchId" type="number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required />
                     <span asp-validation-for="BranchId" class="text-red-500 text-sm mt-1"></span>
                 </div>
 
                 <div class="flex justify-between items-center pt-6">
-                    <a href="@Url.Action("Index", "DeviceManagement")" class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                        <i class="fas fa-arrow-left mr-2"></i>Back to List
+                    <a href="@Url.Action("Index","DeviceManagement")" class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-arrow-right ml-2"></i>الرجوع إلى القائمة
                     </a>
                     <button type="submit" class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
-                        <i class="fas fa-save mr-2"></i>Update Device
+                        <i class="fas fa-save ml-2"></i>تحديث الجهاز
                     </button>
                 </div>
             </form>
@@ -67,5 +67,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

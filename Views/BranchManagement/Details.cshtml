@@ -1,8 +1,8 @@
-@using CompanyApi.DTOs.BranchDtos
+﻿@using CompanyApi.DTOs.BranchDtos
 @model BranchDto
 
 @{
-    ViewData["Title"] = "Branch Details";
+    ViewData["Title"] = "تفاصيل الفرع";
     Layout = "_Layout";
 }
 
@@ -11,17 +11,17 @@
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 mb-2">Branch Details</h1>
-                    <p class="text-gray-600">View branch information and location details.</p>
+                    <h1 class="text-2xl font-bold text-gray-900 mb-2">تفاصيل الفرع</h1>
+                    <p class="text-gray-600">عرض معلومات الفرع وتفاصيل الموقع.</p>
                 </div>
                 <div class="flex space-x-2">
-                    <a href="@Url.Action("Edit", "BranchManagement", new { id = Model.Id })"
+                    <a href="@Url.Action("Edit","BranchManagement",new { id = Model.Id })"
                        class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors">
-                        <i class="fas fa-edit mr-2"></i>Edit
+                        <i class="fas fa-edit mr-2"></i>تعديل
                     </a>
-                    <a href="@Url.Action("Index", "BranchManagement")"
+                    <a href="@Url.Action("Index","BranchManagement")"
                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                        <i class="fas fa-arrow-left mr-2"></i>Back to List
+                        <i class="fas fa-arrow-left mr-2"></i>العودة إلى القائمة
                     </a>
                 </div>
             </div>
@@ -29,59 +29,60 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Branch Name</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">اسم الفرع</label>
                         <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@Model.Name</p>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Branch Code</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">كود الفرع</label>
                         <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@Model.Code</p>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الدولة</label>
                         <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@Model.Country</p>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Governorate</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">المحافظة</label>
                         <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@Model.Governate</p>
                     </div>
                 </div>
 
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Region/City</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">المنطقة / المدينة</label>
                         <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@Model.RegionCity</p>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Street</label>
-                        <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@(string.IsNullOrEmpty(Model.Street) ? "Not specified" : Model.Street)</p>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الشارع</label>
+                        <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@(string.IsNullOrEmpty(Model.Street) ? "غير محدد" : Model.Street)</p>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Building Number</label>
-                        <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@(string.IsNullOrEmpty(Model.BuildingNumber) ? "Not specified" : Model.BuildingNumber)</p>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">رقم المبنى</label>
+                        <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@(string.IsNullOrEmpty(Model.BuildingNumber) ? "غير محدد" : Model.BuildingNumber)</p>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الحالة</label>
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium @(Model.IsActive ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800")">
-                            @(Model.IsActive ? "Active" : "Inactive")
+                            @(Model.IsActive ? "نشط" : "غير نشط")
                         </span>
+                    </div>
                 </div>
             </div>
 
             <div class="mt-8 pt-6 border-t border-gray-200">
                 <div class="flex justify-between items-center">
-                    <div class="text-sm text-gray-500">@Model.Governate, @Model.RegionCity</div>
+                    <div class="text-sm text-gray-500">@Model.Governate، @Model.RegionCity</div>
                     <span class="text-sm text-gray-500">
-                        Branch ID: @Model.Id
+                        رقم الفرع: @Model.Id
                     </span>
                     <button onclick="confirmDelete(@Model.Id, '@Model.Name')"
                             class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-                        <i class="fas fa-trash mr-2"></i>Delete Branch
+                        <i class="fas fa-trash mr-2"></i>حذف الفرع
                     </button>
                 </div>
             </div>
@@ -90,20 +91,20 @@
 </div>
 
 <script>
-function confirmDelete(id, name) {
-    if (confirm(`Are you sure you want to delete the branch "${name}"? This action cannot be undone.`)) {
-        var form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '@Url.Action("Delete", "BranchManagement")/' + id;
+    function confirmDelete(id, name) {
+        if (confirm(`هل أنت متأكد أنك تريد حذف الفرع "${name}"؟ لا يمكن التراجع عن هذا الإجراء.`)) {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '@Url.Action("Delete","BranchManagement")/' + id;
 
-        var token = document.createElement('input');
-        token.type = 'hidden';
-        token.name = '__RequestVerificationToken';
-        token.value = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
-        form.appendChild(token);
+            var token = document.createElement('input');
+            token.type = 'hidden';
+            token.name = '__RequestVerificationToken';
+            token.value = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+            form.appendChild(token);
 
-        document.body.appendChild(form);
-        form.submit();
+            document.body.appendChild(form);
+            form.submit();
+        }
     }
-}
 </script>

@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ???? ??????</title>
+    <title>@ViewData["Title"] - لوحة تحكم المدير</title>
 
-    <!-- Tailwind CSS via CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -26,67 +26,68 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- External CSS -->
+    <!-- CSS خارجي -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <!-- Navigation -->
+
+    <!-- شريط التنقل -->
     <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
+                <!-- الشعار -->
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <h1 class="text-xl font-bold text-gray-900">???? ??????</h1>
+                        <h1 class="text-xl font-bold text-gray-900">لوحة تحكم المدير</h1>
                     </div>
                 </div>
 
-                <!-- Desktop Navigation -->
+                <!-- التنقل (شاشات كبيرة) -->
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
+                    <div class="mr-10 flex items-baseline space-x-4 space-x-reverse">
                         <a href="@Url.Action("Index","Admin")"
                            class="px-3 py-2 rounded-md text-sm font-medium @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Admin" ? "bg-primary text-white" : "text-gray-700 hover:bg-gray-100")">
-                            <i class="fas fa-tachometer-alt mr-2"></i>????????
+                            <i class="fas fa-tachometer-alt ml-2"></i>لوحة التحكم
                         </a>
 
                         <div class="relative group">
                             <button class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 flex items-center">
-                                <i class="fas fa-cog mr-2"></i>???????
-                                <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                                <i class="fas fa-cog ml-2"></i>الإدارة
+                                <i class="fas fa-chevron-down mr-1 text-xs"></i>
                             </button>
 
-                            <!-- Dropdown Menu -->
-                            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <!-- القائمة المنسدلة -->
+                            <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 text-right">
                                 <a href="@Url.Action("Index","BranchManagement")" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    <i class="fas fa-code-branch mr-2"></i>??????
+                                    <i class="fas fa-code-branch ml-2"></i>الفروع
                                 </a>
                                 <a href="@Url.Action("Index","UserManagement")" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    <i class="fas fa-users mr-2"></i>??????????
+                                    <i class="fas fa-users ml-2"></i>المستخدمون
                                 </a>
                                 <a href="@Url.Action("Index","CompanyManagement")" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    <i class="fas fa-building mr-2"></i>???????
+                                    <i class="fas fa-building ml-2"></i>الشركات
                                 </a>
                                 <a href="@Url.Action("Index","DeviceManagement")" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    <i class="fas fa-mobile-alt mr-2"></i>???????
+                                    <i class="fas fa-mobile-alt ml-2"></i>الأجهزة
                                 </a>
                                 <a href="@Url.Action("Index","ProductManagement")" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    <i class="fas fa-box mr-2"></i>????????
+                                    <i class="fas fa-box ml-2"></i>المنتجات
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- User Menu -->
+                <!-- قائمة المستخدم -->
                 <div class="hidden md:block">
-                    <div class="ml-4 flex items-center md:ml-6">
+                    <div class="mr-4 flex items-center md:mr-6">
                         <button class="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
-                            <i class="fas fa-sign-out-alt mr-2"></i>????? ??????
+                            <i class="fas fa-sign-out-alt ml-2"></i>تسجيل الخروج
                         </button>
                     </div>
                 </div>
 
-                <!-- Mobile menu button -->
+                <!-- زر القائمة للجوال -->
                 <div class="md:hidden">
                     <button type="button"
                             class="mobile-menu-button bg-gray-100 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
@@ -98,96 +99,98 @@
             </div>
         </div>
 
-        <!-- Mobile Menu -->
+        <!-- قائمة الجوال -->
         <div id="mobile-menu" class="mobile-menu hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200 text-right">
                 <a href="@Url.Action("Index","Admin")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-tachometer-alt mr-2"></i>????????
+                    <i class="fas fa-tachometer-alt ml-2"></i>لوحة التحكم
                 </a>
                 <a href="@Url.Action("Index","BranchManagement")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-code-branch mr-2"></i>??????
+                    <i class="fas fa-code-branch ml-2"></i>الفروع
                 </a>
                 <a href="@Url.Action("Index","UserManagement")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-users mr-2"></i>??????????
+                    <i class="fas fa-users ml-2"></i>المستخدمون
                 </a>
                 <a href="@Url.Action("Index","CompanyManagement")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-building mr-2"></i>???????
+                    <i class="fas fa-building ml-2"></i>الشركات
                 </a>
                 <a href="@Url.Action("Index","DeviceManagement")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-mobile-alt mr-2"></i>???????
+                    <i class="fas fa-mobile-alt ml-2"></i>الأجهزة
                 </a>
                 <a href="@Url.Action("Index","ProductManagement")" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-box mr-2"></i>????????
+                    <i class="fas fa-box ml-2"></i>المنتجات
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- المحتوى الرئيسي -->
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <!-- Flash Messages -->
+
+        <!-- رسائل النجاح -->
         @if( TempData["SuccessMessage"] != null )
         {
             <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg flex items-center alert-auto-hide">
-                <i class="fas fa-check-circle mr-2"></i>
+                <i class="fas fa-check-circle ml-2"></i>
                 @TempData["SuccessMessage"]
-                <button type="button" class="ml-auto text-green-500 hover:text-green-700 dismiss-alert">
+                <button type="button" class="mr-auto text-green-500 hover:text-green-700 dismiss-alert">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
         }
 
+        <!-- رسائل الخطأ -->
         @if( TempData["ErrorMessage"] != null )
         {
             <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg flex items-center alert-auto-hide">
-                <i class="fas fa-exclamation-circle mr-2"></i>
+                <i class="fas fa-exclamation-circle ml-2"></i>
                 @TempData["ErrorMessage"]
-                <button type="button" class="ml-auto text-red-500 hover:text-red-700 dismiss-alert">
+                <button type="button" class="mr-auto text-red-500 hover:text-red-700 dismiss-alert">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
         }
 
-        <!-- Page Content -->
+        <!-- محتوى الصفحة -->
         <div class="bg-white rounded-lg shadow-sm">
             @RenderBody()
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- التذييل -->
     <footer class="bg-white border-t border-gray-200 mt-12">
         <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center">
-                <p class="text-sm text-gray-500">&copy; 2025 ???? ??????. ???? ?????? ??????.</p>
-                <div class="flex space-x-4">
-                    <span class="text-sm text-gray-400">??????? v1.0.0</span>
+            <div class="flex justify-between items-center flex-row-reverse">
+                <p class="text-sm text-gray-500">&copy; 2025 لوحة تحكم المدير. جميع الحقوق محفوظة.</p>
+                <div class="flex space-x-4 space-x-reverse">
+                    <span class="text-sm text-gray-400">الإصدار 1.0.0</span>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- السكربتات -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        // Mobile menu toggle with accessibility
+        // تبديل قائمة الجوال
         $('.mobile-menu-button').on('click', function () {
             $('#mobile-menu').toggleClass('hidden');
             const expanded = $(this).attr('aria-expanded') === 'true';
             $(this).attr('aria-expanded', !expanded);
         });
 
-        // Dismiss alerts
+        // إغلاق الرسائل يدويًا
         $('.dismiss-alert').on('click', function () {
             $(this).parent().fadeOut();
         });
 
-        // Auto-hide alerts after 5 seconds
+        // إخفاء الرسائل تلقائيًا بعد 5 ثوانٍ
         setTimeout(() => {
             $('.alert-auto-hide').fadeOut();
         }, 5000);
 
-        // Smooth scrolling
+        // تمرير سلس للرابط الداخلي
         $('a[href^="#"]').on('click', function (event) {
             var target = $($(this).attr('href'));
             if (target.length) {
@@ -198,14 +201,14 @@
             }
         });
 
-        // Add loading state to forms
+        // حالة تحميل عند إرسال النماذج
         $('form').on('submit', function () {
             $(this).find('button[type="submit"]')
                 .prop('disabled', true)
-                .html('<i class="fas fa-spinner fa-spin mr-2"></i>Processing...');
+                .html('<i class="fas fa-spinner fa-spin ml-2"></i>جاري المعالجة...');
         });
     </script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts",required: false)
 </body>
 </html>

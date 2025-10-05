@@ -25,7 +25,7 @@ namespace CompanyApi.Services
             _mapper = mapper;
         }
 
-        public async Task CreateDocumentAsync(CreateDocumentDto document)
+        public async Task<Document> CreateDocumentAsync(CreateDocumentDto document)
         {
             const decimal VAT_RATE = 0.14m;
 
@@ -130,6 +130,7 @@ namespace CompanyApi.Services
 
             await _unitOfWork.Repository<Models.Document>().AddAsync(newDocument);
             await _unitOfWork.SaveChangesAsync();
+            return newDocument;
         }
 
 

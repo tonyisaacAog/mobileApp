@@ -1,15 +1,13 @@
-using CompanyApi.DTOs.DeviceDtos;
 using CompanyApi.DTOs.DocumentDtos;
 using CompanyApi.DTOs.OrderReportDtos;
 using CompanyApi.DTOs.QueryParameters;
 using CompanyApi.DTOs.ResponseDtos;
-using CompanyApi.DTOs.UserDtos;
 
 namespace CompanyApi.Services.Interfaces
 {
     public interface IDocumentService
     {
-        Task CreateDocumentAsync(CreateDocumentDto document);
+        Task<Models.Document> CreateDocumentAsync(CreateDocumentDto document);
         Task<Result<DocumentsTotalsDto>> GetDocumentsStatsAsync();
         Task<Result<DocumentDetailsDto>?> GetDocumentByIdAsync(int id);
         Task<PagedResult<DocumentDto>> GetAllDocumentsAsync(DocumentQueryParamters paginationParams);

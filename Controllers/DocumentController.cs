@@ -50,7 +50,14 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> Post([FromBody] CreateDocumentDto document)
         {
             var entity = await _documentService.CreateDocumentAsync(document);
-            return Ok(await Result<Document>.SuccessAsync(entity, "Document created successfully", 201));
+            if (entity.Succeeded)
+            {
+                return Ok(entity);
+            }
+            else
+            {
+                return BadRequest(entity);
+            }
         }
 
         // PUT api/<DocumentController>/5

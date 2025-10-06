@@ -26,24 +26,26 @@ namespace CompanyApi.Services
             _mapper = mapper;
         }
 
-        public async Task<Document> CreateDocumentAsync(CreateDocumentDto document)
+        public async Task<Result<DocumentDetailsDto>> CreateDocumentAsync(CreateDocumentDto document)
         {
             const decimal VAT_RATE = 0.14m;
 
             // 1. Validate branch
             if (document.BranchId == null)
-                throw new InvalidOperationException("Branch is required.");
+                await Result<Document>.FailureAsync("Branch is required.");
 
             var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
             if (branch == null)
-                throw new InvalidOperationException($"Branch with ID {document.BranchId} does not exist.");
+                await Result<Document>.FailureAsync($"Branch with ID {document.BranchId} does not exist.");
 
             // 2. Validate user
             if (document.UserId == null)
-                throw new InvalidOperationException("User is required.");
+                await Result<Document>.FailureAsync("User is required.");
+
 
             if (document.DeviceCode == null)
-                throw new InvalidOperationException("DeviceCode is required.");
+                await Result<Document>.FailureAsync($"Device with code {document.DeviceCode} not exist.");
+
 
             var device = new Models.Device();
 
@@ -52,7 +54,7 @@ namespace CompanyApi.Services
                  device = await _unitOfWork.Repository<Models.Device>()
                     .FirstOrDefaultAsync(d => d.Code == document.DeviceCode && d.BranchId == document.BranchId);
                 if (device == null)
-                    throw new InvalidOperationException($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
+                    await Result<Document>.FailureAsync($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
                 // Optionally, you can associate the device with the document here if needed
                 // newDocument.DeviceId = device.Id;
             }
@@ -136,7 +138,8 @@ namespace CompanyApi.Services
 
             await _unitOfWork.Repository<Models.Document>().AddAsync(newDocument);
             await _unitOfWork.SaveChangesAsync();
-            return newDocument;
+            var documentDetails = _mapper.Map<DocumentDetailsDto>(newDocument);
+            return await Result<DocumentDetailsDto>.SuccessAsync(documentDetails, "Document created successfully", 200);
         }
 
 
@@ -162,8 +165,8 @@ namespace CompanyApi.Services
 
             return await PagedResult<DocumentDto>.SuccessAsync(
                 documents.Items,
-                documents.TotalCount,
                 paginationParams.PageNumber,
+                documents.TotalCount,
                 paginationParams.PageSize
             );
         }

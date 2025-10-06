@@ -31,6 +31,9 @@ namespace CompanyApi.Mappings
                 .ForMember(d => d.ReceiptItems,
                            opt => opt.MapFrom(s => s.ReceiptItems));
             CreateMap<DocumentLines,DocumentLinesDto>();
+
+            CreateMap<Document, DocumentDetailsDto>();
+            CreateMap<DocumentLines, DocumentLinesDto>();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace CompanyApi.Services.Interfaces
 {
     public interface IDocumentService
     {
-        Task CreateDocumentAsync(CreateDocumentDto document);
+        Task<Result<DocumentDetailsDto>> CreateDocumentAsync(CreateDocumentDto document);
         Task<Result<DocumentsTotalsDto>> GetDocumentsStatsAsync(string deviceCode);
         Task<Result<DocumentDetailsDto>?> GetDocumentByIdAsync(int id);
         Task<PagedResult<DocumentDto>> GetAllDocumentsAsync(DocumentQueryParamters paginationParams);

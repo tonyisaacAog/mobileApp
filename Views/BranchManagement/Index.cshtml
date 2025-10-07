@@ -98,11 +98,15 @@
                                            title="تعديل الفرع">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <button onclick="confirmDelete(@branch.Id, '@branch.Name')"
+                                        <a href="@Url.Action("Delete", "BranchManagement", new { id = branch.Id })"
+                                           class="text-red-600 hover:text-red-700 transition-colors" title="حذف">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                       @*  <button onclick="confirmDelete(@branch.Id, '@branch.Name')"
                                                 class="text-red-600 hover:text-red-700 transition-colors"
                                                 title="حذف الفرع">
                                             <i class="fas fa-trash"></i>
-                                        </button>
+                                        </button> *@
                                     </div>
                                 </td>
                             </tr>

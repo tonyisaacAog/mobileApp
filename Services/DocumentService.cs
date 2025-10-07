@@ -1,6 +1,7 @@
 using AutoMapper;
 using CompanyApi.DTOs.DocumentDtos;
 using CompanyApi.DTOs.OrderReportDtos;
+using CompanyApi.DTOs.ProductDtos;
 using CompanyApi.DTOs.QueryParameters;
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.DTOs.UserDtos;
@@ -25,24 +26,26 @@ namespace CompanyApi.Services
             _mapper = mapper;
         }
 
-        public async Task<Document> CreateDocumentAsync(CreateDocumentDto document)
+        public async Task<Result<DocumentDetailsDto>> CreateDocumentAsync(CreateDocumentDto document)
         {
             const decimal VAT_RATE = 0.14m;
 
             // 1. Validate branch
             if (document.BranchId == null)
-                throw new InvalidOperationException("Branch is required.");
+                await Result<Document>.FailureAsync("Branch is required.");
 
             var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
             if (branch == null)
-                throw new InvalidOperationException($"Branch with ID {document.BranchId} does not exist.");
+                await Result<Document>.FailureAsync($"Branch with ID {document.BranchId} does not exist.");
 
             // 2. Validate user
             if (document.UserId == null)
-                throw new InvalidOperationException("User is required.");
+                await Result<Document>.FailureAsync("User is required.");
+
 
             if (document.DeviceCode == null)
-                throw new InvalidOperationException("DeviceCode is required.");
+                await Result<Document>.FailureAsync($"Device with code {document.DeviceCode} not exist.");
+
 
             var device = new Models.Device();
 
@@ -51,7 +54,7 @@ namespace CompanyApi.Services
                  device = await _unitOfWork.Repository<Models.Device>()
                     .FirstOrDefaultAsync(d => d.Code == document.DeviceCode && d.BranchId == document.BranchId);
                 if (device == null)
-                    throw new InvalidOperationException($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
+                    await Result<Document>.FailureAsync($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
                 // Optionally, you can associate the device with the document here if needed
                 // newDocument.DeviceId = device.Id;
             }
@@ -95,11 +98,16 @@ namespace CompanyApi.Services
             decimal totalDiscount = 0;
             decimal totalVAT = 0;
 
+            //var selector = MappingUtilities.CreateMapExpression<Product, ProductDto>();
+            //var products = await _unitOfWork.Repository<Product>().GetAllByConditionAsync(o => document.Items.Any(id=>id.ProductId == o.Id), selector);
+
             foreach (var item in document.Items)
             {
+                //var vatproduct = products.FirstOrDefault(obj => obj.Id == item.ProductId);
                 var lineTotal = item.Quantity * item.UnitPrice; // before discount
                 var lineNet = lineTotal - item.DiscountAmount;  // after discount
-                var lineVAT = lineNet * VAT_RATE;
+               
+                var lineVAT = item.VAT>0? lineNet * VAT_RATE:0;
 
                 subtotal += lineTotal;
                 totalDiscount += item.DiscountAmount;
@@ -130,7 +138,8 @@ namespace CompanyApi.Services
 
             await _unitOfWork.Repository<Models.Document>().AddAsync(newDocument);
             await _unitOfWork.SaveChangesAsync();
-            return newDocument;
+            var documentDetails = _mapper.Map<DocumentDetailsDto>(newDocument);
+            return await Result<DocumentDetailsDto>.SuccessAsync(documentDetails, "Document created successfully", 200);
         }
 
 
@@ -156,18 +165,23 @@ namespace CompanyApi.Services
 
             return await PagedResult<DocumentDto>.SuccessAsync(
                 documents.Items,
-                documents.TotalCount,
                 paginationParams.PageNumber,
+                documents.TotalCount,
                 paginationParams.PageSize
             );
         }
 
 
-        public async Task<Result<DocumentsTotalsDto>> GetDocumentsStatsAsync()
+        public async Task<Result<DocumentsTotalsDto>> GetDocumentsStatsAsync(string deviceCode)
         {
             //var selectors = MappingUtilities.CreateMapExpression<Models.Document,DocumentsTotalsDto>();
+            var device = await _unitOfWork.Repository<Models.Device>()
+                .FirstOrDefaultAsync(d => d.Code == deviceCode);
+
             var documents = await _unitOfWork.Repository<Models.Document>()
-                .GetAllByConditionAsync(x => x.CreatedAt.Date == DateTime.Now.Date, x => new { x.TotalAmount, x.TotalDiscount, x.TotalVAT });
+                .GetAllByConditionAsync(x =>
+                    (x.ReceiptDate.Date == DateTime.Now.Date && device!=null && x.DeviceId == device.Id)
+                , x => new { x.TotalAmount, x.TotalDiscount, x.TotalVAT });
             var totals = new DocumentsTotalsDto
             {
                 SumOfTotals = documents.Sum(d => d.TotalAmount),

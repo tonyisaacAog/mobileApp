@@ -27,9 +27,9 @@ namespace CompanyApi.Controllers
 
         // GET: api/<DocumentController>
         [HttpGet("GetDocumentStats")]
-        public async Task<IActionResult> GetDocumentStats()
+        public async Task<IActionResult> GetDocumentStats([FromQuery]string deviceCode)
         {
-            var result = await _documentService.GetDocumentsStatsAsync();
+            var result = await _documentService.GetDocumentsStatsAsync(deviceCode);
             return Ok(result);
         }
 
@@ -50,7 +50,14 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> Post([FromBody] CreateDocumentDto document)
         {
             var entity = await _documentService.CreateDocumentAsync(document);
-            return Ok(await Result<Document>.SuccessAsync(entity, "Document created successfully", 201));
+            if (entity.Succeeded)
+            {
+                return Ok(entity);
+            }
+            else
+            {
+                return BadRequest(entity);
+            }
         }
 
         // PUT api/<DocumentController>/5

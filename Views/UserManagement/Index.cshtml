@@ -114,10 +114,14 @@
                                            class="text-green-600 hover:text-green-700" title="إدارة فروع المستخدم">
                                             <i class="fas fa-code-branch"></i>
                                         </a>
-                                        <button onclick="confirmDelete(@user.Id, '@user.Username')"
+                                        <a href="@Url.Action("Delete", "UserManagement", new { id = user.Id })"
+                                           class="text-red-600 hover:text-red-700 transition-colors" title="حذف">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                       @*  <button onclick="confirmDelete(@user.Id, '@user.Username')"
                                                 class="text-red-600 hover:text-red-700" title="حذف المستخدم">
                                             <i class="fas fa-trash"></i>
-                                        </button>
+                                        </button> *@
                                     </div>
                                 </td>
                             </tr>

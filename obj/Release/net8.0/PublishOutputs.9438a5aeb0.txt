@@ -15,6 +15,8 @@ G:\Company Projects\MobileApp\CompanyApi\obj\Release\net8.0\PubTmp\Out\Azure.Ide
 G:\Company Projects\MobileApp\CompanyApi\obj\Release\net8.0\PubTmp\Out\FluentValidation.dll
 G:\Company Projects\MobileApp\CompanyApi\obj\Release\net8.0\PubTmp\Out\FluentValidation.AspNetCore.dll
 G:\Company Projects\MobileApp\CompanyApi\obj\Release\net8.0\PubTmp\Out\FluentValidation.DependencyInjectionExtensions.dll
+G:\Company Projects\MobileApp\CompanyApi\obj\Release\net8.0\PubTmp\Out\LinqKit.Core.dll
+G:\Company Projects\MobileApp\CompanyApi\obj\Release\net8.0\PubTmp\Out\LinqKit.Microsoft.EntityFrameworkCore.dll
 G:\Company Projects\MobileApp\CompanyApi\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 G:\Company Projects\MobileApp\CompanyApi\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Authorization.dll
 G:\Company Projects\MobileApp\CompanyApi\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Components.dll

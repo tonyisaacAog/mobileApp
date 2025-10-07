@@ -471,6 +471,15 @@
         "tags": [
           "Document"
         ],
+        "parameters": [
+          {
+            "name": "deviceCode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

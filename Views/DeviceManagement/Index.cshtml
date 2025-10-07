@@ -78,10 +78,14 @@
                                             class="text-yellow-600 hover:text-yellow-700 transition-colors" title="تعديل">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <button onclick="confirmDelete(@device.Id, '@device.Name')"
+                                        <a href="@Url.Action("Delete", "DeviceManagement", new { id = device.Id })"
+                                           class="text-red-600 hover:text-red-700 transition-colors" title="حذف">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                       @*  <button onclick="confirmDelete(@device.Id, '@device.Name')"
                                             class="text-red-600 hover:text-red-700 transition-colors" title="حذف">
                                             <i class="fas fa-trash"></i>
-                                        </button>
+                                        </button> *@
                                     </div>
                                 </td>
                             </tr>

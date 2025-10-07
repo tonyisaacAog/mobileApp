@@ -79,6 +79,8 @@ namespace CompanyApi.Services
             product.Category = dto.Category;
             product.Cost = dto.Cost;
             product.UpdatedAt = DateTime.UtcNow;
+            product.IsTaxable = dto.IsTaxable;
+            product.IsActive = dto.IsActive;
 
             repo.Update(product);
             await _unitOfWork.SaveChangesAsync();

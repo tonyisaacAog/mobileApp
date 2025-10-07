@@ -9,7 +9,7 @@ namespace CompanyApi.Models
 
         public int ProductId { get; set; }
 
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal UnitPrice { get; set; }

@@ -64,7 +64,7 @@ namespace CompanyApi.DTOs.OrderReportDtos
     {
         public string ProductName { get; set; } = string.Empty;
         public string ProductCode { get; set; } = string.Empty;
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal Discount { get; set; }
         public decimal TotalPrice { get; set; }

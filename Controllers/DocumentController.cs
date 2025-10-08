@@ -33,6 +33,14 @@ namespace CompanyApi.Controllers
             return Ok(result);
         }
 
+        // GET: api/<DocumentController>
+        [HttpGet("GetProductStats")]
+        public async Task<IActionResult> GetProductStats([FromQuery]string deviceCode)
+        {
+            var result = await _documentService.GetDocumentsStatsAsync(deviceCode);
+            return Ok(result);
+        }
+
         // GET api/<DocumentController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)

@@ -49,6 +49,7 @@ namespace CompanyApi.Models
         public int? BranchId { get; set; }
         public int? CompanyId { get; set; }
         public int? DeviceId { get; set; }
+        public bool IsCoupon { get; set; } = false;
         // Navigation properties
         [ForeignKey("UserId")]
         public virtual User? User { get; set; }

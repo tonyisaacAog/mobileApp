@@ -487,6 +487,27 @@
         }
       }
     },
+    "/api/Document/GetProductStats": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "parameters": [
+          {
+            "name": "deviceCode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Document/{id}": {
       "get": {
         "tags": [
@@ -892,6 +913,9 @@
             "type": "string",
             "nullable": true
           },
+          "isCoupon": {
+            "type": "boolean"
+          },
           "items": {
             "type": "array",
             "items": {
@@ -1085,8 +1109,8 @@
             "nullable": true
           },
           "quantity": {
-            "type": "integer",
-            "format": "int32"
+            "type": "number",
+            "format": "double"
           },
           "unitPrice": {
             "type": "number",

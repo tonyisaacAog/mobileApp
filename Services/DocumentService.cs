@@ -203,34 +203,46 @@ namespace CompanyApi.Services
         }
 
 
-        public async Task<Result<DocumentsTotalsDto>> GetProductsStatsAsync(string deviceCode)
+        public async Task<Result<List<ProductTotalsDto>>> GetProductsTotalsAsync(string deviceCode)
         {
             var device = await _unitOfWork.Repository<Models.Device>()
                 .FirstOrDefaultAsync(d => d.Code == deviceCode);
 
             if( device == null )
-                return await Result<DocumentsTotalsDto>.FailureAsync("Device not found");
+                return await Result<List<ProductTotalsDto>>.FailureAsync("Device not found");
 
             var today = DateTime.Now.Date;
 
-            var documents = await _unitOfWork.Repository<Document>()
-                .GetAllByConditionAsync(x =>
-                    x.ReceiptDate.Date == today &&
-                    x.DeviceId == device.Id,
-                    x => new { x.DocumentType,x.TotalAmount,x.TotalDiscount,x.TotalVAT });
+            var lines = await _unitOfWork.Repository<DocumentLines>()
+                .GetAllByConditionAsync(l =>
+                    l.Receipt.ReceiptDate.Date == today &&
+                    l.Receipt.DeviceId == device.Id,
+                    l => new
+                    {
+                        l.ProductId,
+                        l.Quantity,
+                        l.TotalPrice,
+                        l.DiscountAmount,
+                        l.VAT,
+                        ProductName = l.Product.Name
+                    });
 
-            var sumSR = documents.Where(x => x.DocumentType == DocumentType.SR);
-            var sumRR = documents.Where(x => x.DocumentType == DocumentType.RR);
+            var grouped = lines
+                .GroupBy(x => new { x.ProductId,x.ProductName })
+                .Select(g => new ProductTotalsDto
+                {
+                    ProductId = g.Key.ProductId,
+                    ProductName = g.Key.ProductName,
+                    TotalQuantity = g.Sum(x => x.Quantity),
+                    TotalSales = g.Sum(x => x.TotalPrice),
+                    TotalDiscount = g.Sum(x => x.DiscountAmount),
+                    TotalVAT = g.Sum(x => x.VAT)
+                })
+                .ToList();
 
-            var totals = new DocumentsTotalsDto
-            {
-                SumOfTotals = sumSR.Sum(d => d.TotalAmount) - sumRR.Sum(d => d.TotalAmount),
-                SumOfDiscount = sumSR.Sum(d => d.TotalDiscount) - sumRR.Sum(d => d.TotalDiscount),
-                SumOfTaxes = sumSR.Sum(d => d.TotalVAT) - sumRR.Sum(d => d.TotalVAT)
-            };
-
-            return await Result<DocumentsTotalsDto>.SuccessAsync(totals);
+            return await Result<List<ProductTotalsDto>>.SuccessAsync(grouped);
         }
+
 
 
         public async Task<Result<DocumentDetailsDto>?> GetDocumentByIdAsync(int id)

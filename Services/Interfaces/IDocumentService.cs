@@ -1,5 +1,6 @@
 using CompanyApi.DTOs.DocumentDtos;
 using CompanyApi.DTOs.OrderReportDtos;
+using CompanyApi.DTOs.ProductDtos;
 using CompanyApi.DTOs.QueryParameters;
 using CompanyApi.DTOs.ResponseDtos;
 
@@ -9,6 +10,7 @@ namespace CompanyApi.Services.Interfaces
     {
         Task<Result<DocumentDetailsDto>> CreateDocumentAsync(CreateDocumentDto document);
         Task<Result<DocumentsTotalsDto>> GetDocumentsStatsAsync(string deviceCode);
+        Task<Result<List<ProductTotalsDto>>> GetProductsTotalsAsync(string deviceCode);
         Task<Result<DocumentDetailsDto>?> GetDocumentByIdAsync(int id);
         Task<PagedResult<DocumentDto>> GetAllDocumentsAsync(DocumentQueryParamters paginationParams);
         Task UpdateDocumentAsync(int id, DocumentDto document);

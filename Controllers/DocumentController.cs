@@ -37,7 +37,7 @@ namespace CompanyApi.Controllers
         [HttpGet("GetProductStats")]
         public async Task<IActionResult> GetProductStats([FromQuery]string deviceCode)
         {
-            var result = await _documentService.GetDocumentsStatsAsync(deviceCode);
+            var result = await _documentService.GetProductsTotalsAsync(deviceCode);
             return Ok(result);
         }
 

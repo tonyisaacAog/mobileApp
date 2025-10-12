@@ -32,19 +32,19 @@ namespace CompanyApi.Services
 
             // 1. Validate branch
             if( document.BranchId == null )
-                await Result<Document>.FailureAsync("Branch is required.");
+                return await Result<DocumentDetailsDto>.FailureAsync("Branch is required.");
 
             var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
             if( branch == null )
-                await Result<Document>.FailureAsync($"Branch with ID {document.BranchId} does not exist.");
+                return await Result<DocumentDetailsDto>.FailureAsync($"Branch with ID {document.BranchId} does not exist.");
 
             // 2. Validate user
             if( document.UserId == null )
-                await Result<Document>.FailureAsync("User is required.");
+                return await Result<DocumentDetailsDto>.FailureAsync("User is required.");
 
 
             if( document.DeviceCode == null )
-                await Result<Document>.FailureAsync($"Device with code {document.DeviceCode} not exist.");
+                return await Result<DocumentDetailsDto>.FailureAsync($"Device with code {document.DeviceCode} not exist.");
 
 
             var device = new Models.Device();
@@ -54,7 +54,7 @@ namespace CompanyApi.Services
                 device = await _unitOfWork.Repository<Models.Device>()
                    .FirstOrDefaultAsync(d => d.Code == document.DeviceCode && d.BranchId == document.BranchId);
                 if( device == null )
-                    await Result<Document>.FailureAsync($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
+                    return await Result<DocumentDetailsDto>.FailureAsync($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
                 // Optionally, you can associate the device with the document here if needed
                 // newDocument.DeviceId = device.Id;
             }

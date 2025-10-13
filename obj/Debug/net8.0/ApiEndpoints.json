@@ -342,6 +342,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "CompanyApi.Controllers.DocumentController",
+    "Method": "GetProductStats",
+    "RelativePath": "api/Document/GetProductStats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deviceCode",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CompanyApi.Controllers.ProductController",
     "Method": "Get",
     "RelativePath": "api/Product",

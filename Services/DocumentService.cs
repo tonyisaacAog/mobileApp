@@ -31,30 +31,30 @@ namespace CompanyApi.Services
             const decimal VAT_RATE = 0.14m;
 
             // 1. Validate branch
-            if (document.BranchId == null)
-                await Result<Document>.FailureAsync("Branch is required.");
+            if( document.BranchId == null )
+                return await Result<DocumentDetailsDto>.FailureAsync("Branch is required.");
 
             var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
-            if (branch == null)
-                await Result<Document>.FailureAsync($"Branch with ID {document.BranchId} does not exist.");
+            if( branch == null )
+                return await Result<DocumentDetailsDto>.FailureAsync($"Branch with ID {document.BranchId} does not exist.");
 
             // 2. Validate user
-            if (document.UserId == null)
-                await Result<Document>.FailureAsync("User is required.");
+            if( document.UserId == null )
+                return await Result<DocumentDetailsDto>.FailureAsync("User is required.");
 
 
-            if (document.DeviceCode == null)
-                await Result<Document>.FailureAsync($"Device with code {document.DeviceCode} not exist.");
+            if( document.DeviceCode == null )
+                return await Result<DocumentDetailsDto>.FailureAsync($"Device with code {document.DeviceCode} not exist.");
 
 
             var device = new Models.Device();
 
-            if(document.DeviceCode != null)
+            if( document.DeviceCode != null )
             {
-                 device = await _unitOfWork.Repository<Models.Device>()
-                    .FirstOrDefaultAsync(d => d.Code == document.DeviceCode && d.BranchId == document.BranchId);
-                if (device == null)
-                    await Result<Document>.FailureAsync($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
+                device = await _unitOfWork.Repository<Models.Device>()
+                   .FirstOrDefaultAsync(d => d.Code == document.DeviceCode && d.BranchId == document.BranchId);
+                if( device == null )
+                    return await Result<DocumentDetailsDto>.FailureAsync($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
                 // Optionally, you can associate the device with the document here if needed
                 // newDocument.DeviceId = device.Id;
             }
@@ -71,29 +71,30 @@ namespace CompanyApi.Services
 
             // 4. Create Document
             var newDocument = new Models.Document
-                {
-                    ReceiptNumber = Guid.NewGuid().ToString(),
-                    DeviceSerial = document.DeviceSerial,
-                    ReceiptDate = document.ReceiptDate,
-                    PaymentMethod = document.PaymentMethod,
-                    DocumentType = document.DocumentType,
-                    Notes = document.Notes,
-                    CustomerName = document.CustomerName,
-                    CustomerCode = document.CustomerCode,
-                    CustomerTaxId = document.CustomerTaxId,
-                    CustomerPhone = document.CustomerPhone,
-                    CustomerCountryCode = document.CustomerCountryCode,
-                    CustomerGovernate = document.CustomerGovernate,
-                    CustomerCity = document.CustomerCity,
-                    CustomerStreet = document.CustomerStreet,
-                    CustomerBuilding = document.CustomerBuilding,
-                    CustomerType = document.CustomerType,
-                    ReferenceNumber = document.ReferenceNumber,
-                    UserId = document.UserId,
-                    BranchId = document.BranchId,
-                    CreatedAt = DateTime.UtcNow,
-                    DeviceId = device.Id
-                };
+            {
+                ReceiptNumber = Guid.NewGuid().ToString(),
+                DeviceSerial = document.DeviceSerial,
+                ReceiptDate = document.ReceiptDate,
+                PaymentMethod = document.PaymentMethod,
+                DocumentType = document.DocumentType,
+                Notes = document.Notes,
+                CustomerName = document.CustomerName,
+                CustomerCode = document.CustomerCode,
+                CustomerTaxId = document.CustomerTaxId,
+                CustomerPhone = document.CustomerPhone,
+                CustomerCountryCode = document.CustomerCountryCode,
+                CustomerGovernate = document.CustomerGovernate,
+                CustomerCity = document.CustomerCity,
+                CustomerStreet = document.CustomerStreet,
+                CustomerBuilding = document.CustomerBuilding,
+                CustomerType = document.CustomerType,
+                ReferenceNumber = document.ReferenceNumber,
+                IsCoupon = document.IsCoupon,
+                UserId = document.UserId,
+                BranchId = document.BranchId,
+                CreatedAt = DateTime.UtcNow,
+                DeviceId = device.Id
+            };
 
             decimal subtotal = 0;
             decimal totalDiscount = 0;
@@ -102,13 +103,13 @@ namespace CompanyApi.Services
             //var selector = MappingUtilities.CreateMapExpression<Product, ProductDto>();
             //var products = await _unitOfWork.Repository<Product>().GetAllByConditionAsync(o => document.Items.Any(id=>id.ProductId == o.Id), selector);
 
-            foreach (var item in document.Items)
+            foreach( var item in document.Items )
             {
                 //var vatproduct = products.FirstOrDefault(obj => obj.Id == item.ProductId);
                 var lineTotal = item.Quantity * item.UnitPrice; // before discount
                 var lineNet = lineTotal - item.DiscountAmount;  // after discount
-               
-                var lineVAT = item.VAT>0? lineNet * VAT_RATE:0;
+
+                var lineVAT = item.VAT > 0 ? lineNet * VAT_RATE : 0;
 
                 subtotal += lineTotal;
                 totalDiscount += item.DiscountAmount;
@@ -140,7 +141,7 @@ namespace CompanyApi.Services
             await _unitOfWork.Repository<Models.Document>().AddAsync(newDocument);
             await _unitOfWork.SaveChangesAsync();
             var documentDetails = _mapper.Map<DocumentDetailsDto>(newDocument);
-            return await Result<DocumentDetailsDto>.SuccessAsync(documentDetails, "Document created successfully", 200);
+            return await Result<DocumentDetailsDto>.SuccessAsync(documentDetails,"Document created successfully",200);
         }
 
 
@@ -153,7 +154,7 @@ namespace CompanyApi.Services
 
             // نضيف الشروط لو اتوفر قيمها
             if( paginationParams.DateFrom.HasValue )
-                predicate = predicate.And(x => x.ReceiptDate.Date >= paginationParams.DateFrom  );
+                predicate = predicate.And(x => x.ReceiptDate.Date >= paginationParams.DateFrom);
 
             if( paginationParams.DateTo.HasValue )
                 predicate = predicate.And(x => x.ReceiptDate.Date <= paginationParams.DateTo.Value);
@@ -175,28 +176,81 @@ namespace CompanyApi.Services
 
         public async Task<Result<DocumentsTotalsDto>> GetDocumentsStatsAsync(string deviceCode)
         {
-            //var selectors = MappingUtilities.CreateMapExpression<Models.Document,DocumentsTotalsDto>();
             var device = await _unitOfWork.Repository<Models.Device>()
                 .FirstOrDefaultAsync(d => d.Code == deviceCode);
 
+            if( device == null )
+                return await Result<DocumentsTotalsDto>.FailureAsync("Device not found");
+
+            var today = DateTime.Now.Date;
+
             var documents = await _unitOfWork.Repository<Models.Document>()
                 .GetAllByConditionAsync(x =>
-                    (x.ReceiptDate.Date == DateTime.Now.Date && device!=null && x.DeviceId == device.Id)
-                , x => new { x.TotalAmount, x.TotalDiscount, x.TotalVAT });
+                    x.ReceiptDate.Date == today &&
+                    x.DeviceId == device.Id,
+                    x => new { x.DocumentType,x.TotalAmount,x.TotalDiscount,x.TotalVAT });
+
+            var sumSR = documents.Where(x => x.DocumentType == DocumentType.SR);
+            var sumRR = documents.Where(x => x.DocumentType == DocumentType.RR);
+
             var totals = new DocumentsTotalsDto
             {
-                SumOfTotals = documents.Sum(d => d.TotalAmount),
-                SumOfDiscount = documents.Sum(d => d.TotalDiscount),
-                SumOfTaxes = documents.Sum(d => d.TotalVAT)
+                SumOfTotals = sumSR.Sum(d => d.TotalAmount) - sumRR.Sum(d => d.TotalAmount),
+                SumOfDiscount = sumSR.Sum(d => d.TotalDiscount) - sumRR.Sum(d => d.TotalDiscount),
+                SumOfTaxes = sumSR.Sum(d => d.TotalVAT) - sumRR.Sum(d => d.TotalVAT)
             };
+
             return await Result<DocumentsTotalsDto>.SuccessAsync(totals);
         }
+
+
+        public async Task<Result<List<ProductTotalsDto>>> GetProductsTotalsAsync(string deviceCode)
+        {
+            var device = await _unitOfWork.Repository<Models.Device>()
+                .FirstOrDefaultAsync(d => d.Code == deviceCode);
+
+            if( device == null )
+                return await Result<List<ProductTotalsDto>>.FailureAsync("Device not found");
+
+            var today = DateTime.Now.Date;
+
+            var lines = await _unitOfWork.Repository<DocumentLines>()
+                .GetAllByConditionAsync(l =>
+                    l.Receipt.ReceiptDate.Date == today &&
+                    l.Receipt.DeviceId == device.Id,
+                    l => new
+                    {
+                        l.ProductId,
+                        l.Quantity,
+                        l.TotalPrice,
+                        l.DiscountAmount,
+                        l.VAT,
+                        ProductName = l.Product.Name
+                    });
+
+            var grouped = lines
+                .GroupBy(x => new { x.ProductId,x.ProductName })
+                .Select(g => new ProductTotalsDto
+                {
+                    ProductId = g.Key.ProductId,
+                    ProductName = g.Key.ProductName,
+                    TotalQuantity = g.Sum(x => x.Quantity),
+                    TotalSales = g.Sum(x => x.TotalPrice),
+                    TotalDiscount = g.Sum(x => x.DiscountAmount),
+                    TotalVAT = g.Sum(x => x.VAT)
+                })
+                .ToList();
+
+            return await Result<List<ProductTotalsDto>>.SuccessAsync(grouped);
+        }
+
+
 
         public async Task<Result<DocumentDetailsDto>?> GetDocumentByIdAsync(int id)
         {
             //var selectors = MappingUtilities.CreateMapExpression<Models.Document, DocumentDetailsDto>();
             var document = await _unitOfWork.Repository<Models.Document>()
-                .GetByIdAsync(obj => obj.Id == id, x => new DocumentDetailsDto
+                .GetByIdAsync(obj => obj.Id == id,x => new DocumentDetailsDto
                 {
                     BranchId = x.BranchId,
                     CustomerBuilding = x.CustomerBuilding,
@@ -240,20 +294,20 @@ namespace CompanyApi.Services
                 : Result<DocumentDetailsDto>.Success(document);
         }
 
-        public async Task UpdateDocumentAsync(int id, DocumentDto document)
+        public async Task UpdateDocumentAsync(int id,DocumentDto document)
         {
             var repo = _unitOfWork.Repository<Models.Document>();
             var existingDocument = await repo.GetByIdAsync(id);
 
-            if (existingDocument == null)
+            if( existingDocument == null )
             {
                 throw new KeyNotFoundException("Document not found.");
             }
 
-            if (existingDocument.ReceiptNumber != document.ReceiptNumber)
+            if( existingDocument.ReceiptNumber != document.ReceiptNumber )
             {
                 var isUnique = await IsDocumentUniqueAsync(document.ReceiptNumber);
-                if (!isUnique)
+                if( !isUnique )
                 {
                     throw new InvalidOperationException("Receipt number must be unique.");
                 }
@@ -302,7 +356,7 @@ namespace CompanyApi.Services
             var repo = _unitOfWork.Repository<Models.Document>();
             var document = await repo.GetByIdAsync(id);
 
-            if (document == null)
+            if( document == null )
             {
                 throw new KeyNotFoundException("Document not found.");
             }
@@ -324,17 +378,17 @@ namespace CompanyApi.Services
                 // Apply filters manually since we don't have GetAllIncluding
                 var filteredDocuments = documents.AsQueryable();
 
-                if (filter.DateFrom.HasValue)
+                if( filter.DateFrom.HasValue )
                 {
                     filteredDocuments = filteredDocuments.Where(d => d.ReceiptDate >= filter.DateFrom.Value);
                 }
 
-                if (filter.DateTo.HasValue)
+                if( filter.DateTo.HasValue )
                 {
                     filteredDocuments = filteredDocuments.Where(d => d.ReceiptDate <= filter.DateTo.Value);
                 }
 
-                if (filter.UserId.HasValue)
+                if( filter.UserId.HasValue )
                 {
                     filteredDocuments = filteredDocuments.Where(d => d.UserId == filter.UserId.Value);
                 }
@@ -342,21 +396,21 @@ namespace CompanyApi.Services
                 // Get related data for each document
                 var orderReports = new List<OrderReportDto>();
 
-                foreach (var document in filteredDocuments)
+                foreach( var document in filteredDocuments )
                 {
                     // Get user
                     var user = await _unitOfWork.Repository<User>().GetByIdAsync(document.UserId ?? 0);
 
                     // Get device
                     Models.Device? device = null;
-                    if (document.DeviceId.HasValue)
+                    if( document.DeviceId.HasValue )
                     {
                         device = await _unitOfWork.Repository<Models.Device>().GetByIdAsync(document.DeviceId.Value);
                     }
 
                     // Get branch
                     Branch? branch = null;
-                    if (document.BranchId.HasValue)
+                    if( document.BranchId.HasValue )
                     {
                         branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
                     }
@@ -381,14 +435,14 @@ namespace CompanyApi.Services
                 orderReports = orderReports.OrderByDescending(o => o.ReceiptDate).ToList();
 
                 // Apply device code filter if specified
-                if (!string.IsNullOrEmpty(filter.DeviceCode))
+                if( !string.IsNullOrEmpty(filter.DeviceCode) )
                 {
                     orderReports = orderReports.Where(o => o.DeviceCode == filter.DeviceCode).ToList();
                 }
 
-                return await Result<IEnumerable<OrderReportDto>>.SuccessAsync(orderReports, "Orders retrieved successfully");
+                return await Result<IEnumerable<OrderReportDto>>.SuccessAsync(orderReports,"Orders retrieved successfully");
             }
-            catch (Exception ex)
+            catch( Exception ex )
             {
                 return await Result<IEnumerable<OrderReportDto>>.FailureAsync($"Error retrieving orders: {ex.Message}");
             }
@@ -400,7 +454,7 @@ namespace CompanyApi.Services
             {
                 // Get document
                 var document = await _unitOfWork.Repository<Models.Document>().GetByIdAsync(id);
-                if (document == null)
+                if( document == null )
                 {
                     return null;
                 }
@@ -410,21 +464,21 @@ namespace CompanyApi.Services
 
                 // Get device
                 Models.Device? device = null;
-                if (document.DeviceId.HasValue)
+                if( document.DeviceId.HasValue )
                 {
                     device = await _unitOfWork.Repository<Models.Device>().GetByIdAsync(document.DeviceId.Value);
                 }
 
                 // Get branch
                 Branch? branch = null;
-                if (document.BranchId.HasValue)
+                if( document.BranchId.HasValue )
                 {
                     branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
                 }
 
                 // Get company
                 Company? company = null;
-                if (document.CompanyId.HasValue)
+                if( document.CompanyId.HasValue )
                 {
                     company = await _unitOfWork.Repository<Company>().GetByIdAsync(document.CompanyId.Value);
                 }
@@ -466,9 +520,9 @@ namespace CompanyApi.Services
                     }).ToList() ?? new List<OrderItemDto>()
                 };
 
-                return await Result<OrderDetailsDto>.SuccessAsync(orderDetails, "Order details retrieved successfully");
+                return await Result<OrderDetailsDto>.SuccessAsync(orderDetails,"Order details retrieved successfully");
             }
-            catch (Exception ex)
+            catch( Exception ex )
             {
                 return await Result<OrderDetailsDto>.FailureAsync($"Error retrieving order details: {ex.Message}");
             }
@@ -493,9 +547,9 @@ namespace CompanyApi.Services
                     IsAdmin = u.IsAdmin
                 });
 
-                return await Result<IEnumerable<UserDto>>.SuccessAsync(userDtos, "Users retrieved successfully");
+                return await Result<IEnumerable<UserDto>>.SuccessAsync(userDtos,"Users retrieved successfully");
             }
-            catch (Exception ex)
+            catch( Exception ex )
             {
                 return await Result<IEnumerable<UserDto>>.FailureAsync($"Error retrieving users: {ex.Message}");
             }
@@ -506,9 +560,9 @@ namespace CompanyApi.Services
             try
             {
                 var count = await _unitOfWork.Repository<Models.Document>().CountAsync();
-                return await Result<int>.SuccessAsync(count, "Document count retrieved successfully");
+                return await Result<int>.SuccessAsync(count,"Document count retrieved successfully");
             }
-            catch (Exception ex)
+            catch( Exception ex )
             {
                 return await Result<int>.FailureAsync($"Error retrieving document count: {ex.Message}");
             }

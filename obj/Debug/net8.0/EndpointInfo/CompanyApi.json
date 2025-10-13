@@ -487,6 +487,27 @@
         }
       }
     },
+    "/api/Document/GetProductStats": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "parameters": [
+          {
+            "name": "deviceCode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Document/{id}": {
       "get": {
         "tags": [
@@ -891,6 +912,9 @@
           "deviceCode": {
             "type": "string",
             "nullable": true
+          },
+          "isCoupon": {
+            "type": "boolean"
           },
           "items": {
             "type": "array",

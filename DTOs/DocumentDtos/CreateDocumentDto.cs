@@ -24,6 +24,7 @@ namespace CompanyApi.DTOs.DocumentDtos
         public int? UserId { get; set; }
         public int? BranchId { get; set; }
         public string? DeviceCode { get; set; }
+        public bool IsCoupon { get; set; } = false;
         public List<DocumentLinesDto> Items { get; set; } = new List<DocumentLinesDto>();
 
     }

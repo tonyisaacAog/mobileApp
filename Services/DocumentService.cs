@@ -58,6 +58,7 @@ namespace CompanyApi.Services
                 // Optionally, you can associate the device with the document here if needed
                 // newDocument.DeviceId = device.Id;
             }
+        
 
             //var user = await _unitOfWork.Repository<UserBranch>()
             //    .FirstOrDefaultAsync(obj=>obj.BranchId== document.BranchId && obj.UserId== document.UserId.Value);
@@ -70,29 +71,29 @@ namespace CompanyApi.Services
 
             // 4. Create Document
             var newDocument = new Models.Document
-            {
-                ReceiptNumber = Guid.NewGuid().ToString(),
-                DeviceSerial = document.DeviceSerial,
-                ReceiptDate = document.ReceiptDate,
-                PaymentMethod = document.PaymentMethod,
-                DocumentType = document.DocumentType,
-                Notes = document.Notes,
-                CustomerName = document.CustomerName,
-                CustomerCode = document.CustomerCode,
-                CustomerTaxId = document.CustomerTaxId,
-                CustomerPhone = document.CustomerPhone,
-                CustomerCountryCode = document.CustomerCountryCode,
-                CustomerGovernate = document.CustomerGovernate,
-                CustomerCity = document.CustomerCity,
-                CustomerStreet = document.CustomerStreet,
-                CustomerBuilding = document.CustomerBuilding,
-                CustomerType = document.CustomerType,
-                ReferenceNumber = document.ReferenceNumber,
-                UserId = document.UserId,
-                BranchId = document.BranchId,
-                CreatedAt = DateTime.UtcNow,
-                DeviceId = device.Id
-            };
+                {
+                    ReceiptNumber = Guid.NewGuid().ToString(),
+                    DeviceSerial = document.DeviceSerial,
+                    ReceiptDate = document.ReceiptDate,
+                    PaymentMethod = document.PaymentMethod,
+                    DocumentType = document.DocumentType,
+                    Notes = document.Notes,
+                    CustomerName = document.CustomerName,
+                    CustomerCode = document.CustomerCode,
+                    CustomerTaxId = document.CustomerTaxId,
+                    CustomerPhone = document.CustomerPhone,
+                    CustomerCountryCode = document.CustomerCountryCode,
+                    CustomerGovernate = document.CustomerGovernate,
+                    CustomerCity = document.CustomerCity,
+                    CustomerStreet = document.CustomerStreet,
+                    CustomerBuilding = document.CustomerBuilding,
+                    CustomerType = document.CustomerType,
+                    ReferenceNumber = document.ReferenceNumber,
+                    UserId = document.UserId,
+                    BranchId = document.BranchId,
+                    CreatedAt = DateTime.UtcNow,
+                    DeviceId = device.Id
+                };
 
             decimal subtotal = 0;
             decimal totalDiscount = 0;

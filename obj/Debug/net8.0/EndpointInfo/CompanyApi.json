@@ -1085,8 +1085,8 @@
             "nullable": true
           },
           "quantity": {
-            "type": "integer",
-            "format": "int32"
+            "type": "number",
+            "format": "double"
           },
           "unitPrice": {
             "type": "number",

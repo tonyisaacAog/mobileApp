@@ -162,3 +162,4 @@ G:\Company Projects\MobileApp\CompanyApi\obj\Release\net8.0\CompanyApi.genruntim
 G:\Company Projects\MobileApp\CompanyApi\obj\Release\net8.0\ref\CompanyApi.dll
 G:\Company Projects\MobileApp\CompanyApi\bin\Release\net8.0\LinqKit.Core.dll
 G:\Company Projects\MobileApp\CompanyApi\bin\Release\net8.0\LinqKit.Microsoft.EntityFrameworkCore.dll
+G:\Company Projects\MobileApp\CompanyApi\obj\Release\net8.0\swae.build.ex.cache

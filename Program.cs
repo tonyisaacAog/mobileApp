@@ -89,10 +89,18 @@ var app = builder.Build();
 //var locOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>();
 //app.UseRequestLocalization(locOptions.Value);
 // Configure the HTTP request pipeline.
+<<<<<<< HEAD
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
+=======
+//if (app.Environment.IsDevelopment())
+//{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+//}
+>>>>>>> 17af8cfbe681da591621d5296d0480fdee34baf4
 
 app.UseHttpsRedirection();
 

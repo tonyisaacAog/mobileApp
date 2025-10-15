@@ -8,17 +8,17 @@ namespace CompanyApi.Models
         public int ReceiptId { get; set; }
 
         public int ProductId { get; set; }
-
+        [Column(TypeName = "decimal(18,5)")]
         public decimal Quantity { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "decimal(18,5)")]
         public decimal UnitPrice { get; set; }
         [Column(TypeName = "decimal(18, 5)")]
         public decimal DiscountAmount { get; set; }
         [Column(TypeName = "decimal(18, 5)")]
         public decimal NetTotal { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "decimal(18,5)")]
         public decimal TotalPrice { get; set; }
         [Column(TypeName = "decimal(18, 5)")]
         public decimal VAT { get; set; }

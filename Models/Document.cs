@@ -12,16 +12,16 @@ namespace CompanyApi.Models
         public string DeviceSerial { get; set; }
 
         public DateTime ReceiptDate { get; set; } = DateTime.UtcNow;
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "decimal(18,5)")]
         public decimal Subtotal { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "decimal(18,5)")]
         public decimal TaxAmount { get; set; }
 
         [Column(TypeName = "decimal(18, 5)")]
         public decimal TotalDiscount { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "decimal(18,5)")]
         public decimal TotalAmount { get; set; }
         [Column(TypeName = "decimal(18, 5)")]
         public decimal ExtraDiscount { get; set; }

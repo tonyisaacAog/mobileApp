@@ -174,8 +174,7 @@
               "RelativeToolTip": "Controllers\\OrderReportController.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAQwCsAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-08T13:12:28.073Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-08T13:12:28.073Z"
             },
             {
               "$type": "Document",
@@ -185,7 +184,7 @@
               "RelativeDocumentMoniker": "Services\\DocumentService.cs",
               "ToolTip": "D:\\Company\\Islam\\MobileApp\\mobileApp\\Services\\DocumentService.cs",
               "RelativeToolTip": "Services\\DocumentService.cs",
-              "ViewState": "AgIAAHwBAAAAAAAAAAAAAI8BAABKAAAAAAAAAA==",
+              "ViewState": "AgIAAHcBAAAAAAAAAAAAAJQBAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-05T13:36:37.228Z",
               "EditorCaption": ""
@@ -200,8 +199,7 @@
               "RelativeToolTip": "Controllers\\DocumentController.cs",
               "ViewState": "AgIAACMAAAAAAAAAAAAgwDsAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T13:35:53.016Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T13:35:53.016Z"
             },
             {
               "$type": "Document",
@@ -213,8 +211,7 @@
               "RelativeToolTip": "Services\\Interfaces\\IDocumentService.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAkwBMAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T13:36:10.282Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T13:36:10.282Z"
             },
             {
               "$type": "Document",
@@ -226,8 +223,7 @@
               "RelativeToolTip": "DTOs\\DocumentDtos\\DocumentLinesDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T15:05:56.512Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-07T15:05:56.512Z"
             },
             {
               "$type": "Document",
@@ -239,8 +235,7 @@
               "RelativeToolTip": "Repositories\\Repository.cs",
               "ViewState": "AgIAABoAAAAAAAAAAAAmwC8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T14:22:03.95Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T14:22:03.95Z"
             },
             {
               "$type": "Document",
@@ -276,8 +271,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAEgAAAAAAAAAAAAAAF8AAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T13:34:05.365Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T13:34:05.365Z"
             },
             {
               "$type": "Document",
@@ -337,8 +331,7 @@
               "RelativeToolTip": "Views\\UserManagement\\ManageUserBranches.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-05T08:23:22.642Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T08:23:22.642Z"
             },
             {
               "$type": "Document",
@@ -350,8 +343,7 @@
               "RelativeToolTip": "Controllers\\UserManagementController.cs",
               "ViewState": "AgIAAGAAAAAAAAAAAAAmwHIAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T11:31:11.564Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T11:31:11.564Z"
             },
             {
               "$type": "Document",
@@ -363,8 +355,7 @@
               "RelativeToolTip": "Services\\UserBranchService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwBQAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T11:42:13.823Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-05T11:42:13.823Z"
             },
             {
               "$type": "Document",

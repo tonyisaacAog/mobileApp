@@ -11,6 +11,7 @@ using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Repositories.Utilities;
 using CompanyApi.Services.Interfaces;
 using LinqKit;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace CompanyApi.Services
@@ -369,75 +370,47 @@ namespace CompanyApi.Services
         {
             try
             {
-                var repo = _unitOfWork.Repository<Models.Document>();
+                var documentRepo = _unitOfWork.Repository<Document>();
+                var userRepo = _unitOfWork.Repository<User>();
+                var deviceRepo = _unitOfWork.Repository<Models.Device>();
+                var branchRepo = _unitOfWork.Repository<Branch>();
+                var lineRepo = _unitOfWork.Repository<DocumentLines>();
 
-                // Get all documents first
-                var documents = await repo.GetAllAsync();
+                var documents = await documentRepo.FindAsync(d =>
+                    ( !filter.DateFrom.HasValue || d.ReceiptDate.Date >= filter.DateFrom.Value.Date ) &&
+                    ( !filter.DateTo.HasValue || d.ReceiptDate.Date <= filter.DateTo.Value.Date ) &&
+                    ( !filter.UserId.HasValue || d.UserId == filter.UserId.Value )
+                );
 
-                // Apply filters manually since we don't have GetAllIncluding
-                var filteredDocuments = documents.AsQueryable();
+                var users = ( await userRepo.GetAllAsync() ).ToDictionary(u => u.Id);
+                var devices = ( await deviceRepo.GetAllAsync() ).ToDictionary(d => d.Id);
+                var branches = ( await branchRepo.GetAllAsync() ).ToDictionary(b => b.Id);
+                var lines = await lineRepo.GetAllAsync();
 
-                if( filter.DateFrom.HasValue )
-                {
-                    filteredDocuments = filteredDocuments.Where(d => d.ReceiptDate >= filter.DateFrom.Value);
-                }
-
-                if( filter.DateTo.HasValue )
-                {
-                    filteredDocuments = filteredDocuments.Where(d => d.ReceiptDate <= filter.DateTo.Value);
-                }
-
-                if( filter.UserId.HasValue )
-                {
-                    filteredDocuments = filteredDocuments.Where(d => d.UserId == filter.UserId.Value);
-                }
-
-                // Get related data for each document
-                var orderReports = new List<OrderReportDto>();
-
-                foreach( var document in filteredDocuments )
-                {
-                    // Get user
-                    var user = await _unitOfWork.Repository<User>().GetByIdAsync(document.UserId ?? 0);
-
-                    // Get device
-                    Models.Device? device = null;
-                    if( document.DeviceId.HasValue )
+                var orderReports = documents
+                    .Select(d => new OrderReportDto
                     {
-                        device = await _unitOfWork.Repository<Models.Device>().GetByIdAsync(document.DeviceId.Value);
-                    }
+                        Id = d.Id,
+                        ReceiptNumber = d.ReceiptNumber,
+                        ReceiptDate = d.ReceiptDate,
+                        CustomerName = d.CustomerName,
+                        TotalAmount = d.TotalAmount,
+                        PaymentMethod = d.PaymentMethod.ToString(),
+                        DeviceName = d.DeviceId.HasValue && devices.ContainsKey(d.DeviceId.Value)
+                            ? devices[d.DeviceId.Value].Name : "غير محدد",
+                        DeviceCode = d.DeviceId.HasValue && devices.ContainsKey(d.DeviceId.Value)
+                            ? devices[d.DeviceId.Value].Code : "غير محدد",
+                        UserName = d.UserId.HasValue && users.ContainsKey(d.UserId.Value)
+                            ? $"{users[d.UserId.Value].FirstName} {users[d.UserId.Value].LastName}" : "غير محدد",
+                        BranchName = d.BranchId.HasValue && branches.ContainsKey(d.BranchId.Value)
+                            ? branches[d.BranchId.Value].Name : "غير محدد",
+                        ItemsCount = lines.Count(l => l.ReceiptId == d.Id)
+                    })
+                    .OrderByDescending(o => o.ReceiptDate)
+                    .ToList();
 
-                    // Get branch
-                    Branch? branch = null;
-                    if( document.BranchId.HasValue )
-                    {
-                        branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
-                    }
-
-                    orderReports.Add(new OrderReportDto
-                    {
-                        Id = document.Id,
-                        ReceiptNumber = document.ReceiptNumber,
-                        ReceiptDate = document.ReceiptDate,
-                        CustomerName = document.CustomerName,
-                        TotalAmount = document.TotalAmount,
-                        PaymentMethod = document.PaymentMethod.ToString(),
-                        DeviceName = device?.Name ?? "غير محدد",
-                        DeviceCode = device?.Code ?? "غير محدد",
-                        UserName = user != null ? $"{user.FirstName} {user.LastName}" : "غير محدد",
-                        BranchName = branch?.Name ?? "غير محدد",
-                        ItemsCount = await _unitOfWork.Repository<DocumentLines>().CountAsync(l => l.ReceiptId == document.Id)
-                    });
-                }
-
-                // Order by receipt date descending
-                orderReports = orderReports.OrderByDescending(o => o.ReceiptDate).ToList();
-
-                // Apply device code filter if specified
                 if( !string.IsNullOrEmpty(filter.DeviceCode) )
-                {
                     orderReports = orderReports.Where(o => o.DeviceCode == filter.DeviceCode).ToList();
-                }
 
                 return await Result<IEnumerable<OrderReportDto>>.SuccessAsync(orderReports,"Orders retrieved successfully");
             }

@@ -10,7 +10,6 @@ using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Repositories.Utilities;
 using CompanyApi.Services.Interfaces;
 using LinqKit;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace CompanyApi.Services
@@ -30,46 +29,70 @@ namespace CompanyApi.Services
         {
             const decimal VAT_RATE = 0.14m;
 
-            // 1. Validate branch
-            if (document.BranchId == null)
+            if( document.BranchId == null )
                 return await Result<DocumentDetailsDto>.FailureAsync("Branch is required.");
 
-            var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
-            if (branch == null)
-                return await Result<DocumentDetailsDto>.FailureAsync($"Branch with ID {document.BranchId} does not exist.");
-
-            // 2. Validate user
-            if (document.UserId == null)
+            if( document.UserId == null )
                 return await Result<DocumentDetailsDto>.FailureAsync("User is required.");
 
+            if( string.IsNullOrEmpty(document.DeviceCode) )
+                return await Result<DocumentDetailsDto>.FailureAsync("Device code is required.");
 
-            if (document.DeviceCode == null)
-                return await Result<DocumentDetailsDto>.FailureAsync($"Device with code {document.DeviceCode} not exist.");
+            var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
+            if( branch == null )
+                return await Result<DocumentDetailsDto>.FailureAsync($"Branch with ID {document.BranchId} does not exist.");
 
+            var device = await _unitOfWork.Repository<Device>()
+                .FirstOrDefaultAsync(d => d.Code == document.DeviceCode && d.BranchId == document.BranchId);
 
-            var device = new Models.Device();
+            if( device == null )
+                return await Result<DocumentDetailsDto>.FailureAsync($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
 
-            if (document.DeviceCode != null)
+            if( document.DocumentType == DocumentType.RR )
             {
-                device = await _unitOfWork.Repository<Models.Device>()
-                   .FirstOrDefaultAsync(d => d.Code == document.DeviceCode && d.BranchId == document.BranchId);
-                if (device == null)
-                    return await Result<DocumentDetailsDto>.FailureAsync($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
-                // Optionally, you can associate the device with the document here if needed
-                // newDocument.DeviceId = device.Id;
+                if( string.IsNullOrEmpty(document.ReferenceNumber) )
+                    return await Result<DocumentDetailsDto>.FailureAsync("Reference number is required for return receipts.");
+
+                var saleDocRepo = _unitOfWork.Repository<Document>();
+
+                var saleDoc = await saleDocRepo.FirstOrDefaultAsync(d => d.ReceiptNumber == document.ReferenceNumber && d.DocumentType == DocumentType.SR);
+                if( saleDoc == null )
+                    return await Result<DocumentDetailsDto>.FailureAsync($"Sale receipt with number {document.ReferenceNumber} not found.");
+
+                var returnDocs = await saleDocRepo.FindAsync(d =>
+                    d.ReferenceNumber == document.ReferenceNumber && d.DocumentType == DocumentType.RR);
+
+                var linesRepo = _unitOfWork.Repository<DocumentLines>();
+                var saleLines = await linesRepo.FindAsync(l => l.ReceiptId == saleDoc.Id);
+
+                var returnedLines = await linesRepo.FindAsync(l =>
+                    returnDocs.Select(r => r.Id).Contains(l.ReceiptId));
+
+                var returnedQuantities = returnedLines
+                    .GroupBy(l => l.ProductId)
+                    .ToDictionary(g => g.Key,g => g.Sum(x => x.Quantity));
+
+                foreach( var item in document.Items )
+                {
+                    var saleLine = saleLines.FirstOrDefault(l => l.ProductId == item.ProductId);
+                    if( saleLine == null )
+                        return await Result<DocumentDetailsDto>.FailureAsync($"Product {item.ProductId} not found in sale receipt {document.ReferenceNumber}.");
+
+                    var alreadyReturned = returnedQuantities.ContainsKey(item.ProductId)
+                        ? returnedQuantities[item.ProductId]
+                        : 0;
+
+                    var newTotalReturned = alreadyReturned + item.Quantity;
+
+                    if( newTotalReturned > saleLine.Quantity )
+                        return await Result<DocumentDetailsDto>.FailureAsync(
+                            $"Cannot return more than sold quantity for product {item.ProductId}. " +
+                            $"Sold: {saleLine.Quantity}, Already returned: {alreadyReturned}, Trying to return: {item.Quantity}."
+                        );
+                }
             }
 
-            //var user = await _unitOfWork.Repository<UserBranch>()
-            //    .FirstOrDefaultAsync(obj=>obj.BranchId== document.BranchId && obj.UserId== document.UserId.Value);
-            //if (user == null)
-            //    throw new InvalidOperationException($"User with ID {document.UserId} does not exist.");
-
-            //// 3. Check user belongs to branch
-            //if (user.BranchId != document.BranchId)
-            //    throw new UnauthorizedAccessException("This user does not have access to the specified branch.");
-
-            // 4. Create Document
-            var newDocument = new Models.Document
+            var newDocument = new Document
             {
                 ReceiptNumber = Guid.NewGuid().ToString(),
                 DeviceSerial = document.DeviceSerial,
@@ -81,40 +104,26 @@ namespace CompanyApi.Services
                 CustomerCode = document.CustomerCode,
                 CustomerTaxId = document.CustomerTaxId,
                 CustomerPhone = document.CustomerPhone,
-                CustomerCountryCode = document.CustomerCountryCode,
-                CustomerGovernate = document.CustomerGovernate,
-                CustomerCity = document.CustomerCity,
-                CustomerStreet = document.CustomerStreet,
-                CustomerBuilding = document.CustomerBuilding,
-                CustomerType = document.CustomerType,
                 ReferenceNumber = document.ReferenceNumber,
-                IsCoupon = document.IsCoupon,
-                UserId = document.UserId,
                 BranchId = document.BranchId,
-                CreatedAt = DateTime.UtcNow,
-                DeviceId = device.Id
+                UserId = document.UserId,
+                DeviceId = device.Id,
+                CreatedAt = DateTime.UtcNow
             };
 
-            decimal subtotal = 0;
-            decimal totalDiscount = 0;
-            decimal totalVAT = 0;
+            decimal subtotal = 0, totalDiscount = 0, totalVAT = 0;
 
-            //var selector = MappingUtilities.CreateMapExpression<Product, ProductDto>();
-            //var products = await _unitOfWork.Repository<Product>().GetAllByConditionAsync(o => document.Items.Any(id=>id.ProductId == o.Id), selector);
-
-            foreach (var item in document.Items)
+            foreach( var item in document.Items )
             {
-                //var vatproduct = products.FirstOrDefault(obj => obj.Id == item.ProductId);
-                var lineTotal = item.Quantity * item.UnitPrice; // before discount
-                var lineNet = lineTotal - item.DiscountAmount;  // after discount
-
+                var lineTotal = item.Quantity * item.UnitPrice;
+                var lineNet = lineTotal - item.DiscountAmount;
                 var lineVAT = item.VAT > 0 ? lineNet * VAT_RATE : 0;
 
                 subtotal += lineTotal;
                 totalDiscount += item.DiscountAmount;
                 totalVAT += lineVAT;
 
-                var lineEntity = new Models.DocumentLines
+                newDocument.ReceiptItems.Add(new DocumentLines
                 {
                     ProductId = item.ProductId,
                     Quantity = item.Quantity,
@@ -124,23 +133,21 @@ namespace CompanyApi.Services
                     NetTotal = lineNet,
                     VAT = lineVAT,
                     Notes = item.Notes
-                };
-
-                newDocument.ReceiptItems.Add(lineEntity);
+                });
             }
 
             totalDiscount += document.ExtraDiscount;
-
             newDocument.Subtotal = subtotal;
             newDocument.TotalDiscount = totalDiscount;
             newDocument.TotalVAT = totalVAT;
             newDocument.ExtraDiscount = document.ExtraDiscount;
             newDocument.TotalAmount = subtotal - totalDiscount + totalVAT;
 
-            await _unitOfWork.Repository<Models.Document>().AddAsync(newDocument);
+            await _unitOfWork.Repository<Document>().AddAsync(newDocument);
             await _unitOfWork.SaveChangesAsync();
+
             var documentDetails = _mapper.Map<DocumentDetailsDto>(newDocument);
-            return await Result<DocumentDetailsDto>.SuccessAsync(documentDetails, "Document created successfully", 200);
+            return await Result<DocumentDetailsDto>.SuccessAsync(documentDetails,"Document created successfully");
         }
 
 

@@ -192,19 +192,21 @@ namespace CompanyApi.Services
             var today = DateTime.Now.Date;
 
             var documents = await _unitOfWork.Repository<Models.Document>()
+                .AddIncludes(nameof(Models.Document.ReceiptItems))
                 .GetAllByConditionAsync(x =>
                     x.ReceiptDate.Date == today &&
                     x.DeviceId == device.Id,
-                    x => new { x.DocumentType, x.TotalAmount, x.TotalDiscount, x.TotalVAT });
+                    x => new { x.DocumentType, x.TotalAmount, x.TotalDiscount, x.TotalVAT, x.ReceiptItems });
 
             var sumSR = documents.Where(x => x.DocumentType == DocumentType.SR);
             var sumRR = documents.Where(x => x.DocumentType == DocumentType.RR);
 
             var totals = new DocumentsTotalsDto
             {
-                SumOfTotals = sumSR.Sum(d => d.TotalAmount) - sumRR.Sum(d => d.TotalAmount),
-                SumOfDiscount = sumSR.Sum(d => d.TotalDiscount) - sumRR.Sum(d => d.TotalDiscount),
-                SumOfTaxes = sumSR.Sum(d => d.TotalVAT) - sumRR.Sum(d => d.TotalVAT)
+                SumOfTotalsSR = sumSR.Sum(d => d.TotalAmount) ,
+                SumOfTotalsRR = sumRR.Sum(d => d.TotalAmount) ,
+                SumOfQuantitySR = sumSR.SelectMany(obj=>obj.ReceiptItems).Sum(d => d.Quantity),
+                SumOfQuantityRR = sumRR.SelectMany(obj=>obj.ReceiptItems).Sum(d => d.Quantity),
             };
 
             return await Result<DocumentsTotalsDto>.SuccessAsync(totals);
@@ -243,9 +245,7 @@ namespace CompanyApi.Services
                     ProductId = g.Key.ProductId,
                     ProductName = g.Key.ProductName,
                     TotalQuantity = g.Where(obj=>obj.DocumentType == DocumentType.SR).Sum(x => x.Quantity)- g.Where(obj => obj.DocumentType == DocumentType.RR).Sum(x => x.Quantity),
-                    TotalSales = g.Where(obj => obj.DocumentType == DocumentType.SR).Sum(x => x.TotalPrice)- g.Where(obj => obj.DocumentType == DocumentType.RR).Sum(x => x.TotalPrice),
-                    TotalDiscount = 0,
-                    TotalVAT =0
+                    TotalSales = g.Where(obj => obj.DocumentType == DocumentType.SR).Sum(x => x.TotalPrice)- g.Where(obj => obj.DocumentType == DocumentType.RR).Sum(x => x.TotalPrice)
                 })
                 .ToList();
 

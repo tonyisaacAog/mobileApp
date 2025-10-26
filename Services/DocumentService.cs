@@ -55,7 +55,7 @@ namespace CompanyApi.Services
 
                 var saleDocRepo = _unitOfWork.Repository<Document>();
 
-                var saleDoc = await saleDocRepo.FirstOrDefaultAsync(d => d.ReceiptNumber == document.ReferenceNumber && d.DocumentType == DocumentType.SR);
+                var saleDoc = await saleDocRepo.FirstOrDefaultAsync(d => d.Id == Convert.ToInt32(document.ReferenceNumber) && d.DocumentType == DocumentType.SR);
                 if( saleDoc == null )
                     return await Result<DocumentDetailsDto>.FailureAsync($"Sale receipt with number {document.ReferenceNumber} not found.");
 
@@ -227,6 +227,7 @@ namespace CompanyApi.Services
                     l.Receipt.DeviceId == device.Id,
                     l => new
                     {
+                        l.Receipt.DocumentType,
                         l.ProductId,
                         l.Quantity,
                         l.TotalPrice,
@@ -241,10 +242,10 @@ namespace CompanyApi.Services
                 {
                     ProductId = g.Key.ProductId,
                     ProductName = g.Key.ProductName,
-                    TotalQuantity = g.Sum(x => x.Quantity),
-                    TotalSales = g.Sum(x => x.TotalPrice),
-                    TotalDiscount = g.Sum(x => x.DiscountAmount),
-                    TotalVAT = g.Sum(x => x.VAT)
+                    TotalQuantity = g.Where(obj=>obj.DocumentType == DocumentType.SR).Sum(x => x.Quantity)- g.Where(obj => obj.DocumentType == DocumentType.RR).Sum(x => x.Quantity),
+                    TotalSales = g.Where(obj => obj.DocumentType == DocumentType.SR).Sum(x => x.TotalPrice)- g.Where(obj => obj.DocumentType == DocumentType.RR).Sum(x => x.TotalPrice),
+                    TotalDiscount = 0,
+                    TotalVAT =0
                 })
                 .ToList();
 

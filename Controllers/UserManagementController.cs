@@ -53,7 +53,7 @@ namespace CompanyApi.Controllers
             if( ModelState.IsValid )
             {
                 await _userService.CreateUserAsync(userDto);
-                TempData["SuccessMessage"] = "User created successfully.";
+                TempData["SuccessMessage"] = "تم إنشاء المستخدم بنجاح.";
                 return RedirectToAction(nameof(Index));
             }
             return View(userDto);
@@ -83,7 +83,7 @@ namespace CompanyApi.Controllers
             if( ModelState.IsValid )
             {
                 await _userService.UpdateUserAsync(id,userDto);
-                TempData["SuccessMessage"] = "User updated successfully.";
+                TempData["SuccessMessage"] = "تم تحديث المستخدم بنجاح.";
                 return RedirectToAction(nameof(Index));
             }
             return View(userDto);

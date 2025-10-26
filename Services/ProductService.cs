@@ -22,7 +22,7 @@ namespace CompanyApi.Services
         {
             var isUnique = await IsProductCodeUniqueAsync(dto.SKU);
             if (!isUnique)
-                throw new InvalidOperationException("Product code must be unique.");
+                throw new InvalidOperationException("كود المنتج يجب أن يكون فريداً.");
 
             var product = new Models.Product
             {
@@ -66,11 +66,11 @@ namespace CompanyApi.Services
             var product = await repo.GetByIdAsync(id);
 
             if (product == null)
-                throw new KeyNotFoundException("Product not found.");
+                throw new KeyNotFoundException("المنتج غير موجود.");
 
             var isUnique = await IsProductCodeUniqueAsync(dto.SKU);
             if (!isUnique && product.SKU != dto.SKU)
-                throw new InvalidOperationException("Product code must be unique.");
+                throw new InvalidOperationException("كود المنتج يجب أن يكون فريداً.");
 
             product.Name = dto.Name;
             product.SKU = dto.SKU;
@@ -92,7 +92,7 @@ namespace CompanyApi.Services
             var product = await repo.GetByIdAsync(id);
 
             if (product == null)
-                throw new KeyNotFoundException("Product not found.");
+                throw new KeyNotFoundException("المنتج غير موجود.");
 
             repo.Remove(product);
             await _unitOfWork.SaveChangesAsync();

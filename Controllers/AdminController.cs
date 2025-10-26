@@ -80,7 +80,7 @@ namespace CompanyApi.Controllers
 
                 // Set success message for data load
                 ViewBag.DataLoaded = true;
-                TempData["SuccessMessage"] = $"Dashboard loaded successfully with {branches} branches, {companies} companies, {products} products, {orders} orders, {devices} devices, and {users} active users.";
+                TempData["SuccessMessage"] = $"تم تحميل لوحة التحكم بنجاح مع {branches} فروع، {companies} شركات، {products} منتجات، {orders} طلبات، {devices} أجهزة، و {users} مستخدمين نشطين.";
             }
             catch (Exception ex)
             {
@@ -106,8 +106,8 @@ namespace CompanyApi.Controllers
 
                 // Set error flag
                 ViewBag.DataLoaded = false;
-                ViewBag.ErrorMessage = "Unable to load dashboard data. Please try again later.";
-                TempData["ErrorMessage"] = "Unable to load dashboard data. Please try again later.";
+                ViewBag.ErrorMessage = "غير قادر على تحميل بيانات لوحة التحكم. يرجى المحاولة مرة أخرى لاحقاً.";
+                TempData["ErrorMessage"] = "غير قادر على تحميل بيانات لوحة التحكم. يرجى المحاولة مرة أخرى لاحقاً.";
             }
 
             return View();

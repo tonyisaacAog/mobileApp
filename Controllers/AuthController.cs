@@ -34,7 +34,7 @@ namespace CompanyApi.Controllers
 
                 if (user == null)
                 {
-                    return Unauthorized(new { message = "Invalid username or password" });
+                    return Unauthorized(new { message = "اسم المستخدم أو كلمة المرور غير صحيحة" });
                 }
 
                 var token = await _authService.GenerateJwtToken(user);
@@ -44,14 +44,14 @@ namespace CompanyApi.Controllers
                 {
                     Token = token,
                     User = userDto,
-                    Message = "Login successful"
+                    Message = "تم تسجيل الدخول بنجاح"
                 };
 
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred during login", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء تسجيل الدخول", error = ex.Message });
             }
         }
 
@@ -96,7 +96,7 @@ namespace CompanyApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while creating admin user", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء إنشاء مستخدم المدير", error = ex.Message });
             }
         }
 
@@ -110,7 +110,7 @@ namespace CompanyApi.Controllers
 
                 if (user == null)
                 {
-                    return NotFound(new { message = "User not found" });
+                    return NotFound(new { message = "المستخدم غير موجود" });
                 }
 
                 var userDto = _mapper.Map<UserDto>(user);
@@ -118,7 +118,7 @@ namespace CompanyApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while retrieving user", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء استرجاع المستخدم", error = ex.Message });
             }
         }
 
@@ -133,7 +133,7 @@ namespace CompanyApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while retrieving users", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء استرجاع المستخدمين", error = ex.Message });
             }
         }
 
@@ -149,7 +149,7 @@ namespace CompanyApi.Controllers
 
                 if (currentUser == null)
                 {
-                    return Unauthorized(new { message = "User not found" });
+                    return Unauthorized(new { message = "المستخدم غير موجود" });
                 }
 
                 // Allow users to update their own profile or admins to update any profile
@@ -162,7 +162,7 @@ namespace CompanyApi.Controllers
 
                 if (updatedUser == null)
                 {
-                    return NotFound(new { message = "User not found" });
+                    return NotFound(new { message = "المستخدم غير موجود" });
                 }
 
                 var userDto = _mapper.Map<UserDto>(updatedUser);
@@ -174,7 +174,7 @@ namespace CompanyApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while updating user", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء تحديث المستخدم", error = ex.Message });
             }
         }
 
@@ -188,14 +188,14 @@ namespace CompanyApi.Controllers
 
                 if (!result.Data)
                 {
-                    return NotFound(new { message = "User not found" });
+                    return NotFound(new { message = "المستخدم غير موجود" });
                 }
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while deleting user", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء حذف المستخدم", error = ex.Message });
             }
         }
 
@@ -209,14 +209,14 @@ namespace CompanyApi.Controllers
 
                 if (!result.Data)
                 {
-                    return NotFound(new { message = "User not found" });
+                    return NotFound(new { message = "المستخدم غير موجود" });
                 }
 
-                return Ok(new { message = "User activated successfully" });
+                return Ok(new { message = "تم تفعيل المستخدم بنجاح" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while activating user", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء تفعيل المستخدم", error = ex.Message });
             }
         }
 
@@ -230,14 +230,14 @@ namespace CompanyApi.Controllers
 
                 if (!result.Data)
                 {
-                    return NotFound(new { message = "User not found" });
+                    return NotFound(new { message = "المستخدم غير موجود" });
                 }
 
-                return Ok(new { message = "User deactivated successfully" });
+                return Ok(new { message = "تم إلغاء تفعيل المستخدم بنجاح" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while deactivating user", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء إلغاء تفعيل المستخدم", error = ex.Message });
             }
         }
     }

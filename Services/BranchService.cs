@@ -1,4 +1,4 @@
-﻿using CompanyApi.DTOs.BranchDtos;
+using CompanyApi.DTOs.BranchDtos;
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Models;
 using CompanyApi.Repositories;
@@ -20,7 +20,7 @@ namespace CompanyApi.Services
             var isUnique = await IsBranchNameUniqueAsync(dto.Name);
             if( !isUnique )
             {
-                throw new InvalidOperationException("Branch name must be unique within the company.");
+                throw new InvalidOperationException("اسم الفرع يجب أن يكون فريداً داخل الشركة.");
             }
             var branch = new Models.Branch
             {
@@ -71,11 +71,11 @@ namespace CompanyApi.Services
         public async Task UpdateBranchAsync(int id, BranchDto dto)
         {
             var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(id);
-            if (branch == null) throw new KeyNotFoundException("Branch not found.");
+            if (branch == null) throw new KeyNotFoundException("الفرع غير موجود.");
             var isUnique = await IsBranchNameUniqueAsync(dto.Name);
             if( !isUnique && branch.Name != dto.Name )
             {
-                throw new InvalidOperationException("Branch name must be unique within the company.");
+                throw new InvalidOperationException("اسم الفرع يجب أن يكون فريداً داخل الشركة.");
             }
             branch.Name = dto.Name;
             branch.Code = dto.Code;
@@ -92,7 +92,7 @@ namespace CompanyApi.Services
         public async Task DeleteBranchAsync(int id)
         {
             var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(id);
-            if (branch == null) throw new KeyNotFoundException("Branch not found.");
+            if (branch == null) throw new KeyNotFoundException("الفرع غير موجود.");
             _unitOfWork.Repository<Branch>().Remove(branch);
             await _unitOfWork.SaveChangesAsync();
         }

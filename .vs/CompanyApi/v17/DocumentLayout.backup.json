@@ -22,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 79,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -53,10 +53,6 @@
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "ProductController.cs",
@@ -77,7 +73,7 @@
               "RelativeDocumentMoniker": "Services\\DocumentService.cs",
               "ToolTip": "G:\\Company Projects\\MobileApp\\CompanyApi\\Services\\DocumentService.cs",
               "RelativeToolTip": "Services\\DocumentService.cs",
-              "ViewState": "AgIAANEAAAAAAAAAAAAswOEAAAA6AAAAAAAAAA==",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAqwIkAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-26T17:57:03.068Z",
               "EditorCaption": ""
@@ -90,7 +86,7 @@
               "RelativeDocumentMoniker": "Controllers\\DocumentController.cs",
               "ToolTip": "G:\\Company Projects\\MobileApp\\CompanyApi\\Controllers\\DocumentController.cs",
               "RelativeToolTip": "Controllers\\DocumentController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwCcAAABGAAAAAAAAAA==",
+              "ViewState": "AgIAADMAAAAAAAAAAAAowDsAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-26T17:56:35.03Z",
               "EditorCaption": ""

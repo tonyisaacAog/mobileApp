@@ -47,7 +47,7 @@ namespace CompanyApi.Controllers
             if (ModelState.IsValid)
             {
                 await _companyService.CreateCompanyAsync(companyDto);
-                TempData["SuccessMessage"] = "Company created successfully.";
+                TempData["SuccessMessage"] = "تم إنشاء الشركة بنجاح.";
                 return RedirectToAction(nameof(Index));
             }
             return View(companyDto);
@@ -75,7 +75,7 @@ namespace CompanyApi.Controllers
             if (ModelState.IsValid)
             {
                 await _companyService.UpdateCompanyAsync(id, companyDto);
-                TempData["SuccessMessage"] = "Company updated successfully.";
+                TempData["SuccessMessage"] = "تم تحديث الشركة بنجاح.";
                 return RedirectToAction(nameof(Index));
             }
             return View(companyDto);
@@ -98,7 +98,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _companyService.DeleteCompanyAsync(id);
-            TempData["SuccessMessage"] = "Company deleted successfully.";
+            TempData["SuccessMessage"] = "تم حذف الشركة بنجاح.";
             return RedirectToAction(nameof(Index));
         }
     }

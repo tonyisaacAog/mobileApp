@@ -1,4 +1,4 @@
-﻿using CompanyApi.DTOs.DocumentDtos;
+using CompanyApi.DTOs.DocumentDtos;
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -48,9 +48,9 @@ namespace CompanyApi.Controllers
             var documentResult = await _documentService.GetDocumentByIdAsync(id);
 
             if (documentResult == null || documentResult.Data == null)
-                return NotFound(await Result<DocumentDetailsDto>.FailureAsync("Document not found", 404));
+                return NotFound(await Result<DocumentDetailsDto>.FailureAsync("الوثيقة غير موجودة", 404));
 
-            return Ok(await Result<DocumentDetailsDto>.SuccessAsync(documentResult.Data, "Document retrieved successfully", 200));
+            return Ok(await Result<DocumentDetailsDto>.SuccessAsync(documentResult.Data, "تم استرجاع الوثيقة بنجاح", 200));
         }
 
         // POST api/<DocumentController>
@@ -73,7 +73,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] DocumentDto document)
         {
             await _documentService.UpdateDocumentAsync(id, document);
-            return Ok(await Result<DocumentDto>.SuccessAsync(document, "Document updated successfully", 200));
+            return Ok(await Result<DocumentDto>.SuccessAsync(document, "تم تحديث الوثيقة بنجاح", 200));
         }
 
         // DELETE api/<DocumentController>/5
@@ -81,7 +81,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _documentService.DeleteDocumentAsync(id);
-            return Ok(await Result<string>.SuccessAsync(default, "Document deleted successfully", 200));
+            return Ok(await Result<string>.SuccessAsync(default, "تم حذف الوثيقة بنجاح", 200));
         }
     }
 }

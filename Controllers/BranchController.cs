@@ -1,4 +1,4 @@
-﻿using CompanyApi.DTOs.BranchDtos;
+using CompanyApi.DTOs.BranchDtos;
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +31,7 @@ namespace CompanyApi.Controllers
             var branchResult = await _branchService.GetBranchByIdAsync(id);
 
             if (branchResult == null || branchResult.Data == null)
-                return NotFound(await Result<BranchDto>.FailureAsync("Branch not found", 404));
+                return NotFound(await Result<BranchDto>.FailureAsync("الفرع غير موجود", 404));
 
             return Ok(branchResult);
         }
@@ -41,7 +41,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> Post([FromBody] CreateBranchDto branch)
         {
             await _branchService.CreateBranchAsync(branch);
-            return Ok(await Result<CreateBranchDto>.SuccessAsync(branch, "Branch created successfully", 201));
+            return Ok(await Result<CreateBranchDto>.SuccessAsync(branch, "تم إنشاء الفرع بنجاح", 201));
         }
 
         // PUT api/<BranchController>/5
@@ -49,7 +49,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] BranchDto branch)
         {
             await _branchService.UpdateBranchAsync(id, branch);
-            return Ok(await Result<BranchDto>.SuccessAsync(branch, "Branch updated successfully", 200));
+            return Ok(await Result<BranchDto>.SuccessAsync(branch, "تم تحديث الفرع بنجاح", 200));
         }
 
         // DELETE api/<BranchController>/5
@@ -57,7 +57,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _branchService.DeleteBranchAsync(id);
-            return Ok(await Result<string>.SuccessAsync(default, "Branch deleted successfully", 200));
+            return Ok(await Result<string>.SuccessAsync(default, "تم حذف الفرع بنجاح", 200));
         }
     }
 }

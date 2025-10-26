@@ -48,7 +48,7 @@ namespace CompanyApi.Controllers
             if (ModelState.IsValid)
             {
                 await _productService.CreateProductAsync(productDto);
-                TempData["SuccessMessage"] = "Product created successfully.";
+                TempData["SuccessMessage"] = "تم إنشاء المنتج بنجاح.";
                 return RedirectToAction(nameof(Index));
             }
             return View(productDto);
@@ -76,7 +76,7 @@ namespace CompanyApi.Controllers
             if (ModelState.IsValid)
             {
                 await _productService.UpdateProductAsync(id, productDto);
-                TempData["SuccessMessage"] = "Product updated successfully.";
+                TempData["SuccessMessage"] = "تم تحديث المنتج بنجاح.";
                 return RedirectToAction(nameof(Index));
             }
             return View(productDto);
@@ -99,7 +99,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _productService.DeleteProductAsync(id);
-            TempData["SuccessMessage"] = "Product deleted successfully.";
+            TempData["SuccessMessage"] = "تم حذف المنتج بنجاح.";
             return RedirectToAction(nameof(Index));
         }
     }

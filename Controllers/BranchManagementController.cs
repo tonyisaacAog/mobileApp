@@ -47,7 +47,7 @@ namespace CompanyApi.Controllers
             if (ModelState.IsValid)
             {
                 await _branchService.CreateBranchAsync(branchDto);
-                TempData["SuccessMessage"] = "Branch created successfully.";
+                TempData["SuccessMessage"] = "تم إنشاء الفرع بنجاح.";
                 return RedirectToAction(nameof(Index));
             }
             return View(branchDto);
@@ -75,7 +75,7 @@ namespace CompanyApi.Controllers
             if (ModelState.IsValid)
             {
                 await _branchService.UpdateBranchAsync(id, branchDto);
-                TempData["SuccessMessage"] = "Branch updated successfully.";
+                TempData["SuccessMessage"] = "تم تحديث الفرع بنجاح.";
                 return RedirectToAction(nameof(Index));
             }
             return View(branchDto);
@@ -98,7 +98,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _branchService.DeleteBranchAsync(id);
-            TempData["SuccessMessage"] = "Branch deleted successfully.";
+            TempData["SuccessMessage"] = "تم حذف الفرع بنجاح.";
             return RedirectToAction(nameof(Index));
         }
     }

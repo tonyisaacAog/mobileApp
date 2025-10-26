@@ -30,34 +30,34 @@ namespace CompanyApi.Services
             const decimal VAT_RATE = 0.14m;
 
             if( document.BranchId == null )
-                return await Result<DocumentDetailsDto>.FailureAsync("Branch is required.");
+                return await Result<DocumentDetailsDto>.FailureAsync("الفرع مطلوب.");
 
             if( document.UserId == null )
-                return await Result<DocumentDetailsDto>.FailureAsync("User is required.");
+                return await Result<DocumentDetailsDto>.FailureAsync("المستخدم مطلوب.");
 
             if( string.IsNullOrEmpty(document.DeviceCode) )
-                return await Result<DocumentDetailsDto>.FailureAsync("Device code is required.");
+                return await Result<DocumentDetailsDto>.FailureAsync("كود الجهاز مطلوب.");
 
             var branch = await _unitOfWork.Repository<Branch>().GetByIdAsync(document.BranchId.Value);
             if( branch == null )
-                return await Result<DocumentDetailsDto>.FailureAsync($"Branch with ID {document.BranchId} does not exist.");
+                return await Result<DocumentDetailsDto>.FailureAsync($"الفرع بالمعرف {document.BranchId} غير موجود.");
 
             var device = await _unitOfWork.Repository<Device>()
                 .FirstOrDefaultAsync(d => d.Code == document.DeviceCode && d.BranchId == document.BranchId);
 
             if( device == null )
-                return await Result<DocumentDetailsDto>.FailureAsync($"Device with code {document.DeviceCode} does not exist in branch {branch.Name}.");
+                return await Result<DocumentDetailsDto>.FailureAsync($"الجهاز بالكود {document.DeviceCode} غير موجود في الفرع {branch.Name}.");
 
             if( document.DocumentType == DocumentType.RR )
             {
                 if( string.IsNullOrEmpty(document.ReferenceNumber) )
-                    return await Result<DocumentDetailsDto>.FailureAsync("Reference number is required for return receipts.");
+                    return await Result<DocumentDetailsDto>.FailureAsync("رقم المرجع مطلوب لإيصالات الإرجاع.");
 
                 var saleDocRepo = _unitOfWork.Repository<Document>();
 
                 var saleDoc = await saleDocRepo.FirstOrDefaultAsync(d => d.Id == Convert.ToInt32(document.ReferenceNumber) && d.DocumentType == DocumentType.SR);
                 if( saleDoc == null )
-                    return await Result<DocumentDetailsDto>.FailureAsync($"Sale receipt with number {document.ReferenceNumber} not found.");
+                    return await Result<DocumentDetailsDto>.FailureAsync($"إيصال البيع بالرقم {document.ReferenceNumber} غير موجود.");
 
                 var returnDocs = await saleDocRepo.FindAsync(d =>
                     d.ReferenceNumber == document.ReferenceNumber && d.DocumentType == DocumentType.RR);
@@ -76,7 +76,7 @@ namespace CompanyApi.Services
                 {
                     var saleLine = saleLines.FirstOrDefault(l => l.ProductId == item.ProductId);
                     if( saleLine == null )
-                        return await Result<DocumentDetailsDto>.FailureAsync($"Product {item.ProductId} not found in sale receipt {document.ReferenceNumber}.");
+                        return await Result<DocumentDetailsDto>.FailureAsync($"المنتج {item.ProductId} غير موجود في إيصال البيع {document.ReferenceNumber}.");
 
                     var alreadyReturned = returnedQuantities.ContainsKey(item.ProductId)
                         ? returnedQuantities[item.ProductId]
@@ -86,8 +86,7 @@ namespace CompanyApi.Services
 
                     if( newTotalReturned > saleLine.Quantity )
                         return await Result<DocumentDetailsDto>.FailureAsync(
-                            $"Cannot return more than sold quantity for product {item.ProductId}. " +
-                            $"Sold: {saleLine.Quantity}, Already returned: {alreadyReturned}, Trying to return: {item.Quantity}."
+                            $"لا يمكن إرجاع كمية أكبر من الكمية المباعة للمنتج {item.ProductId}. مباع: {saleLine.Quantity}, تم إرجاعه مسبقاً: {alreadyReturned}, محاولة إرجاع: {item.Quantity}."
                         );
                 }
             }
@@ -148,7 +147,7 @@ namespace CompanyApi.Services
             await _unitOfWork.SaveChangesAsync();
 
             var documentDetails = _mapper.Map<DocumentDetailsDto>(newDocument);
-            return await Result<DocumentDetailsDto>.SuccessAsync(documentDetails,"Document created successfully");
+            return await Result<DocumentDetailsDto>.SuccessAsync(documentDetails,"تم إنشاء الوثيقة بنجاح");
         }
 
 
@@ -187,7 +186,7 @@ namespace CompanyApi.Services
                 .FirstOrDefaultAsync(d => d.Code == deviceCode);
 
             if (device == null)
-                return await Result<DocumentsTotalsDto>.FailureAsync("Device not found");
+return await Result<DocumentsTotalsDto>.FailureAsync("الجهاز غير موجود");
 
             var today = DateTime.Now.Date;
 
@@ -219,7 +218,7 @@ namespace CompanyApi.Services
                 .FirstOrDefaultAsync(d => d.Code == deviceCode);
 
             if (device == null)
-                return await Result<List<ProductTotalsDto>>.FailureAsync("Device not found");
+return await Result<List<ProductTotalsDto>>.FailureAsync("الجهاز غير موجود");
 
             var today = DateTime.Now.Date;
 
@@ -309,7 +308,7 @@ namespace CompanyApi.Services
 
             if (existingDocument == null)
             {
-                throw new KeyNotFoundException("Document not found.");
+                throw new KeyNotFoundException("الوثيقة غير موجودة.");
             }
 
             if (existingDocument.ReceiptNumber != document.ReceiptNumber)
@@ -317,7 +316,7 @@ namespace CompanyApi.Services
                 var isUnique = await IsDocumentUniqueAsync(document.ReceiptNumber);
                 if (!isUnique)
                 {
-                    throw new InvalidOperationException("Receipt number must be unique.");
+                    throw new InvalidOperationException("رقم الإيصال يجب أن يكون فريداً.");
                 }
             }
 
@@ -366,7 +365,7 @@ namespace CompanyApi.Services
 
             if (document == null)
             {
-                throw new KeyNotFoundException("Document not found.");
+                throw new KeyNotFoundException("الوثيقة غير موجودة.");
             }
 
             repo.Remove(document);
@@ -420,11 +419,11 @@ namespace CompanyApi.Services
                 if( !string.IsNullOrEmpty(filter.DeviceCode) )
                     orderReports = orderReports.Where(o => o.DeviceCode == filter.DeviceCode).ToList();
 
-                return await Result<IEnumerable<OrderReportDto>>.SuccessAsync(orderReports, "Orders retrieved successfully");
+                return await Result<IEnumerable<OrderReportDto>>.SuccessAsync(orderReports, "تم استرجاع الطلبات بنجاح");
             }
             catch (Exception ex)
             {
-                return await Result<IEnumerable<OrderReportDto>>.FailureAsync($"Error retrieving orders: {ex.Message}");
+                return await Result<IEnumerable<OrderReportDto>>.FailureAsync($"خطأ في استرجاع الطلبات: {ex.Message}");
             }
         }
 
@@ -500,11 +499,11 @@ namespace CompanyApi.Services
                     }).ToList() ?? new List<OrderItemDto>()
                 };
 
-                return await Result<OrderDetailsDto>.SuccessAsync(orderDetails, "Order details retrieved successfully");
+                return await Result<OrderDetailsDto>.SuccessAsync(orderDetails, "تم استرجاع تفاصيل الطلب بنجاح");
             }
             catch (Exception ex)
             {
-                return await Result<OrderDetailsDto>.FailureAsync($"Error retrieving order details: {ex.Message}");
+                return await Result<OrderDetailsDto>.FailureAsync($"خطأ في استرجاع تفاصيل الطلب: {ex.Message}");
             }
         }
 
@@ -527,11 +526,11 @@ namespace CompanyApi.Services
                     IsAdmin = u.IsAdmin
                 });
 
-                return await Result<IEnumerable<UserDto>>.SuccessAsync(userDtos, "Users retrieved successfully");
+                return await Result<IEnumerable<UserDto>>.SuccessAsync(userDtos, "تم استرجاع المستخدمين بنجاح");
             }
             catch (Exception ex)
             {
-                return await Result<IEnumerable<UserDto>>.FailureAsync($"Error retrieving users: {ex.Message}");
+                return await Result<IEnumerable<UserDto>>.FailureAsync($"خطأ في استرجاع المستخدمين: {ex.Message}");
             }
         }
 
@@ -540,11 +539,11 @@ namespace CompanyApi.Services
             try
             {
                 var count = await _unitOfWork.Repository<Models.Document>().CountAsync();
-                return await Result<int>.SuccessAsync(count, "Document count retrieved successfully");
+                return await Result<int>.SuccessAsync(count, "تم استرجاع عدد الوثائق بنجاح");
             }
             catch (Exception ex)
             {
-                return await Result<int>.FailureAsync($"Error retrieving document count: {ex.Message}");
+                return await Result<int>.FailureAsync($"خطأ في استرجاع عدد الوثائق: {ex.Message}");
             }
         }
     }

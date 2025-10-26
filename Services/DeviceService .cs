@@ -21,7 +21,7 @@ namespace CompanyApi.Services
             var isUnique = await IsDeviceCodeUniqueAsync(dto.Code);
             if (!isUnique)
             {
-                throw new InvalidOperationException("Device code must be unique.");
+                throw new InvalidOperationException("كود الجهاز يجب أن يكون فريداً.");
             }
 
             var device = new Device
@@ -59,14 +59,14 @@ namespace CompanyApi.Services
         public async Task UpdateDeviceAsync(int id, DeviceDto dto)
         {
             var device = await _unitOfWork.Repository<Device>().GetByIdAsync(id);
-            if (device == null) throw new KeyNotFoundException("Device not found.");
+            if (device == null) throw new KeyNotFoundException("الجهاز غير موجود.");
 
             if (device.Code != dto.Code)
             {
                 var isUnique = await IsDeviceCodeUniqueAsync(dto.Code);
                 if (!isUnique)
                 {
-                    throw new InvalidOperationException("Device code must be unique.");
+                    throw new InvalidOperationException("كود الجهاز يجب أن يكون فريداً.");
                 }
             }
 
@@ -84,7 +84,7 @@ namespace CompanyApi.Services
         public async Task DeleteDeviceAsync(int id)
         {
             var device = await _unitOfWork.Repository<Device>().GetByIdAsync(id);
-            if (device == null) throw new KeyNotFoundException("Device not found.");
+            if (device == null) throw new KeyNotFoundException("الجهاز غير موجود.");
 
             _unitOfWork.Repository<Device>().Remove(device);
             await _unitOfWork.SaveChangesAsync();
@@ -103,11 +103,11 @@ namespace CompanyApi.Services
             try
             {
                 var count = await _unitOfWork.Repository<Device>().CountAsync();
-                return await Result<int>.SuccessAsync(count, "Device count retrieved successfully");
+                return await Result<int>.SuccessAsync(count, "تم استرجاع عدد الأجهزة بنجاح");
             }
             catch (Exception ex)
             {
-                return await Result<int>.FailureAsync($"Error retrieving device count: {ex.Message}");
+                return await Result<int>.FailureAsync($"خطأ في استرجاع عدد الأجهزة: {ex.Message}");
             }
         }
     }

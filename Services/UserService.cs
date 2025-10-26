@@ -61,10 +61,10 @@ namespace CompanyApi.Services
             var newUser = _mapper.Map<User>(user);
             // Check if username or email already exists
             if (await _authService.IsUsernameTaken(user.Username))
-                throw new ArgumentException("Username already exists");
+                throw new ArgumentException("اسم المستخدم موجود بالفعل");
 
             if (await _authService.IsEmailTaken(user.Email))
-                throw new ArgumentException("Email already exists");
+                throw new ArgumentException("البريد الإلكتروني موجود بالفعل");
 
             // Hash password
             newUser.PasswordHash = _authService.HashPassword(user.Password);
@@ -86,10 +86,10 @@ namespace CompanyApi.Services
 
             // Check if username or email already exists (excluding current user)
             if (await _unitOfWork.Repository<User>().AnyAsync(u => u.Username == user.Username && u.Id != id))
-                throw new ArgumentException("Username already exists");
+                throw new ArgumentException("اسم المستخدم موجود بالفعل");
 
             if (await _unitOfWork.Repository<User>().AnyAsync(u => u.Email == user.Email && u.Id != id))
-                throw new ArgumentException("Email already exists");
+                throw new ArgumentException("البريد الإلكتروني موجود بالفعل");
             // Update fields
             existingUser.Username = user.Username;
             existingUser.Email = user.Email;
@@ -114,12 +114,12 @@ namespace CompanyApi.Services
         {
             var user = await _unitOfWork.Repository<User>().GetByIdAsync(id);
             if (user == null)
-                return await Result<bool>.FailureAsync(false, "user not found");
+                return await Result<bool>.FailureAsync(false, "المستخدم غير موجود");
 
             _unitOfWork.Repository<User>().Remove(user);
             await _unitOfWork.SaveChangesAsync();
 
-            return await Result<bool>.SuccessAsync(true, "user deleted");
+            return await Result<bool>.SuccessAsync(true, "تم حذف المستخدم");
         }
 
         public async Task<Result<UserDto>?> GetUserByUsernameAsync(string username)
@@ -148,26 +148,26 @@ namespace CompanyApi.Services
         {
             var user = await _unitOfWork.Repository<User>().GetByIdAsync(id);
             if (user == null)
-                return await Result<bool>.FailureAsync(false, "user not found");
+                return await Result<bool>.FailureAsync(false, "المستخدم غير موجود");
 
             user.IsActive = true;
             _unitOfWork.Repository<User>().Update(user);
             await _unitOfWork.SaveChangesAsync();
 
-            return await Result<bool>.FailureAsync(true, "active user");
+            return await Result<bool>.SuccessAsync(true, "تم تفعيل المستخدم");
         }
 
         public async Task<Result<bool>> DeactivateUserAsync(int id)
         {
             var user = await _unitOfWork.Repository<User>().GetByIdAsync(id);
             if (user == null)
-                return await Result<bool>.FailureAsync(false, "user not found");
+                return await Result<bool>.FailureAsync(false, "المستخدم غير موجود");
 
             user.IsActive = false;
             _unitOfWork.Repository<User>().Update(user);
             await _unitOfWork.SaveChangesAsync();
 
-            return await Result<bool>.FailureAsync(true, "deactive user");
+            return await Result<bool>.SuccessAsync(true, "تم إلغاء تفعيل المستخدم");
         }
 
         public async Task<Result<int>> GetCountUsers()

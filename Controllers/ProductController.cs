@@ -1,4 +1,4 @@
-﻿using CompanyApi.DTOs.ProductDtos;
+using CompanyApi.DTOs.ProductDtos;
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +37,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> Post([FromBody] ProductDto branch)
         {
             await _productService.CreateProductAsync(branch);
-            return Ok(await Result<ProductDto>.SuccessAsync("Product Created Successfully", 200));
+            return Ok(await Result<ProductDto>.SuccessAsync("تم إنشاء المنتج بنجاح", 200));
         }
 
         // PUT api/<ProductController>/5
@@ -45,7 +45,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] ProductDto branch)
         {
             await _productService.UpdateProductAsync(id, branch);
-            return Ok(await Result<ProductDto>.SuccessAsync("Product Updated Successfully", 200));
+            return Ok(await Result<ProductDto>.SuccessAsync("تم تحديث المنتج بنجاح", 200));
         }
 
         // DELETE api/<ProductController>/5
@@ -53,7 +53,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> DeleteAsync(int id)
         {
             await _productService.DeleteProductAsync(id);
-            return Ok(await Result<ProductDto>.SuccessAsync("Product Deleted Successfully", 200));
+            return Ok(await Result<ProductDto>.SuccessAsync("تم حذف المنتج بنجاح", 200));
         }
     }
 }

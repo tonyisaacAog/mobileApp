@@ -1,4 +1,4 @@
-﻿using CompanyApi.DTOs.BranchDtos;
+using CompanyApi.DTOs.BranchDtos;
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.DTOs.UserDtos;
 using CompanyApi.Models;
@@ -20,7 +20,7 @@ namespace CompanyApi.Services
         public async Task<Result<List<UserBranchDto>>> AddBranchToUserAsync(int userId,int[] branchIds)
         {
             if( branchIds == null || branchIds.Length == 0 )
-                return Result<List<UserBranchDto>>.Failure("No branches provided.");
+                return Result<List<UserBranchDto>>.Failure("لم يتم توفير فروع.");
 
             // Get all existing user-branch relations for that user
             var existingUserBranches = await _context.Repository<UserBranch>()
@@ -38,7 +38,7 @@ namespace CompanyApi.Services
                 .ToList();
 
             if( !newBranches.Any() )
-                return Result<List<UserBranchDto>>.Failure("User already has all selected branches.");
+                return Result<List<UserBranchDto>>.Failure("المستخدم لديه بالفعل جميع الفروع المحددة.");
 
             // Add new relations
             await _context.Repository<UserBranch>().AddRangeAsync(newBranches);
@@ -51,7 +51,7 @@ namespace CompanyApi.Services
                 IsActive = nb.IsActive
             }).ToList();
 
-            return Result<List<UserBranchDto>>.Success(resultDtos,"Branches added to user successfully.");
+            return Result<List<UserBranchDto>>.Success(resultDtos,"تم إضافة الفروع للمستخدم بنجاح.");
         }
 
 
@@ -61,12 +61,12 @@ namespace CompanyApi.Services
                 .FindAsync(ub => ub.UserId == userId); // && ub.BranchId == branchId
 
             if( userBranch == null || !userBranch.Any() )
-                return Result<bool>.Failure("User does not have any branches");
+                return Result<bool>.Failure("المستخدم ليس لديه أي فروع");
 
             _context.Repository<UserBranch>().RemoveRange(userBranch);
             await _context.SaveChangesAsync();
 
-            return Result<bool>.Success(true, "Branch removed from user successfully");
+            return Result<bool>.Success(true, "تم حذف الفرع من المستخدم بنجاح");
         }
 
         public async Task<Result<bool>> SetBranchActiveStatusAsync(int userId, int branchId, bool isActive)
@@ -75,14 +75,14 @@ namespace CompanyApi.Services
                 .FirstOrDefaultAsync(ub => ub.UserId == userId && ub.BranchId == branchId);
 
             if (userBranch == null)
-                return Result<bool>.Failure("User does not have this branch");
+                return Result<bool>.Failure("المستخدم ليس لديه هذا الفرع");
 
             userBranch.IsActive = isActive;
             _context.Repository<UserBranch>().Update(userBranch);
             await _context.SaveChangesAsync();
 
-            var status = isActive ? "activated" : "deactivated";
-            return Result<bool>.Success(true, $"Branch {status} for user successfully");
+            var status = isActive ? "مفعل" : "غير مفعل";
+            return Result<bool>.Success(true, $"تم {status} الفرع للمستخدم بنجاح");
         }
 
         public async Task<Result<IEnumerable<BranchDto>>> GetUserBranchesAsync(int userId, bool onlyActive = true)
@@ -101,7 +101,7 @@ namespace CompanyApi.Services
                     IsActive = ub.IsActive
                 });
 
-            return Result<IEnumerable<BranchDto>>.Success(branches, "User branches retrieved successfully");
+            return Result<IEnumerable<BranchDto>>.Success(branches, "تم استرجاع فروع المستخدم بنجاح");
         }
 
     }

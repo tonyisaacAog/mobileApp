@@ -49,7 +49,7 @@ namespace CompanyApi.Controllers
             if (ModelState.IsValid)
             {
                 await _deviceService.CreateDeviceAsync(deviceDto);
-                TempData["SuccessMessage"] = "Device created successfully.";
+                TempData["SuccessMessage"] = "تم إنشاء الجهاز بنجاح.";
                 return RedirectToAction(nameof(Index));
             }
             return View(deviceDto);
@@ -77,7 +77,7 @@ namespace CompanyApi.Controllers
             if (ModelState.IsValid)
             {
                 await _deviceService.UpdateDeviceAsync(id, deviceDto);
-                TempData["SuccessMessage"] = "Device updated successfully.";
+                TempData["SuccessMessage"] = "تم تحديث الجهاز بنجاح.";
                 return RedirectToAction(nameof(Index));
             }
             return View(deviceDto);
@@ -100,7 +100,7 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _deviceService.DeleteDeviceAsync(id);
-            TempData["SuccessMessage"] = "Device deleted successfully.";
+            TempData["SuccessMessage"] = "تم حذف الجهاز بنجاح.";
             return RedirectToAction(nameof(Index));
         }
     }

@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CompanyApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+559dd514dfc6a3068d62e7874339611b1093dfcb")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d69f51708f8b8acdcced612790d80f5d14187bbf")]
->>>>>>> 17af8cfbe681da591621d5296d0480fdee34baf4
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+28f0616f9eb2bc9e67dec3b7dbe137e877494a54")]
 [assembly: System.Reflection.AssemblyProductAttribute("CompanyApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CompanyApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

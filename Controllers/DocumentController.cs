@@ -38,7 +38,8 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> GetProductStats([FromQuery]string deviceCode)
         {
             var result = await _documentService.GetProductsTotalsAsync(deviceCode);
-            return Ok(result);
+            if (result.Succeeded) return Ok(result);
+            else return BadRequest(result);
         }
 
         // GET api/<DocumentController>/5
@@ -72,16 +73,29 @@ namespace CompanyApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] DocumentDto document)
         {
-            await _documentService.UpdateDocumentAsync(id, document);
-            return Ok(await Result<DocumentDto>.SuccessAsync(document, "تم تحديث الوثيقة بنجاح", 200));
+            try
+            {
+                await _documentService.UpdateDocumentAsync(id, document);
+                return Ok(await Result<DocumentDto>.SuccessAsync(document, "تم تحديث الوثيقة بنجاح", 200));
+            }catch(Exception ex)
+            {
+                return BadRequest(await Result<DocumentDto>.FailureAsync($"خطأ في تحديث الوثيقة: {ex.Message}", 400));
+            }
         }
 
         // DELETE api/<DocumentController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _documentService.DeleteDocumentAsync(id);
-            return Ok(await Result<string>.SuccessAsync(default, "تم حذف الوثيقة بنجاح", 200));
+            try
+            {
+                await _documentService.DeleteDocumentAsync(id);
+                return Ok(await Result<string>.SuccessAsync(default, "تم حذف الوثيقة بنجاح", 200));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(await Result<string>.FailureAsync($"خطأ في حذف الوثيقة: {ex.Message}", 400));
+            }
         }
     }
 }

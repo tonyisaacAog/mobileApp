@@ -4,6 +4,8 @@ using CompanyApi.DTOs.TemporaryDocumentDto;
 using CompanyApi.Models;
 using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Services.Interfaces;
+using System.Reflection.Metadata;
+using System.Xml.Linq;
 
 namespace CompanyApi.Services
 {
@@ -31,22 +33,25 @@ namespace CompanyApi.Services
                     .GetAllByConditionAsync(x => request.temporaryReceiptsIds.Contains(x.Id), x => new TemporaryDocument
                     {
                         ReceiptNumber = x.ReceiptNumber,
-                        ReceiptDate = x.ReceiptDate,
+                        ReceiptDate = DateTime.Now,
                         DeviceSerial = x.DeviceSerial, // Needed
+                        DeviceId = x.DeviceId, // Needed
                         CustomerName = x.CustomerName, //Needed
-                        DocumentType = x.DocumentType ,
+                        DocumentType = DocumentType.SR,
+                        TotalDiscount = x.TotalDiscount,
+                        TotalVAT = x.TotalVAT,
                         Subtotal = x.Subtotal,
                         TotalAmount = x.TotalAmount,
-                        PaymentMethod = x.PaymentMethod,
+                        PaymentMethod = PaymentType.Cash,
                         Notes = x.Notes,
                         DocumentLines = x.DocumentLines.Select(l => new TemporaryDocumentLine
                         {
                             ProductId = l.ProductId,
                             Quantity = l.Quantity,
-                            UnitPrice = l.UnitPrice,
-                            DiscountAmount = l.DiscountAmount,
-                            NetTotal = l.NetTotal,
+                            UnitPrice = l.UnitPrice, // replace with actual price
                             TotalPrice = l.TotalPrice,
+                            NetTotal = l.NetTotal,
+                            DiscountAmount = l.DiscountAmount,
                             VAT = l.VAT,
                             Notes = l.Notes
                         }).ToList()
@@ -55,29 +60,32 @@ namespace CompanyApi.Services
                 if (!tempReceipts.Any())
                     return await Result<bool>.FailureAsync("No temporary receipts found for the provided IDs.");
 
-                var approvedReceipts = new List<Document>();
+                var approvedReceipts = new List<Models.Document>();
 
                 foreach(var temp in tempReceipts)
                 {
-                    var approveDocItem = new Document
+                    var approveDocItem = new Models.Document
                     {
                         ReceiptNumber = temp.ReceiptNumber,
                         ReceiptDate = DateTime.Now,
                         DeviceSerial = temp.DeviceSerial, // Needed
+                        DeviceId = temp.DeviceId, // Needed
                         CustomerName = temp.CustomerName, //Needed
                         DocumentType = DocumentType.SR,
+                        TotalDiscount = temp.TotalDiscount,
+                        TotalVAT = temp.TotalVAT,
                         Subtotal = temp.Subtotal,
                         TotalAmount = temp.TotalAmount,
                         PaymentMethod = PaymentType.Cash,
-                        Notes = temp.Notes,
+                        Notes =temp.Notes,
                         ReceiptItems = temp.DocumentLines.Select(dl => new DocumentLines
                         {
                             ProductId = dl.ProductId,
                             Quantity = dl.Quantity,
-                            UnitPrice = dl.UnitPrice,
-                            DiscountAmount = dl.DiscountAmount,
-                            NetTotal = dl.NetTotal,
+                            UnitPrice = dl.UnitPrice, // replace with actual price
                             TotalPrice = dl.TotalPrice,
+                            NetTotal = dl.NetTotal,
+                            DiscountAmount = dl.DiscountAmount,
                             VAT = dl.VAT,
                             Notes = dl.Notes
                         }).ToList()
@@ -85,7 +93,7 @@ namespace CompanyApi.Services
                     approvedReceipts.Add(approveDocItem);
                 }
 
-                await _unitOfWork.Repository<Document>().AddRangeAsync(approvedReceipts);
+                await _unitOfWork.Repository<Models.Document>().AddRangeAsync(approvedReceipts);
                 await _unitOfWork.SaveChangesAsync();
 
                 return await Result<bool>.SuccessAsync(true);
@@ -99,6 +107,7 @@ namespace CompanyApi.Services
 
         public async Task<Result<List<TemporaryDocument>>> GenerateReceiptsAsync(ReceiptGenerationDto generationDto)
         {
+            const decimal VAT_RATE = 0.14m;
             try
             {
                 if(generationDto.NumberOfReceipts <= 0)
@@ -166,18 +175,38 @@ namespace CompanyApi.Services
 
                     var splittedQuantities = SplitTotalQuantitiesWithinRange(productAlloc.TotalQuantity, alloc.count, productAlloc.minRange, productAlloc.maxRange, random);
 
+
+
                     foreach(var qty in  splittedQuantities)
                     {
+
+                        decimal subtotal = 0, totalDiscount = 0, totalVAT = 0;
+
+                        
+                        var lineTotal = qty * productAlloc.UnitPrice;
+                        var lineNet = lineTotal - productAlloc.DiscountAmount;
+                        var lineVAT = productAlloc.VAT > 0 ? lineNet * VAT_RATE : 0;
+
+                        subtotal += lineTotal;
+                        totalDiscount += productAlloc.DiscountAmount;
+                        totalVAT += lineVAT;
+                        
+
+                        totalDiscount += generationDto.ExtraDiscount;
+
+
                         var receipt = new TemporaryDocument
                         {
                             ReceiptNumber = $"TMP-{Guid.NewGuid().ToString("N").Substring(0, 10)}",
                             ReceiptDate = DateTime.Now,
                             DeviceSerial = generationDto.DeviceSerial, // Needed
-                            //DeviceId = 10, // Needed
+                            DeviceId = generationDto.DeviceId, // Needed
                             CustomerName = generationDto.CustomerName, //Needed
                             DocumentType = DocumentType.SR,
-                            Subtotal = qty * productEntity.Cost,
-                            TotalAmount = qty * productEntity.Cost,
+                            TotalDiscount = totalDiscount,
+                            TotalVAT = totalVAT,
+                            Subtotal = subtotal,
+                            TotalAmount = subtotal - totalDiscount + totalVAT,
                             PaymentMethod = PaymentType.Cash,
                             Notes = $"Auto-generated receipt for {productAlloc.ProductName}",
                             DocumentLines = new List<TemporaryDocumentLine> 
@@ -186,11 +215,12 @@ namespace CompanyApi.Services
                                 {
                                     ProductId = productAlloc.ProductId,
                                     Quantity = qty,
-                                    UnitPrice = productEntity.Cost, // replace with actual price
-                                    TotalPrice = qty * productEntity.Cost,
-                                    NetTotal = qty * productEntity.Cost,
-                                    DiscountAmount = 0,
-                                    VAT = 0
+                                    UnitPrice = productAlloc.UnitPrice, // replace with actual price
+                                    TotalPrice = lineTotal,
+                                    NetTotal = lineNet,
+                                    DiscountAmount = productAlloc.DiscountAmount,
+                                    VAT = lineVAT,
+                                    Notes = productAlloc.Notes
                                 }
                             }
                         };

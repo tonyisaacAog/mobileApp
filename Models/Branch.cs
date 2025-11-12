@@ -13,6 +13,7 @@ namespace CompanyApi.Models
         //public virtual ICollection<User> Users { get; set; } = [];
         public virtual ICollection<UserBranch> UserBranches { get; set; } = [];
         public virtual ICollection<Document> Receipts { get; set; } = [];
+        public virtual ICollection<TemporaryDocument> TemporaryDocuments { get; set; } = [];
         public virtual ICollection<Product> Products { get; set; } = [];
     }
 }

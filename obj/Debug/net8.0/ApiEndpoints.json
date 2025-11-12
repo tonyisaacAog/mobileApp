@@ -458,6 +458,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "CompanyApi.Controllers.TemporaryDocumentsController",
+    "Method": "ApproveTempDocument",
+    "RelativePath": "api/TemporaryDocuments/ApproveTempDoc",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CompanyApi.DTOs.TemporaryDocumentDto.ApproveTempDocumentDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CompanyApi.Controllers.TemporaryDocumentsController",
+    "Method": "CreateTempDocuments",
+    "RelativePath": "api/TemporaryDocuments/createTempDoc",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CompanyApi.DTOs.TemporaryDocumentDto.ReceiptGenerationDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CompanyApi.Controllers.AdminController",
     "Method": "SetLanguage",
     "RelativePath": "SetLanguage",

@@ -11,5 +11,6 @@ namespace CompanyApi.Models
         public string? TradeName { get; set; }
         public bool IsActive { get; set; }
         public virtual ICollection<Document> Receipts { get; set; } = new List<Document>();
+        public virtual ICollection<TemporaryDocument> TemporaryDocuments { get; set; } = new List<TemporaryDocument>();
     }
 }

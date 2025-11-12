@@ -37,6 +37,7 @@ builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserBranchService, UserBranchService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITemporaryDocumentService, TemporaryDocumentService>();
 
 
 // Configure JWT authentication

@@ -18,6 +18,9 @@ namespace CompanyApi.Data
         public DbSet<Document> Documents { get; set; }
         public DbSet<DocumentLines> DocumentLines { get; set; }
 
+        public DbSet<TemporaryDocument> TemporaryDocuments { get; set; }
+        public DbSet<TemporaryDocumentLine> TemporaryDocumentLines { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -52,6 +55,41 @@ namespace CompanyApi.Data
                 .WithMany()
                 .HasForeignKey(ri => ri.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+
+            #region For Temporary Documents
+            modelBuilder.Entity<TemporaryDocument>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.TemporaryDocuments)
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<TemporaryDocument>()
+                .HasOne(r => r.Branch)
+                .WithMany(b => b.TemporaryDocuments)
+                .HasForeignKey(r => r.BranchId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<TemporaryDocument>()
+                .HasOne(r => r.Company)
+                .WithMany(c => c.TemporaryDocuments)
+                .HasForeignKey(r => r.CompanyId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // ReceiptItem relationships
+            modelBuilder.Entity<TemporaryDocumentLine>()
+                .HasOne(ri => ri.Receipt)
+                .WithMany(r => r.DocumentLines)
+                .HasForeignKey(ri => ri.ReceiptId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TemporaryDocumentLine>()
+                .HasOne(ri => ri.Product)
+                .WithMany()
+                .HasForeignKey(ri => ri.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+            #endregion
+
 
             // Company-Branch relationship
             //modelBuilder.Entity<Company>()

@@ -35,6 +35,7 @@ namespace CompanyApi.Models
 
         // Navigation properties
         public virtual ICollection<Document> Receipts { get; set; } = [];
+        public virtual ICollection<TemporaryDocument> TemporaryDocuments { get; set; } = [];
         public virtual ICollection<UserBranch> UserBranches { get; set; } = [];
     }
 }

@@ -1,35 +1,35 @@
 {
   "Files": [
     {
-      "Id": "/home/kareem/Desktop/mobileApp/wwwroot/css/admin.css",
-      "PackagePath": "staticwebassets/css/admin.css"
+      "Id": "D:\\Projects\\Mobile-App\\mobileApp\\wwwroot\\css\\admin.css",
+      "PackagePath": "staticwebassets\\css\\admin.css"
     },
     {
-      "Id": "/home/kareem/Desktop/mobileApp/wwwroot/css/receipt.css",
-      "PackagePath": "staticwebassets/css/receipt.css"
+      "Id": "D:\\Projects\\Mobile-App\\mobileApp\\wwwroot\\css\\receipt.css",
+      "PackagePath": "staticwebassets\\css\\receipt.css"
     },
     {
-      "Id": "/home/kareem/Desktop/mobileApp/wwwroot/css/site.css",
-      "PackagePath": "staticwebassets/css/site.css"
+      "Id": "D:\\Projects\\Mobile-App\\mobileApp\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "/home/kareem/Desktop/mobileApp/wwwroot/js/site.js",
-      "PackagePath": "staticwebassets/js/site.js"
+      "Id": "D:\\Projects\\Mobile-App\\mobileApp\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
-      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.CompanyApi.Microsoft.AspNetCore.StaticWebAssets.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.CompanyApi.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
     {
-      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.CompanyApi.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.CompanyApi.props",
       "PackagePath": "build\\CompanyApi.props"
     },
     {
-      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.CompanyApi.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.CompanyApi.props",
       "PackagePath": "buildMultiTargeting\\CompanyApi.props"
     },
     {
-      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.CompanyApi.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.CompanyApi.props",
       "PackagePath": "buildTransitive\\CompanyApi.props"
     }
   ],

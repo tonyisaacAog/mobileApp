@@ -160,8 +160,8 @@ namespace CompanyApi.Services
                     if(product.TotalQuantity <  minQuantityCalculated || product.TotalQuantity > maxQuantityCalculated)
                     {
                         return await Result<List<TemporaryDocument>>.FailureAsync(
-                            $"Cannot generate Receipts for Product {product.ProductName}" +
-                            $"Total Quantity {product.TotalQuantity} cannot fit into {receiptsCount} receipts" +
+                            $"Cannot generate Receipts for Product {product.ProductName} " +
+                            $"Total Quantity {product.TotalQuantity} cannot fit into {receiptsCount} receipts " +
                             $"with minRange = {product.minRange} and maxRange = {product.maxRange}"
                             );
                     }
@@ -249,47 +249,194 @@ namespace CompanyApi.Services
         {
             var results = new List<decimal>();
             decimal remaining = total;
-            for (int i = 0; i < count; i++)
-            {
-                int left = count - i - 1;
-                decimal minNeeded = left * min;
-                decimal maxNeeded = left * max;
+            #region old logic
+            //for (int i = 0; i < count; i++)
+            //{
+            //    int left = count - i - 1;
+            //    decimal minNeeded = left * min;
+            //    decimal maxNeeded = left * max;
 
-                decimal minAllowed = Math.Min(min, remaining - minNeeded);
-                decimal maxAllowed = Math.Max(max, remaining - maxNeeded);
+            //    decimal minAllowed = Math.Min(min, remaining - minNeeded);
+            //    decimal maxAllowed = Math.Max(max, remaining - maxNeeded);
+
+            //    if (minAllowed > maxAllowed)
+            //        throw new Exception("Cannot satisfy range constraints during quantity split.");
+
+            //    double dynamicFactor = GetDynamicRandom(random);
+            //    decimal qty = Math.Round(
+            //        (decimal)(dynamicFactor * (double)(maxAllowed - minAllowed) + (double)minAllowed), 2);
+
+            //    if (qty < 0)
+            //        qty = min;
+            //    if (qty > max)
+            //        qty = max;
+
+            //    results.Add(qty);
+            //    remaining -= qty;
+            //}
+
+            //int highCount = Math.Max(1, count / 20); // ~5%
+            //int avgCount = (int)(count * 0.4);
+            //int minCount = count - highCount - avgCount;
+
+
+
+            //// Step 1: Assign high quantities
+            //for (int i = 0; i < highCount; i++)
+            //{
+            //    decimal qty = Math.Round(max * (0.8m + 0.2m * (decimal)random.NextDouble()), 2); // 80–100% of max
+            //    results.Add(qty);
+            //    remaining -= qty;
+            //}
+
+            //// Step 2: Assign average quantities
+            //for (int i = 0; i < avgCount; i++)
+            //{
+            //    decimal avg = total / count;
+            //    decimal qty = Math.Round(avg * (0.7m + 0.6m * (decimal)random.NextDouble()), 2); // 70–130% of avg
+            //    qty = Math.Min(Math.Max(qty, min), max); // clamp
+            //    results.Add(qty);
+            //    remaining -= qty;
+            //}
+
+            //// Step 3: Assign min/small quantities
+            //for (int i = 0; i < minCount; i++)
+            //{
+            //    decimal qty = Math.Round(min + (decimal)random.NextDouble() * (decimal)Math.Min(5, (double)max - (double)min), 2);
+            //    results.Add(qty);
+            //    remaining -= qty;
+            //}
+
+            //decimal diff = total - results.Sum();
+            //if (Math.Abs(diff) > 0.01m)
+            //{
+            //    for (int i = 0; i < results.Count; i++)
+            //    {
+            //        if (diff == 0) break;
+
+            //        decimal spaceAvailable = max - results[i];
+            //        decimal adjustment = Math.Min(spaceAvailable, diff);
+            //        results[i] += adjustment;
+            //        diff -= adjustment;
+            //    }
+
+            //    // If there is still a tiny diff (due to rounding), adjust the last element
+            //    if (Math.Abs(diff) > 0.001m)
+            //    {
+            //        results[^1] += diff;
+            //    }
+            //}
+            #endregion
+
+            #region old logics
+            //var weights = new List<decimal>();
+            //for (int i = 0; i < count; i++)
+            //{
+            //    // Bias around center — this gives more balanced spread than pure random
+            //    double centered = 0.5 + (random.NextDouble() - 0.5) / 2; // between 0.25 and 0.75
+            //    weights.Add((decimal)centered);
+            //}
+
+            //// Normalize weights so their sum = 1
+            //decimal totalWeight = weights.Sum();
+            //weights = weights.Select(w => w / totalWeight).ToList();
+
+            //// Step 1: Assign quantities based on weighted distribution
+            //for (int i = 0; i < count; i++)
+            //{
+            //    decimal targetQty = total * weights[i];
+
+            //    // Clamp each quantity between min and max
+            //    targetQty = Math.Clamp(targetQty, min, max);
+
+            //    results.Add(Math.Round(targetQty, 2));
+            //}
+
+            //// Step 2: Adjust small rounding error
+            //decimal diff = total - results.Sum();
+            //int index = 0;
+
+            //while (Math.Abs(diff) > 0.01m && index < results.Count)
+            //{
+            //    decimal available = diff > 0
+            //        ? max - results[index]
+            //        : results[index] - min;
+
+            //    decimal adjustment = Math.Min(Math.Abs(diff), available);
+            //    adjustment = diff > 0 ? adjustment : -adjustment;
+
+            //    results[index] += adjustment;
+            //    diff -= adjustment;
+            //    index++;
+            //} 
+            #endregion
+
+            int halfCount = count / 2;
+            int secondHalfCount = count - halfCount;
+
+            decimal firstSplitTotal = Math.Round(total * 2m / 3m, 2);
+            decimal secondSplitTotal = total - firstSplitTotal;
+
+
+            for (int i = 0; i < halfCount; i++)
+            {
+                int remainingCount = halfCount - i - 1;
+
+                decimal avgFirstHalf = firstSplitTotal / (halfCount - i);
+                decimal minAllowed = Math.Max(avgFirstHalf, min);
+                decimal maxAllowed = max;
+
+                // clamp remaining feasibility
+                minAllowed = Math.Max(minAllowed, firstSplitTotal - remainingCount * maxAllowed);
+                maxAllowed = Math.Min(maxAllowed, firstSplitTotal - remainingCount * min);
 
                 if (minAllowed > maxAllowed)
-                    throw new Exception("Cannot satisfy range constraints during quantity split.");
+                    throw new InvalidOperationException("Cannot satisfy range constraints in first half.");
 
-                decimal qty = Math.Round(
-                    (decimal)(random.NextDouble() * (double)(maxAllowed - minAllowed) + (double)minAllowed), 2);
-
+                decimal qty = Math.Round(minAllowed + (decimal)GetDynamicRandom(random) * (maxAllowed - minAllowed), 2);
                 results.Add(qty);
+                firstSplitTotal -= qty;
                 remaining -= qty;
             }
 
-            decimal diff = total - results.Sum();
-            if (Math.Abs(diff) > 0.01m)
+            // --- Second half: min → avg
+            for (int i = 0; i < secondHalfCount; i++)
             {
-                for (int i = 0; i < results.Count; i++)
-                {
-                    if (diff == 0) break;
+                int remainingCount = secondHalfCount - i - 1;
 
-                    decimal spaceAvailable = max - results[i];
-                    decimal adjustment = Math.Min(spaceAvailable, diff);
-                    results[i] += adjustment;
-                    diff -= adjustment;
-                }
+                decimal avgSecondHalf = secondSplitTotal / (secondHalfCount - i);
+                decimal minAllowed = min;
+                decimal maxAllowed = Math.Min(avgSecondHalf, max);
 
-                // If there is still a tiny diff (due to rounding), adjust the last element
-                if (Math.Abs(diff) > 0.001m)
-                {
-                    results[^1] += diff;
-                }
+                // clamp remaining feasibility
+                minAllowed = Math.Max(minAllowed, secondSplitTotal - remainingCount * max);
+                maxAllowed = Math.Min(maxAllowed, secondSplitTotal - remainingCount * min);
+
+                if (minAllowed > maxAllowed)
+                    throw new InvalidOperationException("Cannot satisfy range constraints in second half.");
+
+                decimal qty = Math.Round(minAllowed + (decimal)GetDynamicRandom(random) * (maxAllowed - minAllowed), 2);
+                results.Add(qty);
+                secondSplitTotal -= qty;
+                remaining -= qty;
             }
 
-            return results;
+            // Final tiny adjustment
+            decimal diff = total - results.Sum();
+            if (Math.Abs(diff) > 0.001m)
+                results[^1] += diff;
 
+
+            return results.OrderBy(x => random.Next()).ToList();
+
+        }
+
+        double GetDynamicRandom(Random random)
+        {
+            double r = random.NextDouble();
+            if (r < 0.2) return random.NextDouble() * 0.2;       // near min
+            if (r > 0.8) return 0.8 + random.NextDouble() * 0.2; // near max
+            return 0.3 + random.NextDouble() * 0.4;              // near average
         }
 
     }

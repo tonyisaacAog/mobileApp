@@ -4,6 +4,7 @@ using CompanyApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251130131708_addGroupTable2")]
+    partial class addGroupTable2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -540,7 +543,7 @@ namespace CompanyApi.Migrations
                     b.Property<decimal>("ExtraDiscount")
                         .HasColumnType("decimal(18, 5)");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsCoupon")
@@ -867,9 +870,7 @@ namespace CompanyApi.Migrations
 
                     b.HasOne("CompanyApi.Models.Group", "Group")
                         .WithMany("TemporaryDocuments")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.HasOne("CompanyApi.Models.User", "User")
                         .WithMany("TemporaryDocuments")

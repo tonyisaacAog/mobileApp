@@ -2,6 +2,7 @@
 {
     public class ApproveTempDocumentDto
     {
-        public List<int> temporaryReceiptsIds { get; set; }
+        public int GroupId { get; set; }
+        //public List<int> temporaryReceiptsIds { get; set; }
     }
 }

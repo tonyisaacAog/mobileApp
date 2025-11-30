@@ -60,6 +60,8 @@ namespace CompanyApi.Models
         public virtual Company? Company { get; set; }
         [ForeignKey("DeviceId")]
         public virtual Device? Device { get; set; }
+        public Group Group { get; set; }
+        public int GroupId { get; set; }
 
         public ICollection<TemporaryDocumentLine> DocumentLines { get; set; }
     }

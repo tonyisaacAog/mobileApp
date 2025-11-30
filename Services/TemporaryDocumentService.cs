@@ -21,16 +21,18 @@ namespace CompanyApi.Services
         }
         public async Task<Result<bool>> ApproveReceiptsAsync(ApproveTempDocumentDto request)
         {
+            await _unitOfWork.BeginTransactionAsync();
             try
             {
-                if (request.temporaryReceiptsIds == null || request.temporaryReceiptsIds.Count == 0)
+
+                if (request.GroupId == null || request.GroupId == 0)
                 {
-                    return await Result<bool>.FailureAsync("No receipts selected for Approval");
+                    return await Result<bool>.FailureAsync("No Group selected for Approval");
                 }
 
                 var tempReceipts = await _unitOfWork.Repository<TemporaryDocument>()
                                             .AddIncludes("DocumentLines")
-                    .GetAllByConditionAsync(x => request.temporaryReceiptsIds.Contains(x.Id), x => new TemporaryDocument
+                    .GetAllByConditionAsync(x => x.GroupId == request.GroupId, x => new TemporaryDocument
                     {
                         ReceiptNumber = x.ReceiptNumber,
                         ReceiptDate = DateTime.Now,
@@ -88,28 +90,38 @@ namespace CompanyApi.Services
                             DiscountAmount = dl.DiscountAmount,
                             VAT = dl.VAT,
                             Notes = dl.Notes
-                        }).ToList()
+                        }).ToList(),
+
                     };
                     approvedReceipts.Add(approveDocItem);
                 }
 
+
+
                 await _unitOfWork.Repository<Models.Document>().AddRangeAsync(approvedReceipts);
                 await _unitOfWork.SaveChangesAsync();
 
+                await _unitOfWork.CommitTransactionAsync();
                 return await Result<bool>.SuccessAsync(true);
 
             }
             catch (Exception ex)
             {
+                await _unitOfWork.RollbackTransactionAsync();
                 return await Result<bool>.FailureAsync(ex.Message, 400);
             }
         }
 
         public async Task<Result<List<TemporaryDocument>>> GenerateReceiptsAsync(ReceiptGenerationDto generationDto)
         {
+            await _unitOfWork.BeginTransactionAsync();
             const decimal VAT_RATE = 0.14m;
             try
             {
+                var group = new Group();
+                await _unitOfWork.Repository<Group>().AddAsync(group);  
+                await _unitOfWork.SaveChangesAsync();
+
                 if(generationDto.NumberOfReceipts <= 0)
                 {
                     return await Result<List<TemporaryDocument>>.FailureAsync("Number of receipts must be greater than 0.");
@@ -209,6 +221,7 @@ namespace CompanyApi.Services
                             TotalAmount = subtotal - totalDiscount + totalVAT,
                             PaymentMethod = PaymentType.Cash,
                             Notes = $"Auto-generated receipt for {productAlloc.ProductName}",
+                            GroupId = group.Id,
                             DocumentLines = new List<TemporaryDocumentLine> 
                             {
                                 new TemporaryDocumentLine
@@ -235,12 +248,15 @@ namespace CompanyApi.Services
                 await _unitOfWork.Repository<TemporaryDocument>().AddRangeAsync(allReceipts);
                 await _unitOfWork.SaveChangesAsync();
 
+                await _unitOfWork.CommitTransactionAsync();
+
                 return await Result<List<TemporaryDocument>>.SuccessAsync(allReceipts);
 
 
             }
             catch (Exception ex)
             {
+                await _unitOfWork.RollbackTransactionAsync();
                 return await Result<List<TemporaryDocument>>.FailureAsync(ex.Message, 400);
             }
         }

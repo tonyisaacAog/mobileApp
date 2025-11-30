@@ -112,7 +112,7 @@ namespace CompanyApi.Services
             }
         }
 
-        public async Task<Result<List<TemporaryDocument>>> GenerateReceiptsAsync(ReceiptGenerationDto generationDto)
+        public async Task<Result<int>> GenerateReceiptsAsync(ReceiptGenerationDto generationDto)
         {
             await _unitOfWork.BeginTransactionAsync();
             const decimal VAT_RATE = 0.14m;
@@ -124,19 +124,19 @@ namespace CompanyApi.Services
 
                 if(generationDto.NumberOfReceipts <= 0)
                 {
-                    return await Result<List<TemporaryDocument>>.FailureAsync("Number of receipts must be greater than 0.");
+                    return await Result<int>.FailureAsync("Number of receipts must be greater than 0.");
                 }
 
                 if(generationDto.ProductReceiptDtos == null || generationDto.ProductReceiptDtos.Count == 0)
                 {
-                    return await Result<List<TemporaryDocument>>.FailureAsync("At least one product must be provided");
+                    return await Result<int>.FailureAsync("At least one product must be provided");
                 }
 
                 decimal totalQuantities = generationDto.ProductReceiptDtos.Sum(p => p.TotalQuantity);
 
                 if(totalQuantities <= 0)
                 {
-                    return await Result<List<TemporaryDocument>>.FailureAsync("Total Quantity must be greater than 0.");
+                    return await Result<int>.FailureAsync("Total Quantity must be greater than 0.");
                 }
 
                 var random = new Random();
@@ -171,7 +171,7 @@ namespace CompanyApi.Services
 
                     if(product.TotalQuantity <  minQuantityCalculated || product.TotalQuantity > maxQuantityCalculated)
                     {
-                        return await Result<List<TemporaryDocument>>.FailureAsync(
+                        return await Result<int>.FailureAsync(
                             $"Cannot generate Receipts for Product {product.ProductName} " +
                             $"Total Quantity {product.TotalQuantity} cannot fit into {receiptsCount} receipts " +
                             $"with minRange = {product.minRange} and maxRange = {product.maxRange}"
@@ -185,7 +185,7 @@ namespace CompanyApi.Services
                     var productEntity = await _unitOfWork.Repository<Product>().GetByIdAsync(alloc.product.ProductId);
                     var productAlloc = alloc.product;
 
-                    var splittedQuantities = SplitTotalQuantitiesWithinRange(productAlloc.TotalQuantity, alloc.count, productAlloc.minRange, productAlloc.maxRange, random);
+                    var splittedQuantities = SplitTotalQuantitiesTwoThirdsOneThird(productAlloc.TotalQuantity, alloc.count, productAlloc.minRange, productAlloc.maxRange, random);
 
 
 
@@ -250,14 +250,14 @@ namespace CompanyApi.Services
 
                 await _unitOfWork.CommitTransactionAsync();
 
-                return await Result<List<TemporaryDocument>>.SuccessAsync(allReceipts);
+                return await Result<int>.SuccessAsync(group.Id);
 
 
             }
             catch (Exception ex)
             {
                 await _unitOfWork.RollbackTransactionAsync();
-                return await Result<List<TemporaryDocument>>.FailureAsync(ex.Message, 400);
+                return await Result<int>.FailureAsync(ex.Message, 400);
             }
         }
 
@@ -445,6 +445,50 @@ namespace CompanyApi.Services
 
             return results.OrderBy(x => random.Next()).ToList();
 
+        }
+
+        private List<decimal> SplitTotalQuantitiesTwoThirdsOneThird(decimal total, int count, decimal min, decimal max, Random random)
+        {
+            var results = new List<decimal>(count);
+
+            int firstHalf = count / 2;
+            int secondHalf = count - firstHalf;
+
+            decimal twoThirds = total * 2m / 3m;
+            decimal oneThird = total - twoThirds;
+
+            // 1- First half (high–avg range)
+            for (int i = 0; i < firstHalf; i++)
+            {
+                decimal avg = twoThirds / firstHalf;
+                decimal qty = avg * (0.8m + (decimal)random.NextDouble() * 0.4m); // 80–120% of avg
+                qty = Math.Clamp(qty, min, max);
+                results.Add(qty);
+            }
+
+            // 2- Second half (min–avg range)
+            for (int i = 0; i < secondHalf; i++)
+            {
+                decimal avg = oneThird / secondHalf;
+                decimal qty = avg * (0.6m + (decimal)random.NextDouble() * 0.6m); // 60–120% of avg
+                qty = Math.Clamp(qty, min, max);
+                results.Add(qty);
+            }
+
+            // 3- Normalize to match exact total
+            decimal diff = total - results.Sum();
+
+            for (int i = 0; i < results.Count && Math.Abs(diff) > 0.01m; i++)
+            {
+                decimal space = diff > 0 ? max - results[i] : results[i] - min;
+                decimal adjust = Math.Min(space, Math.Abs(diff));
+                adjust = diff > 0 ? adjust : -adjust;
+
+                results[i] += adjust;
+                diff -= adjust;
+            }
+
+            return results;
         }
 
         double GetDynamicRandom(Random random)

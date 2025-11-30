@@ -6,7 +6,7 @@ namespace CompanyApi.Services.Interfaces
 {
     public interface ITemporaryDocumentService
     {
-        Task<Result<List<TemporaryDocument>>> GenerateReceiptsAsync(ReceiptGenerationDto generationDto);
+        Task<Result<int>> GenerateReceiptsAsync(ReceiptGenerationDto generationDto);
         Task<Result<bool>> ApproveReceiptsAsync(ApproveTempDocumentDto request);
     }
 }

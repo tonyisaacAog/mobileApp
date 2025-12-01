@@ -25,6 +25,7 @@ namespace CompanyApi.Models
         public string Category { get; set; } = string.Empty;
 
         public bool IsActive { get; set; } = true;
+        public bool IsTaxable { get; set; } = true;
 
     }
 }

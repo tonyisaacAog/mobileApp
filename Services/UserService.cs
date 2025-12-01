@@ -1,5 +1,9 @@
+using AutoMapper;
+using CompanyApi.DTOs.ResponseDtos;
+using CompanyApi.DTOs.UserDtos;
 using CompanyApi.Models;
-using CompanyApi.Repositories;
+using CompanyApi.Repositories.Interfaces;
+using CompanyApi.Services.Interfaces;
 
 namespace CompanyApi.Services
 {
@@ -8,56 +12,84 @@ namespace CompanyApi.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthService _authService;
+        private readonly IMapper _mapper;
 
-        public UserService(IUnitOfWork unitOfWork, IAuthService authService)
+        public UserService(IUnitOfWork unitOfWork, IAuthService authService, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _authService = authService;
+            _mapper = mapper;
         }
 
-        public async Task<User?> GetUserByIdAsync(int id)
+        public async Task<Result<UserDto>?> GetUserByIdAsync(int id)
         {
-            return await _unitOfWork.Users.GetByIdAsync(id);
+            var user = await _unitOfWork.Repository<User>().GetByIdAsync<UserDto>(obj => obj.Id == id, obj => new UserDto
+            {
+                Id = obj.Id,
+                Email = obj.Email,
+                FirstName = obj.FirstName,
+                LastName = obj.LastName,
+                IsActive = obj.IsActive,
+                IsAdmin = obj.IsAdmin,
+                PhoneNumber = obj.PhoneNumber,
+                Username = obj.Username,
+                UserBranches = obj.UserBranches
+            });
+            return await Result<UserDto>.SuccessAsync(user);
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+
+
+        public async Task<Result<IEnumerable<UserDto>>> GetAllUsersAsync()
         {
-            return await _unitOfWork.Users.GetAllAsync();
+            var users = await _unitOfWork.Repository<User>().GetProjectedAsync(obj => new UserDto
+            {
+                Id = obj.Id,
+                Email = obj.Email,
+                FirstName = obj.FirstName,
+                LastName = obj.LastName,
+                IsActive = obj.IsActive,
+                IsAdmin = obj.IsAdmin,
+                PhoneNumber = obj.PhoneNumber,
+                Username = obj.Username,
+            });
+            return await Result<IEnumerable<UserDto>>.SuccessAsync(users);
         }
 
-        public async Task<User> CreateUserAsync(User user)
+        public async Task<Result<UserDto>> CreateUserAsync(CreateUserDto user)
         {
+            var newUser = _mapper.Map<User>(user);
             // Check if username or email already exists
             if (await _authService.IsUsernameTaken(user.Username))
-                throw new ArgumentException("Username already exists");
+                throw new ArgumentException("اسم المستخدم موجود بالفعل");
 
             if (await _authService.IsEmailTaken(user.Email))
-                throw new ArgumentException("Email already exists");
+                throw new ArgumentException("البريد الإلكتروني موجود بالفعل");
 
             // Hash password
-            user.PasswordHash =  _authService.HashPassword(user.PasswordHash);
-            user.CreatedAt = DateTime.UtcNow;
-            user.IsActive = true;
+            newUser.PasswordHash = _authService.HashPassword(user.Password);
+            newUser.CreatedAt = DateTime.UtcNow;
+            newUser.IsActive = true;
 
-            await _unitOfWork.Users.AddAsync(user);
+            await _unitOfWork.Repository<User>().AddAsync(newUser);
             await _unitOfWork.SaveChangesAsync();
 
-            return user;
+            return await Result<UserDto>.SuccessAsync(_mapper.Map<UserDto>(user));
         }
 
-        public async Task<User?> UpdateUserAsync(int id, User user)
+        public async Task<Result<UserDto>?> UpdateUserAsync(int id, UpdateUserDto user)
         {
-            var existingUser = await _unitOfWork.Users.GetByIdAsync(id);
+
+            var existingUser = await _unitOfWork.Repository<User>().GetByIdAsync(id);
             if (existingUser == null)
                 return null;
 
             // Check if username or email already exists (excluding current user)
-            if (await _unitOfWork.Users.AnyAsync(u => u.Username == user.Username && u.Id != id))
-                throw new ArgumentException("Username already exists");
+            if (await _unitOfWork.Repository<User>().AnyAsync(u => u.Username == user.Username && u.Id != id))
+                throw new ArgumentException("اسم المستخدم موجود بالفعل");
 
-            if (await _unitOfWork.Users.AnyAsync(u => u.Email == user.Email && u.Id != id))
-                throw new ArgumentException("Email already exists");
-
+            if (await _unitOfWork.Repository<User>().AnyAsync(u => u.Email == user.Email && u.Id != id))
+                throw new ArgumentException("البريد الإلكتروني موجود بالفعل");
             // Update fields
             existingUser.Username = user.Username;
             existingUser.Email = user.Email;
@@ -67,63 +99,81 @@ namespace CompanyApi.Services
             existingUser.IsAdmin = user.IsAdmin;
 
             // Only update password if provided
-            if (!string.IsNullOrEmpty(user.PasswordHash))
+            if (!string.IsNullOrEmpty(user.Password))
             {
-                existingUser.PasswordHash =  _authService.HashPassword(user.PasswordHash);
+                existingUser.PasswordHash = _authService.HashPassword(user.Password);
             }
 
-            _unitOfWork.Users.Update(existingUser);
+            _unitOfWork.Repository<User>().Update(existingUser);
             await _unitOfWork.SaveChangesAsync();
 
-            return existingUser;
+            return await Result<UserDto>.SuccessAsync(_mapper.Map<UserDto>(existingUser));
         }
 
-        public async Task<bool> DeleteUserAsync(int id)
+        public async Task<Result<bool>> DeleteUserAsync(int id)
         {
-            var user = await _unitOfWork.Users.GetByIdAsync(id);
+            var user = await _unitOfWork.Repository<User>().GetByIdAsync(id);
             if (user == null)
-                return false;
+                return await Result<bool>.FailureAsync(false, "المستخدم غير موجود");
 
-            _unitOfWork.Users.Remove(user);
+            _unitOfWork.Repository<User>().Remove(user);
             await _unitOfWork.SaveChangesAsync();
 
-            return true;
+            return await Result<bool>.SuccessAsync(true, "تم حذف المستخدم");
         }
 
-        public async Task<User?> GetUserByUsernameAsync(string username)
+        public async Task<Result<UserDto>?> GetUserByUsernameAsync(string username)
         {
-            return await _unitOfWork.Users.FirstOrDefaultAsync(u => u.Username == username);
+            var user = await _unitOfWork.Repository<User>().FirstOrDefaultAsync(u => u.Username == username);
+            return user == null ? null : await Result<UserDto>.SuccessAsync(_mapper.Map<UserDto>(user));
         }
 
-        public async Task<IEnumerable<User>> GetActiveUsersAsync()
+        public async Task<PagedResult<UserDto>> GetActiveUsersAsync(PaginationParameters paginationParams)
         {
-            return await _unitOfWork.Users.FindAsync(u => u.IsActive);
+            var users = await _unitOfWork.Repository<User>().GetProjectedPaginatedAsync<UserDto>
+                (u => u.IsActive, obj => new UserDto
+                {
+                    Email = obj.Email,
+                    FirstName = obj.FirstName,
+                    LastName = obj.LastName,
+                    IsActive = obj.IsActive,
+                    IsAdmin = obj.IsAdmin,
+                    PhoneNumber = obj.PhoneNumber,
+                    Username = obj.Username,
+                }, paginationParams);
+            return await PagedResult<UserDto>.SuccessAsync(users.Items, users.TotalCount, paginationParams.PageNumber, paginationParams.PageSize);
         }
 
-        public async Task<bool> ActivateUserAsync(int id)
+        public async Task<Result<bool>> ActivateUserAsync(int id)
         {
-            var user = await _unitOfWork.Users.GetByIdAsync(id);
+            var user = await _unitOfWork.Repository<User>().GetByIdAsync(id);
             if (user == null)
-                return false;
+                return await Result<bool>.FailureAsync(false, "المستخدم غير موجود");
 
             user.IsActive = true;
-            _unitOfWork.Users.Update(user);
+            _unitOfWork.Repository<User>().Update(user);
             await _unitOfWork.SaveChangesAsync();
 
-            return true;
+            return await Result<bool>.SuccessAsync(true, "تم تفعيل المستخدم");
         }
 
-        public async Task<bool> DeactivateUserAsync(int id)
+        public async Task<Result<bool>> DeactivateUserAsync(int id)
         {
-            var user = await _unitOfWork.Users.GetByIdAsync(id);
+            var user = await _unitOfWork.Repository<User>().GetByIdAsync(id);
             if (user == null)
-                return false;
+                return await Result<bool>.FailureAsync(false, "المستخدم غير موجود");
 
             user.IsActive = false;
-            _unitOfWork.Users.Update(user);
+            _unitOfWork.Repository<User>().Update(user);
             await _unitOfWork.SaveChangesAsync();
 
-            return true;
+            return await Result<bool>.SuccessAsync(true, "تم إلغاء تفعيل المستخدم");
+        }
+
+        public async Task<Result<int>> GetCountUsers()
+        {
+            var count = await _unitOfWork.Repository<User>().CountAsync();
+            return await Result<int>.SuccessAsync(count);
         }
     }
 }

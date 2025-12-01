@@ -1,73 +1,248 @@
+using CompanyApi.Data;
+using CompanyApi.DTOs.ResponseDtos;
+using CompanyApi.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using CompanyApi.Data;
 
 namespace CompanyApi.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly ApplicationDbContext _context;
-        protected readonly DbSet<T> _dbSet;
+        private readonly ApplicationDbContext _context;
+        private readonly DbSet<T> _dbSet;
+        private IQueryable<T> _query;
 
         public Repository(ApplicationDbContext context)
         {
             _context = context;
             _dbSet = context.Set<T>();
+            _query = _dbSet.AsQueryable();
         }
 
+        public IRepository<T> AddIncludes(params string[] includes)
+        {
+            foreach (var include in includes)
+            {
+                _query = _query.Include(include);
+            }
+            return this;
+        }
+
+        private IQueryable<T> CurrentQuery => _query;
+
+        private void ResetQuery()
+        {
+            _query = _dbSet.AsQueryable();
+        }
+
+        #region Basic CRUD
         public async Task<T?> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            try
+            {
+                return await CurrentQuery.FirstOrDefaultAsync(e => EF.Property<int>(e, "Id") == id);
+            }
+            finally { ResetQuery(); }
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync();
+            try
+            {
+                return await CurrentQuery.ToListAsync();
+            }
+            finally { ResetQuery(); }
+        }
+
+        public async Task<IEnumerable<TProjection>> GetAllByConditionAsync<TProjection>(
+            Expression<Func<T,bool>> predicate,
+            Expression<Func<T,TProjection>> selector)
+        {
+            try
+            {
+                return await CurrentQuery.Where(predicate).Select(selector).ToListAsync();
+            }
+            finally { ResetQuery(); }
         }
 
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbSet.Where(predicate).ToListAsync();
+            try
+            {
+                return await CurrentQuery.Where(predicate).ToListAsync();
+            }
+            finally { ResetQuery(); }
         }
 
         public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbSet.FirstOrDefaultAsync(predicate);
+            try
+            {
+                return await CurrentQuery.FirstOrDefaultAsync(predicate);
+            }
+            finally { ResetQuery(); }
         }
 
-        public async Task AddAsync(T entity)
+        public async Task AddAsync(T entity) => await _dbSet.AddAsync(entity);
+
+        public async Task AddRangeAsync(IEnumerable<T> entities) => await _dbSet.AddRangeAsync(entities);
+
+        public void Update(T entity) => _dbSet.Update(entity);
+
+        public void Remove(T entity) => _dbSet.Remove(entity);
+
+        public void RemoveRange(IEnumerable<T> entities) => _dbSet.RemoveRange(entities);
+        #endregion
+
+        #region Counting / Existence
+        public async Task<int> CountAsync(Expression<Func<T, bool>> predicate)
         {
-            await _dbSet.AddAsync(entity);
+            try
+            {
+                return await CurrentQuery.CountAsync(predicate);
+            }
+            finally { ResetQuery(); }
         }
 
-        public async Task AddRangeAsync(IEnumerable<T> entities)
+        public async Task<int> CountAsync()
         {
-            await _dbSet.AddRangeAsync(entities);
+            try
+            {
+                return await CurrentQuery.CountAsync();
+            }
+            finally { ResetQuery(); }
+        }
+        public async Task<decimal> SumAsync(
+            Expression<Func<T,bool>> predicate,
+            Expression<Func<T,decimal>> selector,
+            CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await CurrentQuery
+                    .Where(predicate)
+                    .SumAsync(selector,cancellationToken);
+            }
+            finally { ResetQuery(); }
         }
 
-        public void Update(T entity)
-        {
-            _dbSet.Update(entity);
-        }
-
-        public void Remove(T entity)
-        {
-            _dbSet.Remove(entity);
-        }
-
-        public void RemoveRange(IEnumerable<T> entities)
-        {
-            _dbSet.RemoveRange(entities);
-        }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbSet.AnyAsync(predicate);
+            try
+            {
+                return await CurrentQuery.AnyAsync(predicate);
+            }
+            finally { ResetQuery(); }
+        }
+        #endregion
+
+        #region Pagination
+        public async Task<(IEnumerable<T> Items, int TotalCount)> GetPaginatedAsync(PaginationParameters parameters)
+        {
+            try
+            {
+                var query = CurrentQuery;
+                return await ApplyPaginationAsync(query, parameters);
+            }
+            finally { ResetQuery(); }
         }
 
-        public async Task<int> CountAsync(Expression<Func<T, bool>> predicate)
+        public async Task<(IEnumerable<T> Items, int TotalCount)> GetPaginatedAsync(
+            Expression<Func<T, bool>> predicate,
+            PaginationParameters parameters)
         {
-            return await _dbSet.CountAsync(predicate);
+            try
+            {
+                var query = CurrentQuery.Where(predicate);
+                return await ApplyPaginationAsync(query, parameters);
+            }
+            finally { ResetQuery(); }
         }
+        #endregion
+
+        #region Projection (DTO Support)
+        public async Task<IEnumerable<TProjection>> GetProjectedAsync<TProjection>(
+            Expression<Func<T, TProjection>> selector)
+        {
+            try
+            {
+                return await CurrentQuery.Select(selector).ToListAsync();
+            }
+            finally { ResetQuery(); }
+        }
+
+        public async Task<IEnumerable<TProjection>> GetProjectedAsync<TProjection>(
+            Expression<Func<T, bool>> predicate,
+            Expression<Func<T, TProjection>> selector)
+        {
+            try
+            {
+                var query = CurrentQuery.Where(predicate);
+                return await query.Select(selector).ToListAsync();
+            }
+            finally { ResetQuery(); }
+        }
+
+        public async Task<TProjection?> GetByIdAsync<TProjection>(
+            Expression<Func<T, bool>> predicate,
+            Expression<Func<T, TProjection>> selector)
+        {
+            try
+            {
+                return await CurrentQuery.Where(predicate).Select(selector).FirstOrDefaultAsync();
+            }
+            finally { ResetQuery(); }
+        }
+
+        public async Task<(IEnumerable<TProjection> Items, int TotalCount)> GetProjectedPaginatedAsync<TProjection>(
+            Expression<Func<T, TProjection>> selector,
+            PaginationParameters parameters)
+        {
+            try
+            {
+                var query = CurrentQuery;
+                return await ApplyPaginationAsync(query, selector, parameters);
+            }
+            finally { ResetQuery(); }
+        }
+
+        public async Task<(IEnumerable<TProjection> Items, int TotalCount)> GetProjectedPaginatedAsync<TProjection>(
+            Expression<Func<T, bool>> predicate,
+            Expression<Func<T, TProjection>> selector,
+            PaginationParameters parameters)
+        {
+            try
+            {
+                var query = CurrentQuery.Where(predicate);
+                return await ApplyPaginationAsync(query, selector, parameters);
+            }
+            finally { ResetQuery(); }
+        }
+        #endregion
+
+        #region Helpers
+        private async Task<(IEnumerable<T> Items, int TotalCount)> ApplyPaginationAsync(
+            IQueryable<T> query,
+            PaginationParameters parameters)
+        {
+            var totalCount = await query.CountAsync();
+            var items = await query.Skip(parameters.Skip()).Take(parameters.PageSize).ToListAsync();
+            return (items, totalCount);
+        }
+
+        private async Task<(IEnumerable<TProjection> Items, int TotalCount)> ApplyPaginationAsync<TProjection>(
+            IQueryable<T> originalQuery,
+            Expression<Func<T, TProjection>> selector,
+            PaginationParameters parameters)
+        {
+            var totalCount = await originalQuery.CountAsync();
+            var query = originalQuery.Select(selector);
+            var items = await query.Skip(parameters.Skip()).Take(parameters.PageSize).ToListAsync();
+            return (items, totalCount);
+        }
+
+        #endregion
     }
+
 }

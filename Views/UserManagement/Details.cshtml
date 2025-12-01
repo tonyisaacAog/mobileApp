@@ -1,0 +1,105 @@
+@model CompanyApi.DTOs.UserDtos.UserDto
+
+@{
+    ViewData["Title"] = "User Details";
+    Layout = "_Layout";
+}
+
+<div class="p-6">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 mb-2">User Details</h1>
+                    <p class="text-gray-600">View user account information and permissions.</p>
+                </div>
+           @*      <div class="flex space-x-2">
+                    <a href="@Url.Action("Edit", "UserManagement", new { id = Model.Id })"
+                       class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors ml-2">
+                        <i class="fas fa-edit ml-2"></i>Edit
+                    </a>
+                    <a href="@Url.Action("Index", "UserManagement")"
+                       class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-arrow-left ml-2"></i>Back to List
+                    </a>
+                </div> *@
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@Model.Username</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@Model.Email</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                        <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@Model.FirstName</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                        <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@Model.LastName</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                        <p class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">@(string.IsNullOrEmpty(Model.PhoneNumber) ? "Not specified" : Model.PhoneNumber)</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Account Status</label>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium @(Model.IsActive ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800")">
+                            @(Model.IsActive ? "Active" : "Inactive")
+                        </span>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">User Role</label>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium @(Model.IsAdmin ? "bg-purple-100 text-purple-800" : "bg-blue-100 text-blue-800")">
+                            @(Model.IsAdmin ? "Administrator" : "User")
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+          @*   <div class="mt-8 pt-6 border-t border-gray-200">
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-500">
+                         User ID: @Model.Id 
+                    </span>
+                    <button onclick="confirmDelete(@Model.Id, '@Model.Username')"
+                            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                        <i class="fas fa-trash ml-2"></i>Delete User
+                    </button>
+                </div>
+            </div> *@
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmDelete(id, username) {
+    if (confirm(`Are you sure you want to delete the user "${username}"? This action cannot be undone.`)) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '@Url.Action("Delete", "UserManagement")/' + id;
+
+        var token = document.createElement('input');
+        token.type = 'hidden';
+        token.name = '__RequestVerificationToken';
+        token.value = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+        form.appendChild(token);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>

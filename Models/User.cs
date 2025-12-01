@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CompanyApi.Models
 {
-    public class User:BaseEntity
+    public class User : BaseEntity
     {
         [Required]
         [StringLength(50)]
@@ -35,6 +34,7 @@ namespace CompanyApi.Models
         public DateTime? LastLoginAt { get; set; }
 
         // Navigation properties
-        public virtual ICollection<Document> Receipts { get; set; } = new List<Document>();
+        public virtual ICollection<Document> Receipts { get; set; } = [];
+        public virtual ICollection<UserBranch> UserBranches { get; set; } = [];
     }
 }

@@ -1,10 +1,11 @@
+using CompanyApi.Models;
+using CompanyApi.Repositories.Interfaces;
+using CompanyApi.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using CompanyApi.Models;
-using CompanyApi.Repositories;
 
 namespace CompanyApi.Services
 {
@@ -61,7 +62,7 @@ namespace CompanyApi.Services
 
         public async Task<User?> AuthenticateUser(string username, string password)
         {
-            var user = await _unitOfWork.Users.FirstOrDefaultAsync(u => u.Username == username && u.IsActive);
+            var user = await _unitOfWork.Repository<User>().FirstOrDefaultAsync(u => u.Username == username && u.IsActive);
 
             if (user == null)
                 return null;
@@ -71,7 +72,7 @@ namespace CompanyApi.Services
 
             // Update last login
             user.LastLoginAt = DateTime.UtcNow;
-            _unitOfWork.Users.Update(user);
+            _unitOfWork.Repository<User>().Update(user);
             await _unitOfWork.SaveChangesAsync();
 
             return user;
@@ -79,12 +80,12 @@ namespace CompanyApi.Services
 
         public async Task<bool> IsUsernameTaken(string username)
         {
-            return await _unitOfWork.Users.AnyAsync(u => u.Username == username);
+            return await _unitOfWork.Repository<User>().AnyAsync(u => u.Username == username);
         }
 
         public async Task<bool> IsEmailTaken(string email)
         {
-            return await _unitOfWork.Users.AnyAsync(u => u.Email == email);
+            return await _unitOfWork.Repository<User>().AnyAsync(u => u.Email == email);
         }
     }
 }

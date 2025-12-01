@@ -14,7 +14,7 @@
         public static DocumentType MapApiCodeToEnum(string apiCode)
         {
 
-            switch( apiCode.ToLower() )
+            switch (apiCode.ToLower())
             {
                 case "i":
                     return DocumentType.I;
@@ -35,7 +35,7 @@
     {
         public static string GetTitleForEnum(DocumentType documentType)
         {
-            switch( documentType )
+            switch (documentType)
             {
                 case DocumentType.I:
                     return "I";

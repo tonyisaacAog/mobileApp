@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using CompanyApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyApi.Data
 {
@@ -14,6 +14,7 @@ namespace CompanyApi.Data
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Device> Devices { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<DocumentLines> DocumentLines { get; set; }
 
@@ -51,13 +52,13 @@ namespace CompanyApi.Data
                 .WithMany()
                 .HasForeignKey(ri => ri.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
-       
+
             // Company-Branch relationship
-            modelBuilder.Entity<Company>()
-                .HasMany(c => c.Branches)
-                .WithOne(b => b.Company)
-                .HasForeignKey(b => b.CompanyId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<Company>()
+            //    .HasMany(c => c.Branches)
+            //    .WithOne(b => b.Company)
+            //    .HasForeignKey(b => b.CompanyId)
+            //    .OnDelete(DeleteBehavior.Cascade);
 
             // Add some indexes for better performance
             modelBuilder.Entity<User>()
@@ -71,13 +72,57 @@ namespace CompanyApi.Data
             modelBuilder.Entity<Branch>()
                 .HasIndex(b => b.Name);
 
-            modelBuilder.Entity<Product>()
-                .HasIndex(p => p.SKU)
-                .IsUnique();
+            modelBuilder.Entity<Device>()
+                .HasIndex(d => d.Name);
 
-            modelBuilder.Entity<Document>()
-                .HasIndex(r => r.ReceiptNumber)
-                .IsUnique();
+            modelBuilder.Entity<Device>()
+                .HasIndex(d => d.Code);
+
+
+
+
+            // Apply global filter for soft delete
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
+                {
+                    var method = typeof(ApplicationDbContext)
+                        .GetMethod(nameof(SetSoftDeleteFilter), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
+                        ?.MakeGenericMethod(entityType.ClrType);
+
+                    method?.Invoke(null, [modelBuilder]);
+                }
+            }
+        }
+
+        public override int SaveChanges()
+        {
+            HandleSoftDelete();
+            return base.SaveChanges();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            HandleSoftDelete();
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void HandleSoftDelete()
+        {
+            foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+            {
+                if (entry.State == EntityState.Deleted)
+                {
+                    entry.State = EntityState.Modified;
+                    entry.Entity.IsDeleted = true;
+                }
+            }
+        }
+
+
+        private static void SetSoftDeleteFilter<TEntity>(ModelBuilder modelBuilder) where TEntity : BaseEntity
+        {
+            modelBuilder.Entity<TEntity>().HasQueryFilter(e => !e.IsDeleted);
         }
     }
 }

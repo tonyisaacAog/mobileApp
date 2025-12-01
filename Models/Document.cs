@@ -9,17 +9,19 @@ namespace CompanyApi.Models
         [Required]
         [StringLength(50)]
         public string ReceiptNumber { get; set; } = string.Empty;
+        public string DeviceSerial { get; set; }
+
         public DateTime ReceiptDate { get; set; } = DateTime.UtcNow;
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "decimal(18,5)")]
         public decimal Subtotal { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "decimal(18,5)")]
         public decimal TaxAmount { get; set; }
 
         [Column(TypeName = "decimal(18, 5)")]
         public decimal TotalDiscount { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "decimal(18,5)")]
         public decimal TotalAmount { get; set; }
         [Column(TypeName = "decimal(18, 5)")]
         public decimal ExtraDiscount { get; set; }
@@ -46,6 +48,8 @@ namespace CompanyApi.Models
         public int? UserId { get; set; }
         public int? BranchId { get; set; }
         public int? CompanyId { get; set; }
+        public int? DeviceId { get; set; }
+        public bool IsCoupon { get; set; } = false;
         // Navigation properties
         [ForeignKey("UserId")]
         public virtual User? User { get; set; }
@@ -55,7 +59,8 @@ namespace CompanyApi.Models
 
         [ForeignKey("CompanyId")]
         public virtual Company? Company { get; set; }
-
+        [ForeignKey("DeviceId")]
+        public virtual Device? Device { get; set; }
         public virtual ICollection<DocumentLines> ReceiptItems { get; set; } = new List<DocumentLines>();
     }
 }

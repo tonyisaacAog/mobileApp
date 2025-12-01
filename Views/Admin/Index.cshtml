@@ -1,0 +1,319 @@
+@{
+    ViewData["Title"] = "لوحة تحكم المدير";
+    Layout = "_Layout";
+}
+
+<div class="p-6" dir="rtl">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">لوحة تحكم المدير</h1>
+        <p class="text-gray-600">مرحباً بعودتك! إليك نظرة عامة على إدارة النظام.</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Branches Card -->
+        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-lg p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-blue-100 text-sm font-medium">إجمالي الفروع</p>
+                    <p class="text-3xl font-bold">@ViewBag.BranchCount</p>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-full p-3">
+                    <i class="fas fa-code-branch text-2xl"></i>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="@Url.Action("Index", "BranchManagement")"
+                    class="text-blue-100 hover:text-white text-sm font-medium">
+                    إدارة الفروع →
+                </a>
+            </div>
+        </div>
+
+        <!-- Users Card -->
+        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-green-100 text-sm font-medium">المستخدمين النشطين</p>
+                    <p class="text-3xl font-bold">@ViewBag.ActiveUserCount</p>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-full p-3">
+                    <i class="fas fa-users text-2xl"></i>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="@Url.Action("Index", "UserManagement")"
+                    class="text-green-100 hover:text-white text-sm font-medium">
+                    إدارة المستخدمين →
+                </a>
+            </div>
+        </div>
+
+        <!-- Companies Card -->
+        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-purple-100 text-sm font-medium">الشركات</p>
+                    <p class="text-3xl font-bold">@ViewBag.CompanyCount</p>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-full p-3">
+                    <i class="fas fa-building text-2xl"></i>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="@Url.Action("Index", "CompanyManagement")"
+                    class="text-purple-100 hover:text-white text-sm font-medium">
+                    إدارة الشركات →
+                </a>
+            </div>
+        </div>
+
+        <!-- Products Card -->
+        <div class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg shadow-lg p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-orange-100 text-sm font-medium">المنتجات</p>
+                    <p class="text-3xl font-bold">@ViewBag.ProductCount</p>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-full p-3">
+                    <i class="fas fa-box text-2xl"></i>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="@Url.Action("Index", "ProductManagement")"
+                    class="text-orange-100 hover:text-white text-sm font-medium">
+                    إدارة المنتجات →
+                </a>
+            </div>
+        </div>
+
+        <!-- Orders Card -->
+        <div class="bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg shadow-lg p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-teal-100 text-sm font-medium">الطلبات</p>
+                    <p class="text-3xl font-bold">@ViewBag.OrderCount</p>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-full p-3">
+                    <i class="fas fa-receipt text-2xl"></i>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="@Url.Action("Index", "OrderReport")"
+                    class="text-teal-100 hover:text-white text-sm font-medium">
+                    تقرير الطلبات →
+                </a>
+            </div>
+        </div>
+
+        <!-- Devices Card -->
+        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg shadow-lg p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-indigo-100 text-sm font-medium">الأجهزة</p>
+                    <p class="text-3xl font-bold">@ViewBag.DeviceCount</p>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-full p-3">
+                    <i class="fas fa-mobile-alt text-2xl"></i>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="@Url.Action("Index", "DeviceManagement")"
+                    class="text-indigo-100 hover:text-white text-sm font-medium">
+                    إدارة الأجهزة →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Management Sections -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                <i class="fas fa-cog ml-2 text-primary"></i>
+                أقسام الإدارة
+            </h2>
+
+            <div class="space-y-3">
+                <a href="@Url.Action("Index", "BranchManagement")"
+                    class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                    <div class="bg-blue-100 rounded-lg p-2 ml-3 group-hover:bg-blue-200 transition-colors">
+                        <i class="fas fa-code-branch text-blue-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-medium text-gray-900">إدارة الفروع</h3>
+                        <p class="text-sm text-gray-500">إدارة فروع الشركة ومواقعها</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </a>
+
+                <a href="@Url.Action("Index", "UserManagement")"
+                    class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                    <div class="bg-green-100 rounded-lg p-2 ml-3 group-hover:bg-green-200 transition-colors">
+                        <i class="fas fa-users text-green-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-medium text-gray-900">إدارة المستخدمين</h3>
+                        <p class="text-sm text-gray-500">إدارة حسابات المستخدمين والصلاحيات</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </a>
+
+                <a href="@Url.Action("Index", "CompanyManagement")"
+                    class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                    <div class="bg-purple-100 rounded-lg p-2 ml-3 group-hover:bg-purple-200 transition-colors">
+                        <i class="fas fa-building text-purple-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-medium text-gray-900">إدارة الشركات</h3>
+                        <p class="text-sm text-gray-500">إدارة معلومات الشركة وإعداداتها</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </a>
+
+                <a href="@Url.Action("Index", "DeviceManagement")"
+                    class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                    <div class="bg-red-100 rounded-lg p-2 ml-3 group-hover:bg-red-200 transition-colors">
+                        <i class="fas fa-mobile-alt text-red-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-medium text-gray-900">إدارة الأجهزة</h3>
+                        <p class="text-sm text-gray-500">إدارة الأجهزة ومخزون الهواتف</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </a>
+
+                <a href="@Url.Action("Index", "ProductManagement")"
+                    class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                    <div class="bg-orange-100 rounded-lg p-2 ml-3 group-hover:bg-orange-200 transition-colors">
+                        <i class="fas fa-box text-orange-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-medium text-gray-900">إدارة المنتجات</h3>
+                        <p class="text-sm text-gray-500">إدارة الكتالوج والمخزون</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </a>
+
+                <a href="@Url.Action("Index", "OrderReport")"
+                    class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                    <div class="bg-teal-100 rounded-lg p-2 ml-3 group-hover:bg-teal-200 transition-colors">
+                        <i class="fas fa-receipt text-teal-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-medium text-gray-900">تقرير الطلبات</h3>
+                        <p class="text-sm text-gray-500">عرض وتصفية الطلبات والتقارير</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                <i class="fas fa-clock ml-2 text-primary"></i>
+                الأنشطة الأخيرة
+            </h2>
+
+            <div class="space-y-4">
+                <div class="flex items-start space-x-3">
+                    <div class="bg-blue-100 rounded-full p-2 ml-2">
+                        <i class="fas fa-user-plus text-blue-600 text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-900">تم تسجيل مستخدم جديد</p>
+                        <p class="text-xs text-gray-500">منذ دقيقتين</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-3">
+                    <div class="bg-green-100 rounded-full p-2 ml-2">
+                        <i class="fas fa-box text-green-600 text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-900">تم تحديث مخزون المنتجات</p>
+                        <p class="text-xs text-gray-500">منذ 15 دقيقة</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-3">
+                    <div class="bg-purple-100 rounded-full p-2 ml-2">
+                        <i class="fas fa-building text-purple-600 text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-900">تم تعديل معلومات الشركة</p>
+                        <p class="text-xs text-gray-500">منذ ساعة</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-3">
+                    <div class="bg-orange-100 rounded-full p-2 ml-2">
+                        <i class="fas fa-code-branch text-orange-600 text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-900">تمت إضافة فرع جديد</p>
+                        <p class="text-xs text-gray-500">منذ 3 ساعات</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <a href="#" class="text-primary hover:text-blue-700 text-sm font-medium">
+                    عرض كل الأنشطة →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Status -->
+    <div class="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-server ml-2 text-primary"></i>
+            حالة النظام
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                <div class="flex items-center">
+                    <div class="bg-green-100 rounded-full p-2 ml-3">
+                        <i class="fas fa-check-circle text-green-600"></i>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-900">قاعدة البيانات</p>
+                        <p class="text-sm text-gray-500">متصلة</p>
+                    </div>
+                </div>
+                <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">متصل</span>
+            </div>
+
+            <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 rounded-full p-2 ml-3">
+                        <i class="fas fa-wifi text-blue-600"></i>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-900">خدمات الـ API</p>
+                        <p class="text-sm text-gray-500">قيد التشغيل</p>
+                    </div>
+                </div>
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">نشط</span>
+            </div>
+
+            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div class="flex items-center">
+                    <div class="bg-gray-100 rounded-full p-2 ml-3">
+                        <i class="fas fa-shield-alt text-gray-600"></i>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-900">الأمان</p>
+                        <p class="text-sm text-gray-500">محمي</p>
+                    </div>
+                </div>
+                <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">آمن</span>
+            </div>
+        </div>
+    </div>
+</div>

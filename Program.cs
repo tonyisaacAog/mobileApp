@@ -1,12 +1,14 @@
-using Microsoft.EntityFrameworkCore;
 using CompanyApi.Data;
+using CompanyApi.Mappings;
+using CompanyApi.Models;
 using CompanyApi.Repositories;
+using CompanyApi.Repositories.Interfaces;
 using CompanyApi.Services;
+using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using AutoMapper;
-using CompanyApi.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllersWithViews();
 
 // Configure database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -27,7 +30,14 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Configure services
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IBranchService, BranchService>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<IDeviceService, DeviceService>();
+builder.Services.AddScoped<IDocumentService, DocumentService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IUserBranchService, UserBranchService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
 
 // Configure JWT authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -52,20 +62,81 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
 });
 
+// Add localization services
+//builder.Services.AddJsonLocalization(options =>
+//{
+//    options.ResourcesPath = "Resources";
+//});
+
+//builder.Services.Configure<RequestLocalizationOptions>(options =>
+//{
+//    var supportedCultures = new[]
+//    {
+//        new CultureInfo("en"),
+//        new CultureInfo("ar")
+//    };
+//    options.DefaultRequestCulture = new RequestCulture("en");
+//    options.SupportedCultures = supportedCultures;
+//    options.SupportedUICultures = supportedCultures;
+//    options.RequestCultureProviders.Insert(0,new CookieRequestCultureProvider());
+//});
+
 var app = builder.Build();
 
+
+
+// Use localization
+//var locOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>();
+//app.UseRequestLocalization(locOptions.Value);
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Admin}/{action=Index}/{id?}");
+
 app.MapControllers();
+// Seed admin user
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    var authService = services.GetRequiredService<IAuthService>();
+    await SeedUsers(context, authService);
+}
 
 app.Run();
+
+static async Task SeedUsers(ApplicationDbContext context, IAuthService authService)
+    {
+        if (!context.Users.Any())
+        {
+            var adminUser = new User
+            {
+                Username = "Admin",
+                Email = "admin@company.com",
+                PasswordHash = authService.HashPassword("Admin@123"),
+                FirstName = "System",
+                LastName = "Administrator",
+                PhoneNumber = "",
+                IsActive = true,
+                IsAdmin = true,
+                CreatedBy = "System"
+            };
+
+            context.Users.Add(adminUser);
+            await context.SaveChangesAsync();
+        }
+    }

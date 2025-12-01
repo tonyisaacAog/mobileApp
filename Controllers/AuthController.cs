@@ -1,10 +1,12 @@
-using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
-using CompanyApi.DTOs;
-using CompanyApi.Services;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
+using CompanyApi.DTOs.AuthDtos;
+using CompanyApi.DTOs.ResponseDtos;
+using CompanyApi.DTOs.UserDtos;
 using CompanyApi.Models;
+using CompanyApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CompanyApi.Controllers
 {
@@ -32,7 +34,7 @@ namespace CompanyApi.Controllers
 
                 if (user == null)
                 {
-                    return Unauthorized(new { message = "Invalid username or password" });
+                    return Unauthorized(new { message = "اسم المستخدم أو كلمة المرور غير صحيحة" });
                 }
 
                 var token = await _authService.GenerateJwtToken(user);
@@ -42,39 +44,38 @@ namespace CompanyApi.Controllers
                 {
                     Token = token,
                     User = userDto,
-                    Message = "Login successful"
+                    Message = "تم تسجيل الدخول بنجاح"
                 };
 
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred during login", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء تسجيل الدخول", error = ex.Message });
             }
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
-        {
-            try
-            {
-                var user = _mapper.Map<User>(registerDto);
-                user.IsAdmin = false; // Regular users are not admins by default
+        //[HttpPost("register")]
+        //public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+        //{
+        //    try
+        //    {
+        //        registerDto.IsAdmin = false; // Regular users are not admins by default
 
-                var createdUser = await _userService.CreateUserAsync(user);
-                var userDto = _mapper.Map<UserDto>(createdUser);
+        //        var createdUser = await _userService.CreateUserAsync(registerDto);
+        //        var userDto = _mapper.Map<UserDto>(createdUser);
 
-                return CreatedAtAction(nameof(GetUser), new { id = createdUser.Id }, userDto);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "An error occurred during registration", error = ex.Message });
-            }
-        }
+        //        return Ok(createdUser);
+        //    }
+        //    catch (ArgumentException ex)
+        //    {
+        //        return BadRequest(new { message = ex.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { message = "An error occurred during registration", error = ex.Message });
+        //    }
+        //}
 
         [HttpPost("add-admin")]
         [Authorize(Roles = "Admin")]
@@ -82,13 +83,12 @@ namespace CompanyApi.Controllers
         {
             try
             {
-                var user = _mapper.Map<User>(createUserDto);
-                user.IsAdmin = true;
+                createUserDto.IsAdmin = true;
 
-                var createdUser = await _userService.CreateUserAsync(user);
+                var createdUser = await _userService.CreateUserAsync(createUserDto);
                 var userDto = _mapper.Map<UserDto>(createdUser);
 
-                return CreatedAtAction(nameof(GetUser), new { id = createdUser.Id }, userDto);
+                return Ok(userDto);
             }
             catch (ArgumentException ex)
             {
@@ -96,7 +96,7 @@ namespace CompanyApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while creating admin user", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء إنشاء مستخدم المدير", error = ex.Message });
             }
         }
 
@@ -110,7 +110,7 @@ namespace CompanyApi.Controllers
 
                 if (user == null)
                 {
-                    return NotFound(new { message = "User not found" });
+                    return NotFound(new { message = "المستخدم غير موجود" });
                 }
 
                 var userDto = _mapper.Map<UserDto>(user);
@@ -118,7 +118,7 @@ namespace CompanyApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while retrieving user", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء استرجاع المستخدم", error = ex.Message });
             }
         }
 
@@ -129,13 +129,11 @@ namespace CompanyApi.Controllers
             try
             {
                 var users = await _userService.GetAllUsersAsync();
-                var userDtos = _mapper.Map<IEnumerable<UserDto>>(users);
-
-                return Ok(userDtos);
+                return Ok(users);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while retrieving users", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء استرجاع المستخدمين", error = ex.Message });
             }
         }
 
@@ -151,21 +149,20 @@ namespace CompanyApi.Controllers
 
                 if (currentUser == null)
                 {
-                    return Unauthorized(new { message = "User not found" });
+                    return Unauthorized(new { message = "المستخدم غير موجود" });
                 }
 
                 // Allow users to update their own profile or admins to update any profile
-                if (id != currentUserId && !currentUser.IsAdmin)
+                if (id != currentUserId && !currentUser.Data.IsAdmin)
                 {
                     return Forbid();
                 }
 
-                var user = _mapper.Map<User>(updateUserDto);
-                var updatedUser = await _userService.UpdateUserAsync(id, user);
+                var updatedUser = await _userService.UpdateUserAsync(id, updateUserDto);
 
                 if (updatedUser == null)
                 {
-                    return NotFound(new { message = "User not found" });
+                    return NotFound(new { message = "المستخدم غير موجود" });
                 }
 
                 var userDto = _mapper.Map<UserDto>(updatedUser);
@@ -177,7 +174,7 @@ namespace CompanyApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while updating user", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء تحديث المستخدم", error = ex.Message });
             }
         }
 
@@ -189,16 +186,16 @@ namespace CompanyApi.Controllers
             {
                 var result = await _userService.DeleteUserAsync(id);
 
-                if (!result)
+                if (!result.Data)
                 {
-                    return NotFound(new { message = "User not found" });
+                    return NotFound(new { message = "المستخدم غير موجود" });
                 }
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while deleting user", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء حذف المستخدم", error = ex.Message });
             }
         }
 
@@ -210,16 +207,16 @@ namespace CompanyApi.Controllers
             {
                 var result = await _userService.ActivateUserAsync(id);
 
-                if (!result)
+                if (!result.Data)
                 {
-                    return NotFound(new { message = "User not found" });
+                    return NotFound(new { message = "المستخدم غير موجود" });
                 }
 
-                return Ok(new { message = "User activated successfully" });
+                return Ok(new { message = "تم تفعيل المستخدم بنجاح" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while activating user", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء تفعيل المستخدم", error = ex.Message });
             }
         }
 
@@ -231,16 +228,16 @@ namespace CompanyApi.Controllers
             {
                 var result = await _userService.DeactivateUserAsync(id);
 
-                if (!result)
+                if (!result.Data)
                 {
-                    return NotFound(new { message = "User not found" });
+                    return NotFound(new { message = "المستخدم غير موجود" });
                 }
 
-                return Ok(new { message = "User deactivated successfully" });
+                return Ok(new { message = "تم إلغاء تفعيل المستخدم بنجاح" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while deactivating user", error = ex.Message });
+                return StatusCode(500, new { message = "حدث خطأ أثناء إلغاء تفعيل المستخدم", error = ex.Message });
             }
         }
     }

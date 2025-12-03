@@ -4,6 +4,7 @@ using CompanyApi.DTOs.BranchDtos;
 using CompanyApi.DTOs.CompanyDtos;
 using CompanyApi.DTOs.DocumentDtos;
 using CompanyApi.DTOs.ProductDtos;
+using CompanyApi.DTOs.TemporaryDocumentDto;
 using CompanyApi.DTOs.UserDtos;
 using CompanyApi.Models;
 
@@ -34,6 +35,10 @@ namespace CompanyApi.Mappings
 
             CreateMap<Document, DocumentDetailsDto>();
             CreateMap<DocumentLines, DocumentLinesDto>();
+
+            CreateMap<TemporaryDocument, TemporaryDocumentDto>().ReverseMap();
+            CreateMap<TemporaryDocumentLine, TemporaryDocumentLineDto>().ReverseMap();
+
         }
     }
 }

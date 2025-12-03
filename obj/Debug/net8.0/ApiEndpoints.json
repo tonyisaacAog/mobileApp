@@ -490,6 +490,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "CompanyApi.Controllers.TemporaryDocumentsController",
+    "Method": "GetTemporaryDocuments",
+    "RelativePath": "api/TemporaryDocuments/GetAllTemporaryDocs",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CompanyApi.DTOs.QueryParameters.TemporaryDocumentQueryParameters",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CompanyApi.Controllers.AdminController",
     "Method": "SetLanguage",
     "RelativePath": "SetLanguage",

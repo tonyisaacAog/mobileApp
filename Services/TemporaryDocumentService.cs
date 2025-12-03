@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using CompanyApi.DTOs.DocumentDtos;
+using CompanyApi.DTOs.QueryParameters;
 using CompanyApi.DTOs.ResponseDtos;
 using CompanyApi.DTOs.TemporaryDocumentDto;
 using CompanyApi.Models;
 using CompanyApi.Repositories.Interfaces;
+using CompanyApi.Repositories.Utilities;
 using CompanyApi.Services.Interfaces;
 using System.Reflection.Metadata;
 using System.Xml.Linq;
@@ -111,6 +114,8 @@ namespace CompanyApi.Services
                 return await Result<bool>.FailureAsync(ex.Message, 400);
             }
         }
+
+        
 
         public async Task<Result<int>> GenerateReceiptsAsync(ReceiptGenerationDto generationDto)
         {
@@ -499,5 +504,27 @@ namespace CompanyApi.Services
             return 0.3 + random.NextDouble() * 0.4;              // near average
         }
 
+        public async Task<PagedResult<TemporaryDocumentDto>> GetReceiptsByGroupId(TemporaryDocumentQueryParameters parameters)
+        {
+            try
+            {
+                //var selectors = MappingUtilities.CreateMapExpression<TemporaryDocument, TemporaryDocumentDto>();
+                var tempDocuments = await _unitOfWork.Repository<TemporaryDocument>().AddIncludes("DocumentLines")
+                    .GetPaginatedAsync(c => c.GroupId == parameters.GroupId, parameters);
+
+                var dto = _mapper.Map<IEnumerable<TemporaryDocument>, IEnumerable<TemporaryDocumentDto>>(tempDocuments.Items);
+                return await PagedResult<TemporaryDocumentDto>.SuccessAsync(
+                    dto,
+                    parameters.PageNumber,
+                    tempDocuments.TotalCount,
+                    parameters.PageSize
+                    );
+
+            }
+            catch (Exception ex)
+            {
+                return await PagedResult<TemporaryDocumentDto>.FailureAsync(ex.Message, 400);
+            }
+        }
     }
 }

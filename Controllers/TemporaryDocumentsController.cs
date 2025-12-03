@@ -1,4 +1,5 @@
-﻿using CompanyApi.DTOs.TemporaryDocumentDto;
+﻿using CompanyApi.DTOs.QueryParameters;
+using CompanyApi.DTOs.TemporaryDocumentDto;
 using CompanyApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +32,13 @@ namespace CompanyApi.Controllers
         public async Task<IActionResult> ApproveTempDocument([FromBody] ApproveTempDocumentDto request)
         {
             var result = await _temporaryDocument.ApproveReceiptsAsync(request);
+            return Ok(result);
+        }
+
+        [HttpPost("GetAllTemporaryDocs")]
+        public async Task<IActionResult> GetTemporaryDocuments([FromBody] TemporaryDocumentQueryParameters request)
+        {
+            var result = await _temporaryDocument.GetReceiptsByGroupId(request);
             return Ok(result);
         }
 
